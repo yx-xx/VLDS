@@ -1,4 +1,5 @@
 import pathlib
+from unittest import mock
 
 import pytest
 
@@ -52,3 +53,19 @@ def test_download_fsspec():
 
     new_local_path = download.maybe_download(remote_path, gs={"token": "anon"})
     assert new_local_path == local_path
+
+
+def test_download_failure_is_not_published(monkeypatch):
+    filesystem = mock.Mock()
+    filesystem.info.return_value = {"name": "checkpoint", "size": 100, "type": "file"}
+
+    def fail_download(url, destination, recursive):
+        destination.write_bytes(b"incomplete")
+        raise OSError("Download interrupted")
+
+    filesystem.get.side_effect = fail_download
+    monkeypatch.setattr(download.fsspec.core, "url_to_fs", lambda url, **kwargs: (filesystem, "checkpoint"))
+    monkeypatch.setattr(download.time, "sleep", lambda duration: None)
+    with pytest.raises(OSError, match="Download interrupted"):
+        download.maybe_download("memory://checkpoint")
+    assert not (download.get_cache_dir() / "checkpoint").exists()

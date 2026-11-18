@@ -48,6 +48,7 @@ class Args:
 
     # Port to serve the policy on.
     port: int = 8000
+    host: str = "0.0.0.0"
     # Record the policy's behavior for debugging.
     record: bool = False
 
@@ -110,7 +111,7 @@ def main(args: Args) -> None:
 
     server = websocket_policy_server.WebsocketPolicyServer(
         policy=policy,
-        host="0.0.0.0",
+        host=args.host,
         port=args.port,
         metadata=policy_metadata,
     )
