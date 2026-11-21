@@ -12,9 +12,9 @@ import h5py
 class ReplaySource:
     path: Path
     group: str
-    frame_indices: tuple[int, ...]
+    frame_indices: tuple[int | None, ...]
 
-    def frame(self, index: int) -> int:
+    def frame(self, index: int) -> int | None:
         return self.frame_indices[index]
 
 

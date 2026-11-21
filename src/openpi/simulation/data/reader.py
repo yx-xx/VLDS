@@ -37,6 +37,8 @@ class Episode:
     fields: tuple[str, ...] = ()
     replay_source: ReplaySource | None = None
     replay_error: str = ""
+    processed_root: pathlib.Path | None = None
+    processed_index: int | None = None
 
     @property
     def kind(self):
@@ -104,6 +106,10 @@ def scan_dataset(path: str | pathlib.Path) -> DatasetIndex:
     root = pathlib.Path(path).expanduser().resolve()
     if not root.exists():
         raise ValueError("数据路径不存在。请选择 LeRobot 数据集根目录或 LIBERO / ALOHA HDF5 文件。")
+    if root.is_dir() and (root / "manifest.json").is_file():
+        manifest = json.loads((root / "manifest.json").read_text())
+        if str(manifest.get("schema", "")).startswith("vlds.libero.trajectories."):
+            return _scan_processed_libero(root)
     if root.is_dir() and (root / "meta/info.json").is_file():
         return _scan_lerobot(root)
     files = [root] if root.is_file() else sorted([*root.rglob("*.hdf5"), *root.rglob("*.h5")])
@@ -119,6 +125,37 @@ def scan_dataset(path: str | pathlib.Path) -> DatasetIndex:
         detail = "；".join(notes[:3])
         raise ValueError("没有找到可浏览的演示。支持 LeRobot v2.x、LIBERO HDF5、ALOHA HDF5。" + detail)
     return DatasetIndex(root, episodes, notes=notes)
+
+
+def _scan_processed_libero(root):
+    from openpi.datasets.libero.reader import ProcessedLiberoDataset
+
+    dataset = ProcessedLiberoDataset(root)
+    cameras = ("images/agentview_rgb", "images/eye_in_hand_rgb")
+    episodes = [
+        Episode(
+            path=root / entry["shard"],
+            name=f"{entry['suite']} / {entry['task']} / {entry['episode']}",
+            task=entry["language"],
+            frames=entry["observations"],
+            fps=entry["actions"] / entry["duration_seconds"],
+            cameras=cameras,
+            format="VLDS LIBERO HDF5",
+            group=entry["group"],
+            replay=True,
+            fields=(*cameras, "actions", "robot_state/position", "gripper_command", "command_intervals"),
+            processed_root=root,
+            processed_index=index,
+        )
+        for index, entry in enumerate(dataset.episodes)
+    ]
+    return DatasetIndex(
+        root,
+        episodes,
+        declared_episodes=len(episodes),
+        robot="Franka Panda",
+        notes=["已处理示教；命令区间是分段候选，尚未经过 F 拟合。", "初始录制图像缺失；终端观测无对应的完整仿真状态。"],
+    )
 
 
 def _scan_hdf5(path):
@@ -341,7 +378,50 @@ class EpisodeReader:
 
     def __init__(self, episode: Episode):
         self.episode = episode
-        self.file = h5py.File(episode.path, "r") if episode.format.endswith("HDF5") else None
+        self.segmentation = None
+        self.processed_group = None
+        if episode.processed_root is not None:
+            from openpi.datasets.libero.reader import ProcessedLiberoDataset
+            from openpi.datasets.libero.reader import read_record
+
+            dataset = ProcessedLiberoDataset(episode.processed_root)
+            self.file, self.processed_group = dataset._open(episode.processed_index)  # noqa: SLF001 -- validated source/VDS access.
+            group = self.processed_group
+            try:
+                if "command_intervals" in group:
+                    intervals = read_record(group, "command_intervals")
+                    candidates = read_record(group, "candidates")
+                    self.segmentation = {
+                        "intervals": intervals,
+                        "time": group["time"][:].tolist(),
+                        "candidate_counts": [
+                            sum(c["command_interval_id"] == i for c in candidates) for i in range(len(intervals))
+                        ],
+                    }
+                source = group["source"]
+                episode.replay = "states" in source and bool(source.attrs.get("model_file", ""))
+                if episode.replay:
+                    source_path = (episode.path.parent / group.attrs["source_file"]).resolve()
+                    indices = group["simulation_state_index"][:]
+                    valid = group["simulation_state_valid"][:]
+                    if len(indices) != episode.frames or len(valid) != episode.frames:
+                        raise ValueError("处理后仿真帧映射长度错误。")
+                    if np.any(indices[valid] < 0) or np.any(indices[valid] >= len(source["states"])):
+                        raise ValueError("处理后仿真帧映射越界。")
+                    episode.replay_source = ReplaySource(
+                        source_path,
+                        text(group.attrs["source_group"]),
+                        tuple(
+                            int(index) if available else None for index, available in zip(indices, valid, strict=True)
+                        ),
+                    )
+                else:
+                    episode.replay_error = "来源缺少完整场景 XML 或仿真状态。"
+            except Exception:
+                self.file.close()
+                raise
+        else:
+            self.file = h5py.File(episode.path, "r") if episode.format.endswith("HDF5") else None
         self.parquet = pq.ParquetFile(episode.path) if self.file is None else None
         self.table = None
         self.table_start = -1
@@ -394,7 +474,26 @@ class EpisodeReader:
             raise ValueError("帧编号超出此回合范围。")
         values = {}
         image = None
-        if self.file is not None:
+        if self.processed_group is not None:
+            group = self.processed_group
+            available = bool(group["image_valid"][frame])
+            if camera and available:
+                image = rgb_image(group[camera][frame])
+            values = {
+                "time": float(group["time"][frame]),
+                "image_valid": available,
+                "simulation_state_valid": bool(group["simulation_state_valid"][frame]),
+                **{
+                    f"robot_state/{key}": np.asarray(value[frame]).tolist()
+                    for key, value in group["robot_state"].items()
+                },
+            }
+            if frame < len(group["actions"]):
+                values["actions"] = group["actions"][frame].tolist()
+                values["gripper_command"] = int(group["gripper_command"][frame])
+            else:
+                values["note"] = "终端观测：没有下一动作，也没有对应的完整仿真状态。"
+        elif self.file is not None:
             group = self.file[episode.group] if episode.group else self.file
             if camera:
                 image = rgb_image(group[camera][frame])

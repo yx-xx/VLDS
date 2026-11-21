@@ -27,16 +27,27 @@ class InteractiveViewer:
         # robosuite 1.4 exposes the native objects only through these wrapper attributes.
         self.attach_native(env.sim.model._model, env.sim.data._data, hide_collision_shells=True)  # noqa: SLF001
 
-    def attach_native(self, model, data, *, hide_collision_shells=False, lookat=(0.0, 0.0, 0.8), distance=2.2):
+    def attach_native(
+        self,
+        model,
+        data,
+        *,
+        hide_collision_shells=False,
+        lookat=(0.0, 0.0, 0.8),
+        distance=2.2,
+        show_ui=True,
+    ):
         self.detach()
         if not self.enabled:
             return
         from mujoco import viewer as mujoco_viewer
 
+        options = {} if show_ui else {"show_left_ui": False, "show_right_ui": False}
         self.handle = mujoco_viewer.launch_passive(
             model,
             data,
             key_callback=self.on_key,
+            **options,
         )
         with self.handle.lock():
             # Match robosuite's camera rendering: hide collision shells and show visual meshes.

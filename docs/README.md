@@ -5,6 +5,7 @@
 - [项目首页](../README.md)：项目定位与安装说明。
 - [常用命令](../COMMANDS.md)：观察台、模型服务及命令行入口。
 - [完整数据集](datasets.md)：下载、续传、校验和训练共用目录。
+- [LIBERO 数据处理](data_processing.md)：统一入口、时序对齐、完整命令区间与拟合候选、划分归一化及 F 接口。
 - [模型观察台](simulation_inspector.md)：模型仿真验证、数据集浏览和记录状态回放。
 - [项目结构与开发约定](project_structure.md)：源码、脚本、测试、数据与运行环境。
 

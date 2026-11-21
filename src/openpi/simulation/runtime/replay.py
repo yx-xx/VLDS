@@ -6,6 +6,7 @@ import queue
 import subprocess
 import threading
 
+from openpi.datasets.libero import SEGMENT_COLORS
 from openpi.simulation import paths
 from openpi.simulation.runtime.controller import InspectorController
 from openpi.simulation.runtime.controller import simulation_environment
@@ -20,8 +21,12 @@ class DatasetReplay:
         self.lock = threading.RLock()
         self.closed = False
         self.source = None
+        self.overlay_options = {"visible": True, "current_only": False, "markers": True}
 
     def open(self, episode, *, frame=0):
+        if episode.replay_source and episode.replay_source.frame(frame) is None:
+            self.events.put((self.generation, {"error": "此观测没有对应的完整仿真状态。"}))
+            return
         self.generation += 1
         generation = self.generation
 
@@ -45,7 +50,12 @@ class DatasetReplay:
                     source_group,
                     "--frame",
                     str(self._source_frame(frame)),
+                    "--timeline-frame",
+                    str(frame),
                 ]
+                overlay = self._overlay(episode)
+                if overlay is not None:
+                    command.extend(["--overlay", json.dumps(overlay)])
                 try:
                     process = subprocess.Popen(
                         command,
@@ -78,22 +88,49 @@ class DatasetReplay:
 
         threading.Thread(target=launch, daemon=True).start()
 
+    def _overlay(self, episode):
+        if episode.processed_root is None:
+            return None
+        return {
+            "path": str(episode.path),
+            "group": episode.group,
+            "colors": SEGMENT_COLORS,
+            **self.overlay_options,
+        }
+
+    def configure_overlay(self, **options):
+        self.overlay_options.update(options)
+        self.send("overlay", **self.overlay_options)
+
     @staticmethod
     def _location(episode):
         source = episode.replay_source
         return (source.path, source.group) if source else (episode.path, episode.group)
 
     def _source_frame(self, frame):
-        return self.source.frame(frame) if self.source else frame
+        source_frame = self.source.frame(frame) if self.source else frame
+        if source_frame is None:
+            raise ValueError("此观测没有对应的完整仿真状态，无法打开三维回放。")
+        return source_frame
 
     def reload(self, episode, *, frame=0):
+        if episode.replay_source and episode.replay_source.frame(frame) is None:
+            self.events.put((self.generation, {"error": "此观测没有对应的完整仿真状态。"}))
+            return
         with self.lock:
             if self.process is None or self.process.poll() is not None or self.process_generation != self.generation:
                 self.open(episode, frame=frame)
                 return
             self.source = episode.replay_source
             path, group = self._location(episode)
-            self.send("reload", path=str(path), group=group, frame=self._source_frame(frame))
+            self.send(
+                "reload",
+                path=str(path),
+                group=group,
+                frame=self._source_frame(frame),
+                timeline_frame=frame,
+                overlay=self._overlay(episode),
+            )
 
     def send(self, command, **values):
         if not self.lock.acquire(blocking=False):

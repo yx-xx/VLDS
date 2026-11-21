@@ -72,3 +72,7 @@ env -u PYTHONPATH .venv/bin/python scripts/compute_norm_stats.py --config-name p
 PushT、xArm 下载后可进行数据浏览和通用数据分析；将它们用于当前 VLA 模型训练，仍需配置对应的观测字段、动作维度及机器人适配。原始 LIBERO 可用于检查仿真记录、构造离线实验和三维回放。
 
 完整演示数据可供后续建立离线指标。闭环成功率由模型在仿真任务中执行后的结果计算；训练集、验证集与评分数据的划分应在具体实验中固定并单独记录。
+
+## 示教预处理与拟合输入
+
+完整原始 LIBERO 已提供可复现的处理入口，输出到 `data/processed/libero_v1/`。时序约定、缺失图像、夹爪耦合事件、分段候选、回合划分、归一化与读取接口见 [LIBERO 数据处理](data_processing.md)。候选数据与通过物理执行的场监督分别管理，是否完成以各自的清单字段为准。

@@ -21,6 +21,10 @@ def discover_datasets(roots, extra=()):
     for root in roots:
         if not root.is_dir():
             continue
+        for marker in root.glob("*/manifest.json"):
+            with contextlib.suppress(OSError, ValueError):
+                if str(json.loads(marker.read_text()).get("schema", "")).startswith("vlds.libero.trajectories."):
+                    found.add(marker.parent.resolve())
         for pattern in ("*/meta/info.json", "*/*/meta/info.json"):
             found.update(path.parent.parent.resolve() for path in root.glob(pattern))
         for pattern in ("*/dataset_source.json", "*/*/dataset_source.json"):

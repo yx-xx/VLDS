@@ -18,6 +18,11 @@ import mujoco
 import numpy as np
 from openpi_client.simulation_viewer import InteractiveViewer
 
+if __package__:
+    from openpi.simulation.workers.trajectory_overlay import TrajectoryOverlay
+else:
+    from trajectory_overlay import TrajectoryOverlay
+
 
 def emit(**event):
     print("@dataset " + json.dumps(event, ensure_ascii=False), flush=True)
@@ -67,7 +72,7 @@ def set_recorded_state(model, data, state):
 class RecordedTrajectory:
     """Own an HDF5 snapshot, validating replacement data before touching the displayed scene."""
 
-    def __init__(self, path, group, frame=0, previous=None):
+    def __init__(self, path, group, frame=0, previous=None, *, overlay=None, timeline_frame=None):
         self.path = pathlib.Path(path)
         self.group = group
         self.file = h5py.File(self.path, "r")
@@ -86,16 +91,32 @@ class RecordedTrajectory:
                 else mujoco.MjModel.from_xml_string(self.xml)
             )
             self.data = mujoco.MjData(self.model)
-            self.seek(frame)
+            self.overlay = TrajectoryOverlay(overlay, self.path, self.group) if overlay else None
+            self.seek(frame, timeline_frame)
         except Exception:
             self.file.close()
             raise
 
-    def seek(self, frame):
+    def seek(self, frame, timeline_frame=None):
         if not 0 <= frame < len(self.states):
             raise ValueError("三维回放的帧编号超出范围。")
-        set_recorded_state(self.model, self.data, self.states[frame])
+        state = self.states[frame]
+        if self.overlay:
+            self.overlay.validate_frame(frame if timeline_frame is None else timeline_frame, frame)
+        set_recorded_state(self.model, self.data, state)
+        if self.overlay:
+            self.overlay.set_frame(frame if timeline_frame is None else timeline_frame, frame)
         self.frame = frame
+
+    def draw_overlay(self, viewer):
+        with viewer.handle.lock():
+            if self.overlay:
+                self.overlay.draw(viewer.handle.user_scn)
+            else:
+                viewer.handle.user_scn.ngeom = 0
+
+    def overlay_status(self):
+        return self.overlay.status() if self.overlay else {}
 
     def close(self):
         self.file.close()
@@ -112,7 +133,7 @@ def replace_trajectory(viewer, current, replacement):
             camera = viewer.handle.cam
             position = (camera.lookat.copy(), camera.distance, camera.azimuth, camera.elevation)
         viewer.detach()
-        viewer.attach_native(replacement.model, replacement.data, hide_collision_shells=True)
+        viewer.attach_native(replacement.model, replacement.data, hide_collision_shells=True, show_ui=False)
         with viewer.handle.lock():
             camera = viewer.handle.cam
             camera.lookat[:], camera.distance, camera.azimuth, camera.elevation = position
@@ -137,11 +158,26 @@ def run(args):
     viewer = InteractiveViewer()
     trajectory = None
     try:
-        trajectory = RecordedTrajectory(args.path, args.group, args.frame)
-        viewer.attach_native(trajectory.model, trajectory.data, hide_collision_shells=True)
+        trajectory = RecordedTrajectory(
+            args.path,
+            args.group,
+            args.frame,
+            overlay=args.overlay,
+            timeline_frame=args.timeline_frame,
+        )
+        camera = {}
+        if trajectory.overlay:
+            positions = trajectory.overlay.positions
+            camera = {
+                "lookat": (positions.min(axis=0) + positions.max(axis=0)) / 2,
+                "distance": max(1.2, float(np.ptp(positions, axis=0).max()) * 2.5),
+            }
+        viewer.attach_native(trajectory.model, trajectory.data, hide_collision_shells=True, show_ui=False, **camera)
         viewer.paused = True
         expected_paused = True
-        emit(ready=True, source_frame=args.frame)
+        trajectory.draw_overlay(viewer)
+        viewer.sync()
+        emit(ready=True, source_frame=args.frame, **trajectory.overlay_status())
         while viewer.enabled:
             target = None
             while not commands.empty():
@@ -153,15 +189,26 @@ def run(args):
                     target = (int(command["frame"]), command.get("timeline_frame", command["frame"]))
                 elif action == "playing":
                     viewer.paused = expected_paused = not command["playing"]
+                elif action == "overlay":
+                    if trajectory.overlay:
+                        trajectory.overlay.configure(**command)
+                        trajectory.draw_overlay(viewer)
+                        emit(overlay_updated=True, **trajectory.overlay_status())
                 elif action == "reload":
                     replacement = None
                     try:
                         replacement = RecordedTrajectory(
-                            command["path"], command["group"], int(command["frame"]), previous=trajectory
+                            command["path"],
+                            command["group"],
+                            int(command["frame"]),
+                            previous=trajectory,
+                            overlay=command.get("overlay"),
+                            timeline_frame=command.get("timeline_frame"),
                         )
                         trajectory = replace_trajectory(viewer, trajectory, replacement)
+                        trajectory.draw_overlay(viewer)
                         target = None
-                        emit(ready=True, reloaded=True, source_frame=trajectory.frame)
+                        emit(ready=True, reloaded=True, source_frame=trajectory.frame, **trajectory.overlay_status())
                     except Exception as error:
                         if replacement is not None:
                             replacement.close()
@@ -171,9 +218,15 @@ def run(args):
                 source_frame, timeline_frame = target
                 try:
                     with viewer.handle.lock():
-                        trajectory.seek(source_frame)
+                        trajectory.seek(source_frame, timeline_frame)
+                    trajectory.draw_overlay(viewer)
                     viewer.sync()
-                    emit(frame=timeline_frame, source_frame=source_frame, simulation_time=float(trajectory.data.time))
+                    emit(
+                        frame=timeline_frame,
+                        source_frame=source_frame,
+                        simulation_time=float(trajectory.data.time),
+                        **trajectory.overlay_status(),
+                    )
                 except (ValueError, IndexError, OSError) as error:
                     viewer.paused = expected_paused = True
                     emit(error="当前帧无法回放，保留上一帧：" + str(error))
@@ -197,6 +250,8 @@ def main():
     parser.add_argument("--path", required=True)
     parser.add_argument("--group", required=True)
     parser.add_argument("--frame", type=int, default=0)
+    parser.add_argument("--timeline-frame", type=int)
+    parser.add_argument("--overlay", type=json.loads)
     args = parser.parse_args()
     try:
         run(args)

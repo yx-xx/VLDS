@@ -1,6 +1,8 @@
 # 项目启动命令
 
-均在项目根目录执行。当前主要入口用于交互式模型观察、单场景验证和数据集演示浏览。目录职责见[项目结构说明](docs/project_structure.md)，其他文档见[文档索引](docs/README.md)。
+以下命令均在代码仓库根目录执行；若当前位于包含三个项目的工作空间，先运行 `cd VLDS`。当前主要入口用于交互式模型观察、单场景验证和数据集演示浏览。目录职责见[项目结构说明](docs/project_structure.md)，其他文档见[文档索引](docs/README.md)。
+
+移动现有项目目录后，先按[目录迁移检查](docs/project_structure.md#目录迁移检查)确认两套 Python 环境与本地资源路径有效。
 
 ## 环境准备（首次）
 
@@ -102,3 +104,29 @@ env -u PYTHONPATH .venv/bin/python scripts/view_simulation.py \
 ```
 
 文件更新时优先使用临时文件加 `os.replace` 发布；界面的“重新载入当前数据”可以手动刷新。处理后的 LeRobot 数据可以通过 `meta/replay.json` 关联原始场景，具体约定见 `docs/simulation_inspector.md` 的“数据处理时实时观看”。
+
+## LIBERO 示教预处理
+
+```bash
+# 观看已处理数据：MuJoCo 内彩色末端轨迹、当前段高亮，与录制画面同步
+env -u PYTHONPATH .venv/bin/python scripts/view_simulation.py \
+  --dataset data/processed/libero_v2 --replay
+
+# 导出彩色分段的三维末端轨迹及时间线
+env -u PYTHONPATH .venv/bin/python -m openpi.datasets.libero inspect \
+  data/processed/libero_v2 --episode 0 --segments
+```
+
+
+```bash
+env -u PYTHONPATH .venv/bin/python -m openpi.datasets.libero process \
+  --workers 4 --output data/processed/libero_v2
+
+env -u PYTHONPATH .venv/bin/python -m openpi.datasets.libero audit \
+  data/processed/libero_v2
+
+env -u PYTHONPATH .venv/bin/python -m openpi.datasets.libero inspect \
+  data/processed/libero_v2 --episode 0
+```
+
+输出规范化示教、完整夹爪命令区间、拟合候选与 H=1/3/4/5 诊断窗口；候选覆盖全部动作，含耦合运动和等待。运行状态、监督可用性和 F 接入边界见 [LIBERO 数据处理](docs/data_processing.md)。

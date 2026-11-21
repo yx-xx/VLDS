@@ -7,6 +7,7 @@ def watch_paths(index, episode):
     root = index.root
     paths = {root}
     if root.is_dir():
+        paths.update(root / name for name in ("manifest.json", "run.json"))
         paths.update(root / "meta" / name for name in ("info.json", "episodes.jsonl", "tasks.jsonl", "replay.json"))
         paths.update(item.path.parent for item in index.episodes)
     if episode is not None:

@@ -1,0 +1,29 @@
+{
+  "python_version": "3.8.20",
+  "robosuite_version": "1.4.1",
+  "numpy_version": "1.22.4",
+  "scipy_version": "1.10.1",
+  "checker_sha256": "cb2d88b75c6f41029dcd0b777f86bcbf454b99f7551a3721104e3f933e623dcf",
+  "seed": 20261121,
+  "fields": 100,
+  "nonzero_state_probes": 10000,
+  "minimum_covariance_eigenvalue": 2.3320776998593833e-06,
+  "largest_symmetric_A_eigenvalue": -0.010019916738785559,
+  "largest_radial_ratio": -0.01052987188081948,
+  "largest_nominal_Euler_delta_V": -5.607288395123242e-07,
+  "max_float32_field_absolute_difference": 0.0001785030799800917,
+  "rotation_frame_scaling_trials": 100,
+  "max_rotation_element_error": 4.362896821596962e-09,
+  "max_frame_composition_error": 6.661338147750939e-16,
+  "max_scaling_error": 2.168404344971009e-19,
+  "zero_rotation_retains_old_target": true,
+  "explicit_set_ori_refreshes_target": true,
+  "hold_pause_rule": "passed",
+  "source_sha256": {
+    "utils/transform_utils.py": "1c2317895733449883b56af0decefb3529649b3a7779dc2ef3ed00816bb25bb0",
+    "utils/control_utils.py": "1d0f1a063894b1e8289339e223665e14e8aec492c31e9e00f42edea8dc735f43",
+    "controllers/base_controller.py": "61f99a2daeb4eb6e39bfb996d94c5a5689ef3bc771d030d070193ea56d6a8332",
+    "controllers/osc.py": "cfa62a0e719bc53ef0c701efa66f7b3e2272d4fca2150ec73c05bb145eba85cb"
+  },
+  "scope": "formula and extracted installed helper bodies only; no simulator, fitter, learned model or real robot"
+}

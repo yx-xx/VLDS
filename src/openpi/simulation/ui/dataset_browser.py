@@ -27,6 +27,7 @@ from openpi.simulation.data.watch import file_signature
 from openpi.simulation.data.watch import watch_paths
 from openpi.simulation.runtime.replay import DatasetReplay
 from openpi.simulation.ui.dataset_library import DatasetLibrary
+from openpi.simulation.ui.segmentation import SegmentationPanel
 from openpi.simulation.ui.tk_runtime import filedialog
 from openpi.simulation.ui.tk_runtime import scrolledtext
 from openpi.simulation.ui.tk_runtime import tk
@@ -51,6 +52,7 @@ class DatasetBrowser(ttk.Frame):
         self.requested = None
         self.frame = 0
         self.playing = False
+        self.play_limit = None
         self.last_tick = 0.0
         self.image = None
         self.photo = None
@@ -59,6 +61,7 @@ class DatasetBrowser(ttk.Frame):
         self.replay_pending = None
         self.replay_sent_at = 0.0
         self.replay_loading = False
+        self.replay_after_read = False
         self.reload_restore = None
         self.reloading = False
         self.reload_retry = False
@@ -204,6 +207,12 @@ class DatasetBrowser(ttk.Frame):
         self.canvas.pack(fill="both", expand=True)
         self.canvas.bind("<Configure>", lambda _event: self._draw())
         self.canvas.create_text(300, 150, text="选择本地数据，或下载一个演示回合", fill="#c7d6d0", tags="placeholder")
+        self.segments = SegmentationPanel(
+            right,
+            seek=self.seek_frame,
+            play=self.play_segment,
+            configure_overlay=self.replay.configure_overlay,
+        )
         self.position = tk.DoubleVar(value=0)
         self.scale = ttk.Scale(right, from_=0, to=1, variable=self.position, command=self._seek)
         self.scale.pack(fill="x", pady=(10, 3))
@@ -274,7 +283,7 @@ class DatasetBrowser(ttk.Frame):
 
     def refresh_local(self, extra=None):
         cache_root = pathlib.Path(os.environ.get("HF_LEROBOT_HOME", "~/.cache/huggingface/lerobot")).expanduser()
-        roots = [PREVIEW_ROOT, paths.ROOT / "data/datasets", cache_root]
+        roots = [PREVIEW_ROOT, paths.ROOT / "data/datasets", paths.ROOT / "data/processed", cache_root]
         existing = [*self.paths, *([pathlib.Path(extra).resolve()] if extra is not None else [])]
         found = discover_datasets(roots, extra=existing)
         if extra is not None and pathlib.Path(extra).resolve() not in found:
@@ -463,6 +472,8 @@ class DatasetBrowser(ttk.Frame):
         self.requested = None
         self.filtered_episodes = []
         self.image = self.photo = None
+        self.segments.set_data(None)
+        self.replay_after_read = False
         self.preview_message = message
         self.episode_box["values"] = ()
         self.episode_name.set("")
@@ -535,9 +546,12 @@ class DatasetBrowser(ttk.Frame):
         self.episode = self.filtered_episodes[self.episode_box.current()]
         episode = self.episode
         same_episode = restore and self._episode_key(episode) == restore["episode"]
+        if episode.processed_root and not same_episode:
+            self.flip.set(True)
         self.frame = min(restore["frame"], episode.frames - 1) if same_episode else 0
         self.watch.reset()
         self.image = self.photo = None
+        self.segments.set_data(None)
         self._draw()
         self.camera_box["values"] = episode.cameras
         if episode.cameras:
@@ -552,7 +566,7 @@ class DatasetBrowser(ttk.Frame):
         self.status.configure(
             text=f"{episode.format} · {episode.fps:g} FPS · {episode.frames / episode.fps:.1f} 秒", style="Muted.TLabel"
         )
-        self.replay_button.configure(state="normal" if episode.replay else "disabled")
+        self.replay_button.configure(state="normal" if episode.replay and not episode.processed_root else "disabled")
         self.replay_note.configure(text=self._replay_description())
         if not episode.cameras:
             self.preview_message = "此回合保存了完整仿真状态。\n打开三维回放后，可用下方时间轴观看。"
@@ -561,9 +575,12 @@ class DatasetBrowser(ttk.Frame):
         self._controls(enabled=True)
         self.request_frame()
         self.replay_loading = False
+        self.replay_after_read = False
         if episode.replay and (self.auto_replay.get() or (same_episode and restore["replay"])):
             self.replay_loading = True
-            self.replay.reload(episode, frame=self.frame)
+            self.replay_after_read = bool(episode.processed_root)
+            if not self.replay_after_read:
+                self.replay.reload(episode, frame=self.frame)
             self.replay_note.configure(text="正在打开或更新三维回放…")
         else:
             self.replay.stop()
@@ -594,6 +611,7 @@ class DatasetBrowser(ttk.Frame):
                 if self.reader is None or self.reader.episode is not episode:
                     self._close_reader()
                     self.reader = EpisodeReader(episode)
+                    self.events.put((generation, "segmentation", self.reader.segmentation))
                 image, values = self.reader.read(frame, camera)
                 self.events.put((generation, "frame", (frame, camera, image, values)))
             except Exception as error:
@@ -607,6 +625,7 @@ class DatasetBrowser(ttk.Frame):
         self.updating_scale = True
         self.position.set(self.frame)
         self.updating_scale = False
+        self.segments.update_frame(self.frame)
         self.frame_label.configure(
             text=f"帧 {self.frame} / {self.episode.frames - 1} · {self.frame / self.episode.fps:.2f} / {(self.episode.frames - 1) / self.episode.fps:.2f} 秒"
         )
@@ -617,6 +636,13 @@ class DatasetBrowser(ttk.Frame):
         self.pause()
         self.frame = min(self.episode.frames - 1, max(0, round(float(value))))
         self.request_frame()
+
+    def seek_frame(self, frame):
+        self._seek(frame)
+
+    def play_segment(self, start, end):
+        self.seek_frame(start)
+        self.toggle_play(stop=end)
 
     def step(self, delta):
         if self.episode is None:
@@ -630,7 +656,7 @@ class DatasetBrowser(ttk.Frame):
         self.play_button.configure(text="播放")
         self.replay.send("playing", playing=False)
 
-    def toggle_play(self):
+    def toggle_play(self, *, stop=None):
         if self.episode is None:
             return
         if self.playing:
@@ -640,6 +666,7 @@ class DatasetBrowser(ttk.Frame):
                 self.frame = 0
                 self.request_frame()
             self.playing = True
+            self.play_limit = stop
             self.play_button.configure(text="暂停")
             self._restart_clock()
             self.replay.send("playing", playing=True)
@@ -694,6 +721,9 @@ class DatasetBrowser(ttk.Frame):
 
     def open_replay(self):
         if self.episode is not None and self.episode.replay:
+            if self.episode.replay_source and self.episode.replay_source.frame(self.frame) is None:
+                self.replay_note.configure(text="终端观测没有对应的完整仿真状态；请跳到此前区间再打开三维回放。")
+                return
             self.pause()
             self.replay_ready = False
             self.replay_note.configure(text="正在打开三维回放窗口…")
@@ -746,12 +776,20 @@ class DatasetBrowser(ttk.Frame):
         if self.episode.replay_error:
             return self.episode.replay_error
         if self.episode.replay_source:
+            if self.episode.processed_root:
+                return "三维彩色轨迹与命令分段同步，当前段加粗、白点定位；示教回放，尚未执行拟合场。"
             return "原始参考回放：按帧映射显示来源场景；数值区显示处理后的数据。"
         if self.episode.replay:
             return "记录状态三维回放，与下方时间轴同步。"
         return "此回合提供录制画面；完整三维回放需要场景 XML 和仿真 states，或明确的来源帧映射。"
 
     def _sync_replay_frame(self, frame):
+        if self.episode and self.episode.replay_source and self.episode.replay_source.frame(frame) is None:
+            self.replay_ready = self.replay_loading = False
+            self.replay_pending = None
+            self.replay.stop()
+            self.replay_note.configure(text="终端观测无完整仿真状态，三维窗口已关闭；录制末帧与本体仍可查看。")
+            return
         if self.replay_ready:
             self.replay_pending = frame
             self.replay_sent_at = time.monotonic()
@@ -882,10 +920,24 @@ class DatasetBrowser(ttk.Frame):
                 elif kind == "watch":
                     if self.auto_refresh.get() and self.watch.changed(value):
                         self.reload_current()
+                elif kind == "segmentation":
+                    self.segments.set_data(value)
+                    if value:
+                        self.segments.pack(fill="x", pady=(8, 0), before=self.scale)
+                        self.segments.update_frame(self.frame)
+                    self.replay_button.configure(state="normal" if self.episode.replay else "disabled")
+                    if self.replay_after_read:
+                        self.replay_after_read = False
+                        if self.episode.replay and self.episode.replay_source.frame(self.frame) is not None:
+                            self.replay.reload(self.episode, frame=self.frame)
+                        else:
+                            self.replay_loading = False
                 elif kind == "frame":
                     frame, camera, image, values = value
                     if self.episode is not None and frame == self.frame and camera == (self.camera.get() or None):
                         self.image = image
+                        if values.get("image_valid") is False:
+                            self.preview_message = "初始录制图像缺失。\n可打开三维状态回放查看真实来源状态。"
                         self._draw()
                         self._show_values(values)
                         self._sync_replay_frame(frame)
@@ -954,7 +1006,7 @@ class DatasetBrowser(ttk.Frame):
             now = time.monotonic()
             if now - self.last_tick >= interval:
                 self.last_tick = now
-                if self.frame >= self.episode.frames - 1:
+                if self.frame >= (self.play_limit if self.play_limit is not None else self.episode.frames - 1):
                     self.pause()
                 else:
                     self.frame += 1
