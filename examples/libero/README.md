@@ -74,7 +74,11 @@ checkpoint was trained in openpi with the `pi05_libero` config.
 
 ## Franka Panda local simulation
 
-此入口使用 LIBERO / MuJoCo 的 Franka Panda，不连接真机，不需要训练数据集或额外微调。默认离屏渲染并保存 MP4；添加 `--viewer` 可实时查看场景和腕部相机。
+交互式观看与模型验证建议使用 `env -u PYTHONPATH .venv/bin/python scripts/view_simulation.py`。
+该入口提供 LIBERO / ALOHA 环境、任务类型、具体任务与初始状态选择；每次只运行当前场景，默认暂停，结束后保留现场。
+操作说明及扩展建议见 [模型观察台](../../docs/simulation_inspector.md)。以下为原命令行入口及批量评测用法。
+
+此入口使用 LIBERO / MuJoCo 的 Franka Panda，不连接真机，不需要训练数据集或额外微调。默认离屏渲染并保存 MP4；添加 `--viewer` 可打开 MuJoCo 完整三维界面，添加 `--camera-preview` 可查看场景和腕部相机。
 
 ### 安装与启动
 
@@ -101,12 +105,19 @@ env -u PYTHONPATH .venv/bin/python scripts/run_franka_sim.py --models pi05
 
 ```bash
 env -u PYTHONPATH .venv/bin/python scripts/run_franka_sim.py \
-    --models pi05 --viewer --output-dir data/franka_sim/live
+    --models pi05 --viewer --software-rendering --output-dir data/franka_sim/live
 ```
 
-窗口左侧是场景相机，右侧是腕部相机，并显示任务编号、回合、控制步数和推理状态。预览只读取已有观测，不修改相机、物体、动作或任务判定；原有视频和 JSON 仍会保存。
-按 `Q` / `Esc` 或关闭窗口只隐藏预览，仿真继续运行；在启动终端按 `Ctrl+C` 停止运行。预览在模型服务就绪、仿真初始化后出现，首次推理编译期间可能暂时停留在等待画面。
-这里的“实时”指运行过程中更新画面，不保证模拟时间与墙钟时间相同。无桌面 `DISPLAY` 的 Linux 环境应省略 `--viewer`；正式批量评测也建议关闭预览，避免显示开销影响耗时比较。
+打开的是 MuJoCo 原生三维界面，显示模型正在控制的同一份物理仿真状态，并保留左右两侧的参数、状态和可视化面板。
+左键拖动旋转、右键拖动平移、滚轮缩放；空格暂停/继续，右方向键执行一个控制步。首次推理编译时物理状态可能暂时不动，仍可操作三维视角。
+界面直接连接仿真，修改状态、控制量或施加扰动力会影响本回合结果。只改变自由观察视角不会移动模型输入使用的两台相机。视频和 JSON 仍会保存。
+
+`--software-rendering` 让仿真图形使用 Mesa 软件渲染，适用于本机当前 NVIDIA 图形库与驱动不一致的情况，模型服务仍使用 GPU。图形驱动正常的机器可省略该参数。
+需要同时观察模型的输入图像时，额外加 `--camera-preview`，会打开场景相机和腕部相机的双画面窗口。
+
+关闭三维窗口只隐藏界面，后续回合不会重新打开；相机预览中按 `Q` / `Esc` 可隐藏预览。在启动终端按 `Ctrl+C` 停止整个运行。
+界面在模型服务就绪、仿真初始化后出现。这里的“实时”指运行过程中更新画面，不保证模拟时间与墙钟时间相同。
+无桌面 `DISPLAY` 的 Linux 环境应省略 `--viewer` 和 `--camera-preview`；正式批量评测也建议关闭界面，避免显示开销影响耗时比较。
 
 建议按“短流程检查 → 单任务实时观察 → 无窗口批量评测”的顺序运行。比较模型时保持任务、官方初始状态、随机种子、步数上限和重规划设置一致，使用多个初始状态，而不是只观察一次成功。
 每次实验使用独立的 `--output-dir`，保留视频、结果和日志。正式性能分析还应单独测量预热后的推理延迟和墙钟耗时，不能用 MP4 的播放帧率代替控制频率或实时性能。

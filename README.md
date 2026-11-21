@@ -1,4 +1,23 @@
-# openpi
+# VLDS
+
+基于 openpi 的机器人模型项目。当前主要入口是模型观察台，用于交互式仿真、单场景模型验证和数据集演示浏览。
+
+```bash
+env -u PYTHONPATH .venv/bin/python scripts/view_simulation.py
+```
+
+也可通过 `env -u PYTHONPATH .venv/bin/python -m openpi.simulation` 启动同一界面。首次安装请先阅读下方的 openpi 安装说明，并运行 `bash examples/libero/setup_franka.sh` 准备独立的 LIBERO 环境。
+
+- [常用启动命令](COMMANDS.md)：观察台、数据集浏览、模型服务和命令行仿真。
+- [项目结构与开发约定](docs/project_structure.md)：目录职责、模块边界、测试及运行文件位置。
+- [模型观察台说明](docs/simulation_inspector.md)：操作方式、模型适配、数据格式和三维回放条件。
+- [文档索引](docs/README.md)：安装、训练与部署相关文档。
+
+主要代码在 `src/openpi/`，共享客户端在 `packages/openpi-client/`，启动脚本在 `scripts/`，应用与脚本测试在 `tests/`。数据、日志和模型权重保存在忽略目录中。
+
+本机数据、模型配套资源、检查点和缓存分别保存在项目内的普通目录 `data/`、`assets/`、`checkpoints/`、`.cache/` 和 `examples/libero/.cache/` 中，均由 `.gitignore` 排除。预训练模型默认缓存仍在仓库外的 `~/.cache/openpi/`。目录对应关系见[本地资源与 Git 管理](docs/project_structure.md#本地资源与-git-管理)。
+
+## openpi 上游说明
 
 openpi holds open-source models and packages for robotics, published by the [Physical Intelligence team](https://www.physicalintelligence.company/).
 

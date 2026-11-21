@@ -1,8 +1,14 @@
-# Data directories.
-assets/
-checkpoints/
-data/
-wandb/
+# Local data, model resources, and outputs at the repository root.
+# Keep source directories such as src/openpi/models and src/openpi/simulation/data tracked.
+/assets
+/checkpoints
+/data
+/datasets
+/models
+/weights
+/outputs
+/runs
+/wandb
 
 # Byte-compiled / optimized / DLL files
 __pycache__/
@@ -55,6 +61,7 @@ coverage.xml
 *.py,cover
 .hypothesis/
 .pytest_cache/
+.ruff_cache/
 cover/
 
 # Translations

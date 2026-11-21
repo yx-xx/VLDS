@@ -4,7 +4,7 @@ from unittest import mock
 
 import pytest
 
-from scripts import run_franka_sim
+from openpi.simulation.runtime import franka as run_franka_sim
 
 
 def test_default_franka_run():
@@ -94,7 +94,26 @@ def test_viewer_client_run(tmp_path: pathlib.Path, monkeypatch):
     assert "--args.viewer" in run_franka_sim.client_command(args, tmp_path)
 
 
-@pytest.mark.parametrize("arguments", [["--viewer"], ["--mode", "view"]])
+def test_camera_preview_client_run(tmp_path: pathlib.Path, monkeypatch):
+    monkeypatch.setenv("DISPLAY", ":1")
+    args = run_franka_sim.parse_args(["--camera-preview"])
+    assert "--args.camera-preview" in run_franka_sim.client_command(args, tmp_path)
+    assert not args.viewer
+
+
+def test_software_rendering_environment(monkeypatch, tmp_path: pathlib.Path):
+    monkeypatch.setattr(run_franka_sim, "ROOT", tmp_path)
+    (tmp_path / "examples/libero/.cache/LIBERO/libero/libero/envs").mkdir(parents=True)
+    monkeypatch.setenv("PYOPENGL_PLATFORM", "egl")
+    environment = run_franka_sim.simulation_env(software_rendering=True)
+    assert environment["MUJOCO_GL"] == "glx"
+    assert environment["__GLX_VENDOR_LIBRARY_NAME"] == "mesa"
+    assert environment["LIBGL_ALWAYS_SOFTWARE"] == "1"
+    assert "PYOPENGL_PLATFORM" not in environment
+    assert "PYOPENGL_PLATFORM" in run_franka_sim.os.environ
+
+
+@pytest.mark.parametrize("arguments", [["--viewer"], ["--mode", "view"], ["--camera-preview"]])
 def test_viewer_requires_display(monkeypatch, arguments):
     monkeypatch.setattr(run_franka_sim.sys, "platform", "linux")
     monkeypatch.delenv("DISPLAY", raising=False)

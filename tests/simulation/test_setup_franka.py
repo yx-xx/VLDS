@@ -5,6 +5,8 @@ import subprocess
 
 import pytest
 
+from openpi.simulation.paths import ROOT
+
 
 @pytest.mark.parametrize("failures", [0, 1, 3])
 def test_source_fetch_retries(tmp_path: Path, failures: int):
@@ -15,7 +17,7 @@ def test_source_fetch_retries(tmp_path: Path, failures: int):
     python = example / ".venv/bin/python"
     python.touch(mode=0o755)
     script = example / "setup_franka.sh"
-    shutil.copyfile(Path(__file__).resolve().parents[1] / "examples/libero/setup_franka.sh", script)
+    shutil.copyfile(ROOT / "examples/libero/setup_franka.sh", script)
     bin_dir = tmp_path / "bin"
     bin_dir.mkdir()
     git = bin_dir / "git"

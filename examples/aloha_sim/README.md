@@ -1,5 +1,12 @@
 # Run Aloha Sim
 
+## Interactive 3D inspection
+
+From the project root, run `env -u PYTHONPATH .venv/bin/python scripts/view_simulation.py`.
+Select **ALOHA Sim** and choose cube transfer or bimanual insertion. The scene opens in the full MuJoCo interface and starts paused.
+The default `pi0_aloha_sim` checkpoint is for cube transfer; insertion inference requires a compatible task checkpoint.
+See [the inspector guide](../../docs/simulation_inspector.md) for scene selection, reset and model controls.
+
 ## With Docker
 
 ```bash

@@ -3085,6 +3085,7 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "augmax" },
+    { name = "av" },
     { name = "beartype" },
     { name = "chex" },
     { name = "dm-tree", version = "0.1.8", source = { registry = "https://pypi.org/simple" }, marker = "python_full_version >= '3.13'" },
@@ -3097,6 +3098,7 @@ dependencies = [
     { name = "fsspec", extra = ["gcs"] },
     { name = "google-crc32c" },
     { name = "gym-aloha" },
+    { name = "h5py" },
     { name = "imageio" },
     { name = "jax", extra = ["cuda12"] },
     { name = "jaxtyping" },
@@ -3109,6 +3111,8 @@ dependencies = [
     { name = "orbax-checkpoint" },
     { name = "pillow" },
     { name = "polars" },
+    { name = "pyarrow" },
+    { name = "requests" },
     { name = "rich" },
     { name = "sentencepiece" },
     { name = "torch" },
@@ -3139,6 +3143,7 @@ rlds = [
 [package.metadata]
 requires-dist = [
     { name = "augmax", specifier = ">=0.3.4" },
+    { name = "av", specifier = ">=14.0.0" },
     { name = "beartype", specifier = "==0.19.0" },
     { name = "chex", specifier = "==0.1.90" },
     { name = "dm-tree", specifier = ">=0.1.8" },
@@ -3150,6 +3155,7 @@ requires-dist = [
     { name = "fsspec", extras = ["gcs"], specifier = ">=2024.6.0" },
     { name = "google-crc32c", specifier = ">=1.7.1" },
     { name = "gym-aloha", specifier = ">=0.1.1" },
+    { name = "h5py", specifier = ">=3.11.0" },
     { name = "imageio", specifier = ">=2.36.1" },
     { name = "jax", extras = ["cuda12"], specifier = "==0.5.3" },
     { name = "jaxtyping", specifier = "==0.2.36" },
@@ -3162,6 +3168,8 @@ requires-dist = [
     { name = "orbax-checkpoint", specifier = "==0.11.13" },
     { name = "pillow", specifier = ">=11.0.0" },
     { name = "polars", specifier = ">=1.30.0" },
+    { name = "pyarrow", specifier = ">=17.0.0" },
+    { name = "requests", specifier = ">=2.32.0" },
     { name = "rich", specifier = ">=14.0.0" },
     { name = "sentencepiece", specifier = ">=0.2.0" },
     { name = "torch", specifier = "==2.7.1" },
