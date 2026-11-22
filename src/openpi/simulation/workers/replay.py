@@ -1,4 +1,4 @@
-"""Replay recorded MuJoCo states in a native 3D window; no policy inference."""
+"""Replay recorded MuJoCo states in the inspector viewport; no policy inference."""
 
 # ruff: noqa: RUF001 -- Chinese interface messages.
 from __future__ import annotations
@@ -16,6 +16,7 @@ import xml.etree.ElementTree as ET
 import h5py
 import mujoco
 import numpy as np
+from openpi_client.embedded_viewer import EmbeddedViewer
 from openpi_client.simulation_viewer import InteractiveViewer
 
 if __package__:
@@ -109,6 +110,9 @@ class RecordedTrajectory:
         self.frame = frame
 
     def draw_overlay(self, viewer):
+        if isinstance(viewer, EmbeddedViewer):
+            viewer.set_overlay(self.overlay)
+            return
         with viewer.handle.lock():
             if self.overlay:
                 self.overlay.draw(viewer.handle.user_scn)
@@ -155,7 +159,7 @@ def run(args):
         commands.put({"command": "stop"})
 
     threading.Thread(target=read_commands, daemon=True).start()
-    viewer = InteractiveViewer()
+    viewer = EmbeddedViewer(args.render_buffer) if args.render_buffer else InteractiveViewer()
     trajectory = None
     try:
         trajectory = RecordedTrajectory(
@@ -183,6 +187,8 @@ def run(args):
             while not commands.empty():
                 command = commands.get_nowait()
                 action = command.get("command")
+                if args.render_buffer and viewer.command(command):
+                    continue
                 if action == "stop":
                     return
                 if action == "frame":
@@ -252,6 +258,7 @@ def main():
     parser.add_argument("--frame", type=int, default=0)
     parser.add_argument("--timeline-frame", type=int)
     parser.add_argument("--overlay", type=json.loads)
+    parser.add_argument("--render-buffer", help="Render into the inspector instead of a separate window.")
     args = parser.parse_args()
     try:
         run(args)

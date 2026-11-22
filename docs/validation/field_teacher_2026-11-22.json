@@ -1,0 +1,4611 @@
+{
+  "schema": "vlds.validation.field_teacher.v1",
+  "date_local": "2026-11-22",
+  "timezone": "Asia/Shanghai",
+  "generated_at_utc": "2026-11-21T17:47:55.223272+00:00",
+  "checks": {
+    "passed": true,
+    "errors": [],
+    "running_artifacts": [],
+    "no_training_dataset_released": true,
+    "scope": "archive factors/physical agreement, nominal acceptance flags, full action coverage, source splits and terminal artifact states"
+  },
+  "code_commit": "8ccc1b09829c1065c3905be16a6a0f568fa7bbef",
+  "implementation_sha256": {
+    "src/openpi/datasets/libero/fields.py": "b7e59a95f19d5462107b48892143f1a7213c26afbc7e413a661d0847057b6bf1",
+    "src/openpi/fields/seds.py": "f01e4e10285f4210133db7522f70d88bde19340a52c42f1f8709f99df5d54e7c",
+    "src/openpi/fields/primitive.py": "aac653f44f650eea58821390888ceba047180e1c9c3beaad85d68f6d0e4f29d0",
+    "src/openpi/datasets/libero/trajectory.py": "1e09abcafe40a3baf2f4eb2d69e634424bbc2aa92240f615a8aa89e34fb2803f",
+    "src/openpi/datasets/libero/replay_teacher.py": "cdb0452f85ea039e3cf79380c5eef7cd1560f9858e35980f99e975b62f991b7c",
+    "src/openpi/datasets/libero/reader.py": "fe34c5a769f7d4c85d40e3a84ade0333984e8945e02b062db33253a3888edbf5"
+  },
+  "collector_sha256": "31a827864ed8ec67f356de51281c7be0bb3525a5ccc797a2d23aaea95a1dac92",
+  "offline": [
+    {
+      "directory": "calibration_b",
+      "status": "complete",
+      "run_sha256": "92d1e8149640cdde5ce25f25f9faadfa95af1bf0506880f8b65730650a494ce0",
+      "fingerprint": "a11b8beb52a1cb98cff2c88a8e45f1bc8550138dbe705e6b4352043634ece13e",
+      "episodes": [
+        {
+          "episode_index": 6000,
+          "task": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate_demo",
+          "artifact_sha256": "f4be02b8c2f64d8a1caf38a47b1906414c99df4df70a36d2e4780684b94e778e",
+          "summary": {
+            "evaluated_candidates": 41,
+            "accepted_candidates": 16,
+            "complete_offline_sequence": false,
+            "failure_counts": {
+              "position_rms": 23,
+              "rotation_rms": 6,
+              "nominal_arrival_timeout": 12
+            },
+            "wall_seconds_this_invocation": 74.62172533500416,
+            "total_fitting_wall_seconds": 74.35840456403093,
+            "speed_only_impossible_candidates": 0
+          },
+          "best_sequence_fields": null,
+          "best_sequence_teacher_kinds": {}
+        }
+      ],
+      "config": {
+        "field": {
+          "length_scale": 0.1,
+          "covariance_floor": 1e-06,
+          "stability_margin": 0.01,
+          "max_condition": 1000000.0,
+          "max_matrix_norm": 20.0,
+          "restarts": 3,
+          "max_iterations": 300,
+          "seed": 20261122
+        },
+        "control": {
+          "dt": 0.05,
+          "max_speed": 0.3,
+          "max_angular_speed": 0.5,
+          "rotation_gain": 2.0,
+          "position_tolerance": 0.005,
+          "rotation_tolerance": 0.08726646259971647,
+          "speed_tolerance": 0.02,
+          "angular_speed_tolerance": 0.1,
+          "arrival_seconds": 0.1,
+          "extra_convergence_seconds": 2.0,
+          "position_rms_tolerance": 0.01,
+          "rotation_rms_tolerance": 0.08726646259971647,
+          "hold_position_range": 0.002,
+          "hold_rotation_range": 0.03490658503988659
+        },
+        "selection": {
+          "initial_candidates": 128,
+          "expanded_candidates": 256,
+          "field_penalty": 0.1,
+          "max_sequences": 3,
+          "grid_seconds": 0.5,
+          "minimum_seconds": 0.5
+        },
+        "representation": null,
+        "reference_mode": null,
+        "teacher_source": null
+      }
+    },
+    {
+      "directory": "calibration_b_v2",
+      "status": "complete",
+      "run_sha256": "d3ca3cb3da8a98572e210776998a39da7a56eba177c3e38fb79437f9c6877578",
+      "fingerprint": "32beeabd71c06f309d074fb1d2e6838ed1a0304b0e2215caada689c60aec03ab",
+      "episodes": [
+        {
+          "episode_index": 6000,
+          "task": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate_demo",
+          "artifact_sha256": "eab31badd91f80a5d32b38e4b3c1a4456e10f2cb6df172110fa7eb0873f68ec3",
+          "summary": {
+            "evaluated_candidates": 41,
+            "accepted_candidates": 16,
+            "complete_offline_sequence": false,
+            "failure_counts": {
+              "position_rms": 23,
+              "rotation_rms": 6,
+              "nominal_arrival_timeout": 12
+            },
+            "wall_seconds_this_invocation": 2.1104702669981634,
+            "total_fitting_wall_seconds": 74.35840456403093,
+            "speed_only_impossible_candidates": 0
+          },
+          "best_sequence_fields": null,
+          "best_sequence_teacher_kinds": {}
+        }
+      ],
+      "config": {
+        "field": {
+          "length_scale": 0.1,
+          "covariance_floor": 1e-06,
+          "stability_margin": 0.01,
+          "max_condition": 1000000.0,
+          "max_matrix_norm": 20.0,
+          "restarts": 3,
+          "max_iterations": 300,
+          "seed": 20261122
+        },
+        "control": {
+          "dt": 0.05,
+          "max_speed": 0.1,
+          "max_angular_speed": 0.5,
+          "rotation_gain": 2.0,
+          "position_tolerance": 0.005,
+          "rotation_tolerance": 0.08726646259971647,
+          "speed_tolerance": 0.02,
+          "angular_speed_tolerance": 0.1,
+          "arrival_seconds": 0.1,
+          "extra_convergence_seconds": 2.0,
+          "position_rms_tolerance": 0.01,
+          "rotation_rms_tolerance": 0.08726646259971647,
+          "hold_position_range": 0.002,
+          "hold_rotation_range": 0.03490658503988659
+        },
+        "selection": {
+          "initial_candidates": 128,
+          "expanded_candidates": 256,
+          "field_penalty": 0.1,
+          "max_sequences": 3,
+          "grid_seconds": 0.5,
+          "minimum_seconds": 0.5
+        },
+        "representation": null,
+        "reference_mode": null,
+        "teacher_source": null
+      }
+    },
+    {
+      "directory": "linear_compensated_6000",
+      "status": "complete",
+      "run_sha256": "3ac7e83934dae29903fc173a01c058f4a24ac663024efd54df7e6419a5be6b08",
+      "fingerprint": "4f45238b2ba42d1c61e5968a17567db84eeb817fb874990ca26c0b979a215fe2",
+      "episodes": [
+        {
+          "episode_index": 6000,
+          "task": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate_demo",
+          "artifact_sha256": "babde4ecd14accdc2630a215ceb90acb9e8132c68de84e147223261b52626577",
+          "summary": {
+            "evaluated_candidates": 128,
+            "accepted_candidates": 66,
+            "complete_offline_sequence": true,
+            "failure_counts": {
+              "position_rms": 62,
+              "nominal_arrival_timeout": 10,
+              "rotation_rms": 1
+            },
+            "wall_seconds_this_invocation": 138.09383905600407,
+            "total_fitting_wall_seconds": 136.0542980619939,
+            "speed_only_impossible_candidates": 0
+          },
+          "best_sequence_fields": 17,
+          "best_sequence_teacher_kinds": {
+            "linear_baseline": 17
+          }
+        }
+      ],
+      "config": {
+        "field": {
+          "length_scale": 0.1,
+          "covariance_floor": 1e-06,
+          "stability_margin": 0.01,
+          "max_condition": 1000000.0,
+          "max_matrix_norm": 20.0,
+          "restarts": 3,
+          "max_iterations": 300,
+          "seed": 20261122
+        },
+        "control": {
+          "dt": 0.05,
+          "reference_seconds": 0.16329931618554522,
+          "max_speed": 0.3,
+          "max_angular_speed": 0.5,
+          "rotation_gain": 2.0,
+          "position_tolerance": 0.005,
+          "rotation_tolerance": 0.08726646259971647,
+          "speed_tolerance": 0.02,
+          "angular_speed_tolerance": 0.1,
+          "arrival_seconds": 0.1,
+          "extra_convergence_seconds": 2.0,
+          "position_rms_tolerance": 0.01,
+          "rotation_rms_tolerance": 0.08726646259971647,
+          "hold_position_range": 0.002,
+          "hold_rotation_range": 0.03490658503988659
+        },
+        "selection": {
+          "initial_candidates": 128,
+          "expanded_candidates": 256,
+          "field_penalty": 0.1,
+          "max_sequences": 3,
+          "grid_seconds": 0.25,
+          "minimum_seconds": 0.25
+        },
+        "representation": "linear",
+        "reference_mode": "damping-compensated",
+        "teacher_source": null
+      }
+    },
+    {
+      "directory": "pilot_a",
+      "status": "complete",
+      "run_sha256": "d6cc28e534b4600d1b9493e388ef0b48c3f831cb24efead36dcdfe3034dae50f",
+      "fingerprint": "ec9a50406bc5866c6cec57205e405829fc94913aaef8d3b9d477f20565fbbf89",
+      "episodes": [
+        {
+          "episode_index": 6000,
+          "task": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate_demo",
+          "artifact_sha256": "79a2a3e58a74f5401adac961bd2602cf22789b198c32bf777d4aa12f9ac68711",
+          "summary": {
+            "evaluated_candidates": 41,
+            "accepted_candidates": 0,
+            "complete_offline_sequence": false,
+            "failure_counts": {
+              "optimizer_or_constraints": 41
+            },
+            "wall_seconds_this_invocation": 74.27791059299489,
+            "total_fitting_wall_seconds": 74.22987431407091
+          },
+          "best_sequence_fields": null,
+          "best_sequence_teacher_kinds": {}
+        }
+      ],
+      "config": {
+        "field": {
+          "length_scale": 0.1,
+          "covariance_floor": 1e-06,
+          "stability_margin": 0.01,
+          "max_condition": 1000000.0,
+          "max_matrix_norm": 20.0,
+          "restarts": 3,
+          "max_iterations": 300,
+          "seed": 20261122
+        },
+        "control": {
+          "dt": 0.05,
+          "max_speed": 0.1,
+          "max_angular_speed": 0.5,
+          "rotation_gain": 2.0,
+          "position_tolerance": 0.005,
+          "rotation_tolerance": 0.08726646259971647,
+          "speed_tolerance": 0.02,
+          "angular_speed_tolerance": 0.1,
+          "arrival_seconds": 0.1,
+          "extra_convergence_seconds": 2.0,
+          "position_rms_tolerance": 0.01,
+          "rotation_rms_tolerance": 0.08726646259971647,
+          "hold_position_range": 0.002,
+          "hold_rotation_range": 0.03490658503988659
+        },
+        "selection": {
+          "initial_candidates": 128,
+          "expanded_candidates": 256,
+          "field_penalty": 0.1,
+          "max_sequences": 3,
+          "grid_seconds": 0.5,
+          "minimum_seconds": 0.5
+        },
+        "representation": null,
+        "reference_mode": null,
+        "teacher_source": null
+      }
+    },
+    {
+      "directory": "pilot_b",
+      "status": "complete",
+      "run_sha256": "eb63a09005432ed7bdb2c907e6762b85789b00d2bd83524c64a06c926a03ca02",
+      "fingerprint": "a18f6e8638afe0f28c692fdc65939bd72344574e90960e45c57bc0c529048118",
+      "episodes": [
+        {
+          "episode_index": 6000,
+          "task": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate_demo",
+          "artifact_sha256": "4dda65491a785dadc330233ff9785cfe5691d4e9b1dfcc318fa9e86d33c3439b",
+          "summary": {
+            "evaluated_candidates": 41,
+            "accepted_candidates": 2,
+            "complete_offline_sequence": false,
+            "failure_counts": {
+              "position_rms": 39,
+              "nominal_arrival_timeout": 18,
+              "rotation_rms": 6
+            },
+            "wall_seconds_this_invocation": 74.62172533500416,
+            "total_fitting_wall_seconds": 74.35840456403093
+          },
+          "best_sequence_fields": null,
+          "best_sequence_teacher_kinds": {}
+        }
+      ],
+      "config": {
+        "field": {
+          "length_scale": 0.1,
+          "covariance_floor": 1e-06,
+          "stability_margin": 0.01,
+          "max_condition": 1000000.0,
+          "max_matrix_norm": 20.0,
+          "restarts": 3,
+          "max_iterations": 300,
+          "seed": 20261122
+        },
+        "control": {
+          "dt": 0.05,
+          "max_speed": 0.1,
+          "max_angular_speed": 0.5,
+          "rotation_gain": 2.0,
+          "position_tolerance": 0.005,
+          "rotation_tolerance": 0.08726646259971647,
+          "speed_tolerance": 0.02,
+          "angular_speed_tolerance": 0.1,
+          "arrival_seconds": 0.1,
+          "extra_convergence_seconds": 2.0,
+          "position_rms_tolerance": 0.01,
+          "rotation_rms_tolerance": 0.08726646259971647,
+          "hold_position_range": 0.002,
+          "hold_rotation_range": 0.03490658503988659
+        },
+        "selection": {
+          "initial_candidates": 128,
+          "expanded_candidates": 256,
+          "field_penalty": 0.1,
+          "max_sequences": 3,
+          "grid_seconds": 0.5,
+          "minimum_seconds": 0.5
+        },
+        "representation": null,
+        "reference_mode": null,
+        "teacher_source": null
+      }
+    },
+    {
+      "directory": "pilot_c",
+      "status": "complete",
+      "run_sha256": "14c212b359444f23b240ba4fb5484f5810025a385066b3b167983f96c3391028",
+      "fingerprint": "e648cfc2fc29e8a7c577b91af9fabb2aa620831e2bda0f307d6cc2e07e3df460",
+      "episodes": [
+        {
+          "episode_index": 6000,
+          "task": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate_demo",
+          "artifact_sha256": "7454bff6a0569d31ee13768eb5d4d52ed7b70cec787d99406e9eec0022a329fa",
+          "summary": {
+            "evaluated_candidates": 128,
+            "accepted_candidates": 90,
+            "complete_offline_sequence": true,
+            "failure_counts": {
+              "position_rms": 31,
+              "rotation_rms": 1,
+              "nominal_arrival_timeout": 21
+            },
+            "wall_seconds_this_invocation": 138.09383905600407,
+            "total_fitting_wall_seconds": 136.0542980619939
+          },
+          "best_sequence_fields": 10,
+          "best_sequence_teacher_kinds": {
+            "short_linear": 2,
+            "seds": 8
+          }
+        }
+      ],
+      "config": {
+        "field": {
+          "length_scale": 0.1,
+          "covariance_floor": 1e-06,
+          "stability_margin": 0.01,
+          "max_condition": 1000000.0,
+          "max_matrix_norm": 20.0,
+          "restarts": 3,
+          "max_iterations": 300,
+          "seed": 20261122
+        },
+        "control": {
+          "dt": 0.05,
+          "max_speed": 0.3,
+          "max_angular_speed": 0.5,
+          "rotation_gain": 2.0,
+          "position_tolerance": 0.005,
+          "rotation_tolerance": 0.08726646259971647,
+          "speed_tolerance": 0.02,
+          "angular_speed_tolerance": 0.1,
+          "arrival_seconds": 0.1,
+          "extra_convergence_seconds": 2.0,
+          "position_rms_tolerance": 0.01,
+          "rotation_rms_tolerance": 0.08726646259971647,
+          "hold_position_range": 0.002,
+          "hold_rotation_range": 0.03490658503988659
+        },
+        "selection": {
+          "initial_candidates": 128,
+          "expanded_candidates": 256,
+          "field_penalty": 0.1,
+          "max_sequences": 3,
+          "grid_seconds": 0.25,
+          "minimum_seconds": 0.25
+        },
+        "representation": null,
+        "reference_mode": null,
+        "teacher_source": null
+      }
+    },
+    {
+      "directory": "reference_compensation_6000",
+      "status": "complete",
+      "run_sha256": "73aff70a1a3a026fc726f9d9ced4da295f63d30367b47f4bc85af24cf1e30369",
+      "fingerprint": "931366acc47301f743fec4fd3b3fbd81555862b62ce6404b131f6f13066a1b92",
+      "episodes": [
+        {
+          "episode_index": 6000,
+          "task": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate_demo",
+          "artifact_sha256": "dd9106de069ce8363638ab8628bf4f48be287785843858cffa2071432ae5a93e",
+          "summary": {
+            "evaluated_candidates": 128,
+            "accepted_candidates": 87,
+            "complete_offline_sequence": true,
+            "failure_counts": {
+              "position_rms": 33,
+              "rotation_rms": 1,
+              "nominal_arrival_timeout": 27
+            },
+            "wall_seconds_this_invocation": 138.09383905600407,
+            "total_fitting_wall_seconds": 136.0542980619939,
+            "speed_only_impossible_candidates": 0
+          },
+          "best_sequence_fields": 10,
+          "best_sequence_teacher_kinds": {
+            "short_linear": 4,
+            "seds": 6
+          }
+        }
+      ],
+      "config": {
+        "field": {
+          "length_scale": 0.1,
+          "covariance_floor": 1e-06,
+          "stability_margin": 0.01,
+          "max_condition": 1000000.0,
+          "max_matrix_norm": 20.0,
+          "restarts": 3,
+          "max_iterations": 300,
+          "seed": 20261122
+        },
+        "control": {
+          "dt": 0.05,
+          "reference_seconds": 0.16329931618554522,
+          "max_speed": 0.3,
+          "max_angular_speed": 0.5,
+          "rotation_gain": 2.0,
+          "position_tolerance": 0.005,
+          "rotation_tolerance": 0.08726646259971647,
+          "speed_tolerance": 0.02,
+          "angular_speed_tolerance": 0.1,
+          "arrival_seconds": 0.1,
+          "extra_convergence_seconds": 2.0,
+          "position_rms_tolerance": 0.01,
+          "rotation_rms_tolerance": 0.08726646259971647,
+          "hold_position_range": 0.002,
+          "hold_rotation_range": 0.03490658503988659
+        },
+        "selection": {
+          "initial_candidates": 128,
+          "expanded_candidates": 256,
+          "field_penalty": 0.1,
+          "max_sequences": 3,
+          "grid_seconds": 0.25,
+          "minimum_seconds": 0.25
+        },
+        "representation": null,
+        "reference_mode": null,
+        "teacher_source": null
+      }
+    },
+    {
+      "directory": "replay_calibration_200",
+      "status": "complete",
+      "run_sha256": "dee79b34e744dab6c0782bd1a28687b037be4d10f4b710fc8550b7674509c27d",
+      "fingerprint": "2776d24f2dc1a47a39292f88a6fce213240ab0adc0ec55e506c880a7abf22844",
+      "episodes": [
+        {
+          "episode_index": 200,
+          "task": "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket_demo",
+          "artifact_sha256": "252d8647efc58b2170c9739bbd9fe5fcbfc92653adebb80cb4bbcc263d63c33d",
+          "summary": {
+            "evaluated_candidates": 128,
+            "accepted_candidates": 103,
+            "complete_offline_sequence": true,
+            "failure_counts": {
+              "position_rms": 25,
+              "nominal_arrival_timeout": 5,
+              "rotation_rms": 1
+            },
+            "wall_seconds_this_invocation": 5.703893698009779,
+            "total_fitting_wall_seconds": 5.893309121020138,
+            "speed_only_impossible_candidates": 0
+          },
+          "best_sequence_fields": 39,
+          "best_sequence_teacher_kinds": {
+            "linear_baseline": 39
+          }
+        }
+      ],
+      "config": {
+        "field": {
+          "length_scale": 0.1,
+          "covariance_floor": 1e-06,
+          "stability_margin": 0.01,
+          "max_condition": 1000000.0,
+          "max_matrix_norm": 20.0,
+          "restarts": 3,
+          "max_iterations": 300,
+          "seed": 20261122
+        },
+        "control": {
+          "dt": 0.05,
+          "reference_seconds": 0.16329931618554522,
+          "max_speed": 0.3,
+          "max_angular_speed": 0.5,
+          "rotation_gain": 2.0,
+          "position_tolerance": 0.002,
+          "rotation_tolerance": 0.08726646259971647,
+          "speed_tolerance": 0.02,
+          "angular_speed_tolerance": 0.1,
+          "arrival_seconds": 0.1,
+          "extra_convergence_seconds": 2.0,
+          "position_rms_tolerance": 0.01,
+          "rotation_rms_tolerance": 0.08726646259971647,
+          "hold_position_range": 0.002,
+          "hold_rotation_range": 0.03490658503988659
+        },
+        "selection": {
+          "initial_candidates": 128,
+          "expanded_candidates": 256,
+          "field_penalty": 0.1,
+          "max_sequences": 3,
+          "grid_seconds": 0.25,
+          "minimum_seconds": 0.25
+        },
+        "representation": "linear",
+        "reference_mode": "damping-compensated",
+        "teacher_source": {
+          "kind": "successful_source_action_replay",
+          "file": "teacher_trajectory.npz",
+          "sha256": "146ea533536f019f457dd285a7dc7f2e40c97cbe046369652edae8bfd497ccfd",
+          "source_signature": "82451e0509cd9da86fd825652c3fe697bd4728d7c97179b9be5556e1393339ee",
+          "request_sha256": "9e867d027eef5b66d1d33c84efb48be345f67a9110f7cb27b77626aab228e7c9",
+          "result_sha256": "f7466e0a09262a2b773ad315bfc9475534d76a175efe3634212eeca13cf88336",
+          "trajectory_sha256": "1ee974426ff8c5be8cf3f14a0e6d3c6e1dfe1917d94fc5a16d6dd83f289fbee6",
+          "initial_pose_basis": "source FK pose; full-environment worker verifies initial position and frame transform",
+          "position_difference_rms_metres": 0.004353423753910824,
+          "position_difference_maximum_metres": 0.006029790794265962,
+          "training_ready": false
+        }
+      }
+    },
+    {
+      "directory": "replay_linear_200",
+      "status": "complete",
+      "run_sha256": "c36baf10869ce79066b3935579a2eb2058f3ceeae8e8bbc0c437a4fc6aa976a2",
+      "fingerprint": "52a6c58a4ea01d6ff48a2dc3ce08cdda66d81dee3338a3f2f7ef846b8691fd20",
+      "episodes": [
+        {
+          "episode_index": 200,
+          "task": "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket_demo",
+          "artifact_sha256": "1b4cb92e3871bfcf50c4a98f4ace9f6405b735db4804ae7929d8af61dba55351",
+          "summary": {
+            "evaluated_candidates": 128,
+            "accepted_candidates": 103,
+            "complete_offline_sequence": true,
+            "failure_counts": {
+              "position_rms": 25,
+              "nominal_arrival_timeout": 4,
+              "rotation_rms": 1
+            },
+            "wall_seconds_this_invocation": 7.933814673000597,
+            "total_fitting_wall_seconds": 5.893309121020138
+          },
+          "best_sequence_fields": 39,
+          "best_sequence_teacher_kinds": {
+            "linear_baseline": 39
+          }
+        }
+      ],
+      "config": {
+        "field": {
+          "length_scale": 0.1,
+          "covariance_floor": 1e-06,
+          "stability_margin": 0.01,
+          "max_condition": 1000000.0,
+          "max_matrix_norm": 20.0,
+          "restarts": 3,
+          "max_iterations": 300,
+          "seed": 20261122
+        },
+        "control": {
+          "dt": 0.05,
+          "reference_seconds": 0.05,
+          "max_speed": 0.3,
+          "max_angular_speed": 0.5,
+          "rotation_gain": 2.0,
+          "position_tolerance": 0.005,
+          "rotation_tolerance": 0.08726646259971647,
+          "speed_tolerance": 0.02,
+          "angular_speed_tolerance": 0.1,
+          "arrival_seconds": 0.1,
+          "extra_convergence_seconds": 2.0,
+          "position_rms_tolerance": 0.01,
+          "rotation_rms_tolerance": 0.08726646259971647,
+          "hold_position_range": 0.002,
+          "hold_rotation_range": 0.03490658503988659
+        },
+        "selection": {
+          "initial_candidates": 128,
+          "expanded_candidates": 256,
+          "field_penalty": 0.1,
+          "max_sequences": 3,
+          "grid_seconds": 0.25,
+          "minimum_seconds": 0.25
+        },
+        "representation": "linear",
+        "reference_mode": null,
+        "teacher_source": {
+          "kind": "successful_source_action_replay",
+          "file": "teacher_trajectory.npz",
+          "sha256": "146ea533536f019f457dd285a7dc7f2e40c97cbe046369652edae8bfd497ccfd",
+          "source_signature": "82451e0509cd9da86fd825652c3fe697bd4728d7c97179b9be5556e1393339ee",
+          "request_sha256": "9e867d027eef5b66d1d33c84efb48be345f67a9110f7cb27b77626aab228e7c9",
+          "result_sha256": "f7466e0a09262a2b773ad315bfc9475534d76a175efe3634212eeca13cf88336",
+          "trajectory_sha256": "1ee974426ff8c5be8cf3f14a0e6d3c6e1dfe1917d94fc5a16d6dd83f289fbee6",
+          "initial_pose_basis": "source FK pose; full-environment worker verifies initial position and frame transform",
+          "position_difference_rms_metres": 0.004353423753910824,
+          "position_difference_maximum_metres": 0.006029790794265962,
+          "training_ready": false
+        }
+      }
+    },
+    {
+      "directory": "replay_linear_compensated_200",
+      "status": "complete",
+      "run_sha256": "0f36e2209f1004bdf119aa6bdee950e729ccc0c7d6dfdd2fb4f5692ebb9b8828",
+      "fingerprint": "ebc18db13cfeb866224440ab7b69cc43322fa40a6c75fb8ee86fcf65948fb430",
+      "episodes": [
+        {
+          "episode_index": 200,
+          "task": "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket_demo",
+          "artifact_sha256": "222f0b913e80956f2de5a42c220df374f198ce97df503b49ed3b09d236b07c66",
+          "summary": {
+            "evaluated_candidates": 128,
+            "accepted_candidates": 103,
+            "complete_offline_sequence": true,
+            "failure_counts": {
+              "position_rms": 25,
+              "nominal_arrival_timeout": 4,
+              "rotation_rms": 1
+            },
+            "wall_seconds_this_invocation": 5.827093806990888,
+            "total_fitting_wall_seconds": 5.893309121020138,
+            "speed_only_impossible_candidates": 0
+          },
+          "best_sequence_fields": 39,
+          "best_sequence_teacher_kinds": {
+            "linear_baseline": 39
+          }
+        }
+      ],
+      "config": {
+        "field": {
+          "length_scale": 0.1,
+          "covariance_floor": 1e-06,
+          "stability_margin": 0.01,
+          "max_condition": 1000000.0,
+          "max_matrix_norm": 20.0,
+          "restarts": 3,
+          "max_iterations": 300,
+          "seed": 20261122
+        },
+        "control": {
+          "dt": 0.05,
+          "reference_seconds": 0.16329931618554522,
+          "max_speed": 0.3,
+          "max_angular_speed": 0.5,
+          "rotation_gain": 2.0,
+          "position_tolerance": 0.005,
+          "rotation_tolerance": 0.08726646259971647,
+          "speed_tolerance": 0.02,
+          "angular_speed_tolerance": 0.1,
+          "arrival_seconds": 0.1,
+          "extra_convergence_seconds": 2.0,
+          "position_rms_tolerance": 0.01,
+          "rotation_rms_tolerance": 0.08726646259971647,
+          "hold_position_range": 0.002,
+          "hold_rotation_range": 0.03490658503988659
+        },
+        "selection": {
+          "initial_candidates": 128,
+          "expanded_candidates": 256,
+          "field_penalty": 0.1,
+          "max_sequences": 3,
+          "grid_seconds": 0.25,
+          "minimum_seconds": 0.25
+        },
+        "representation": "linear",
+        "reference_mode": "damping-compensated",
+        "teacher_source": {
+          "kind": "successful_source_action_replay",
+          "file": "teacher_trajectory.npz",
+          "sha256": "146ea533536f019f457dd285a7dc7f2e40c97cbe046369652edae8bfd497ccfd",
+          "source_signature": "82451e0509cd9da86fd825652c3fe697bd4728d7c97179b9be5556e1393339ee",
+          "request_sha256": "9e867d027eef5b66d1d33c84efb48be345f67a9110f7cb27b77626aab228e7c9",
+          "result_sha256": "f7466e0a09262a2b773ad315bfc9475534d76a175efe3634212eeca13cf88336",
+          "trajectory_sha256": "1ee974426ff8c5be8cf3f14a0e6d3c6e1dfe1917d94fc5a16d6dd83f289fbee6",
+          "initial_pose_basis": "source FK pose; full-environment worker verifies initial position and frame transform",
+          "position_difference_rms_metres": 0.004353423753910824,
+          "position_difference_maximum_metres": 0.006029790794265962,
+          "training_ready": false
+        }
+      }
+    },
+    {
+      "directory": "replay_linear_tight_200",
+      "status": "complete",
+      "run_sha256": "1cc3bb118e188f09d09efe1058f2471bb3d4c635a05516533bb03f36b9b1a4c0",
+      "fingerprint": "74ad01a904ae14fe5c7d3c334381dc70c1f7e4cca97fa495632e2998f0dd7395",
+      "episodes": [
+        {
+          "episode_index": 200,
+          "task": "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket_demo",
+          "artifact_sha256": "4a90dd5ddeb66008bff6bc0b5beedb2101cb93b7a05e37577a176b07d6e1be49",
+          "summary": {
+            "evaluated_candidates": 128,
+            "accepted_candidates": 103,
+            "complete_offline_sequence": true,
+            "failure_counts": {
+              "position_rms": 25,
+              "nominal_arrival_timeout": 5,
+              "rotation_rms": 1
+            },
+            "wall_seconds_this_invocation": 5.414363956995658,
+            "total_fitting_wall_seconds": 5.893309121020138,
+            "speed_only_impossible_candidates": 0
+          },
+          "best_sequence_fields": 39,
+          "best_sequence_teacher_kinds": {
+            "linear_baseline": 39
+          }
+        }
+      ],
+      "config": {
+        "field": {
+          "length_scale": 0.1,
+          "covariance_floor": 1e-06,
+          "stability_margin": 0.01,
+          "max_condition": 1000000.0,
+          "max_matrix_norm": 20.0,
+          "restarts": 3,
+          "max_iterations": 300,
+          "seed": 20261122
+        },
+        "control": {
+          "dt": 0.05,
+          "reference_seconds": 0.16329931618554522,
+          "max_speed": 0.3,
+          "max_angular_speed": 0.5,
+          "rotation_gain": 2.0,
+          "position_tolerance": 0.002,
+          "rotation_tolerance": 0.08726646259971647,
+          "speed_tolerance": 0.02,
+          "angular_speed_tolerance": 0.1,
+          "arrival_seconds": 0.1,
+          "extra_convergence_seconds": 2.0,
+          "position_rms_tolerance": 0.01,
+          "rotation_rms_tolerance": 0.08726646259971647,
+          "hold_position_range": 0.002,
+          "hold_rotation_range": 0.03490658503988659
+        },
+        "selection": {
+          "initial_candidates": 128,
+          "expanded_candidates": 256,
+          "field_penalty": 0.1,
+          "max_sequences": 3,
+          "grid_seconds": 0.25,
+          "minimum_seconds": 0.25
+        },
+        "representation": "linear",
+        "reference_mode": "damping-compensated",
+        "teacher_source": {
+          "kind": "successful_source_action_replay",
+          "file": "teacher_trajectory.npz",
+          "sha256": "146ea533536f019f457dd285a7dc7f2e40c97cbe046369652edae8bfd497ccfd",
+          "source_signature": "82451e0509cd9da86fd825652c3fe697bd4728d7c97179b9be5556e1393339ee",
+          "request_sha256": "9e867d027eef5b66d1d33c84efb48be345f67a9110f7cb27b77626aab228e7c9",
+          "result_sha256": "f7466e0a09262a2b773ad315bfc9475534d76a175efe3634212eeca13cf88336",
+          "trajectory_sha256": "1ee974426ff8c5be8cf3f14a0e6d3c6e1dfe1917d94fc5a16d6dd83f289fbee6",
+          "initial_pose_basis": "source FK pose; full-environment worker verifies initial position and frame transform",
+          "position_difference_rms_metres": 0.004353423753910824,
+          "position_difference_maximum_metres": 0.006029790794265962,
+          "training_ready": false
+        }
+      }
+    },
+    {
+      "directory": "single_linear_compensated",
+      "status": "complete",
+      "run_sha256": "cf5a3d6bffe5cdab7c82a96455e7acff371e7789a1ead53c907d292780ffe81d",
+      "fingerprint": "0b08470a25a1bead732b2359e4902a6d7bccdbc191f085ab91401c9176198831",
+      "episodes": [
+        {
+          "episode_index": 5800,
+          "task": "pick_up_the_milk_and_place_it_in_the_basket_demo",
+          "artifact_sha256": "d3a957bbe2f1fd0cdd901859521c7f9d573f85dd634a95776c14ea066c15b7b8",
+          "summary": {
+            "evaluated_candidates": 128,
+            "accepted_candidates": 73,
+            "complete_offline_sequence": true,
+            "failure_counts": {
+              "position_rms": 55,
+              "rotation_rms": 2,
+              "nominal_arrival_timeout": 4
+            },
+            "wall_seconds_this_invocation": 5.8746230590040796,
+            "total_fitting_wall_seconds": 139.02065594196029,
+            "speed_only_impossible_candidates": 0
+          },
+          "best_sequence_fields": 18,
+          "best_sequence_teacher_kinds": {
+            "linear_baseline": 18
+          }
+        },
+        {
+          "episode_index": 6050,
+          "task": "pick_up_the_black_bowl_from_table_center_and_place_it_on_the_plate_demo",
+          "artifact_sha256": "7a7f6c94e7fcdb9f6e1b0d45afccd31b0bfcd5cbc9bb03a782da7cc4af1fa6fd",
+          "summary": {
+            "evaluated_candidates": 128,
+            "accepted_candidates": 77,
+            "complete_offline_sequence": true,
+            "failure_counts": {
+              "position_rms": 51,
+              "nominal_arrival_timeout": 7,
+              "rotation_rms": 1
+            },
+            "wall_seconds_this_invocation": 5.778644058998907,
+            "total_fitting_wall_seconds": 130.59541540309147,
+            "speed_only_impossible_candidates": 0
+          },
+          "best_sequence_fields": 14,
+          "best_sequence_teacher_kinds": {
+            "linear_baseline": 14
+          }
+        }
+      ],
+      "config": {
+        "field": {
+          "length_scale": 0.1,
+          "covariance_floor": 1e-06,
+          "stability_margin": 0.01,
+          "max_condition": 1000000.0,
+          "max_matrix_norm": 20.0,
+          "restarts": 3,
+          "max_iterations": 300,
+          "seed": 20261122
+        },
+        "control": {
+          "dt": 0.05,
+          "reference_seconds": 0.16329931618554522,
+          "max_speed": 0.3,
+          "max_angular_speed": 0.5,
+          "rotation_gain": 2.0,
+          "position_tolerance": 0.005,
+          "rotation_tolerance": 0.08726646259971647,
+          "speed_tolerance": 0.02,
+          "angular_speed_tolerance": 0.1,
+          "arrival_seconds": 0.1,
+          "extra_convergence_seconds": 2.0,
+          "position_rms_tolerance": 0.01,
+          "rotation_rms_tolerance": 0.08726646259971647,
+          "hold_position_range": 0.002,
+          "hold_rotation_range": 0.03490658503988659
+        },
+        "selection": {
+          "initial_candidates": 128,
+          "expanded_candidates": 256,
+          "field_penalty": 0.1,
+          "max_sequences": 3,
+          "grid_seconds": 0.25,
+          "minimum_seconds": 0.25
+        },
+        "representation": "linear",
+        "reference_mode": "damping-compensated",
+        "teacher_source": null
+      }
+    },
+    {
+      "directory": "single_object_v1",
+      "status": "complete",
+      "run_sha256": "6b184d5f45649f7a5593ec3b719f657fe466cf7599628b188a8a03a5908862fe",
+      "fingerprint": "fd2fa97dd2e2e6e5b2bc63d86b9b36d894f1df41c4ddf7e2155d880f8ed5c267",
+      "episodes": [
+        {
+          "episode_index": 5800,
+          "task": "pick_up_the_milk_and_place_it_in_the_basket_demo",
+          "artifact_sha256": "b2e80c72c519eaa3a39b9e537ae82058532670923896d722062ccb1e48b49902",
+          "summary": {
+            "evaluated_candidates": 128,
+            "accepted_candidates": 105,
+            "complete_offline_sequence": true,
+            "failure_counts": {
+              "position_rms": 20,
+              "rotation_rms": 2,
+              "nominal_arrival_timeout": 11,
+              "optimizer_or_constraints": 2
+            },
+            "wall_seconds_this_invocation": 141.08102454400796,
+            "total_fitting_wall_seconds": 139.02065594196029
+          },
+          "best_sequence_fields": 12,
+          "best_sequence_teacher_kinds": {
+            "seds": 11,
+            "short_linear": 1
+          }
+        },
+        {
+          "episode_index": 6050,
+          "task": "pick_up_the_black_bowl_from_table_center_and_place_it_on_the_plate_demo",
+          "artifact_sha256": "6f371d772f0d3da8fb07a7cfca4aaf502ddfa7c300677e3409f134ef8d50a84e",
+          "summary": {
+            "evaluated_candidates": 128,
+            "accepted_candidates": 101,
+            "complete_offline_sequence": true,
+            "failure_counts": {
+              "position_rms": 21,
+              "rotation_rms": 1,
+              "nominal_arrival_timeout": 15,
+              "optimizer_or_constraints": 1
+            },
+            "wall_seconds_this_invocation": 132.62533921799331,
+            "total_fitting_wall_seconds": 130.59541540309147
+          },
+          "best_sequence_fields": 9,
+          "best_sequence_teacher_kinds": {
+            "short_linear": 2,
+            "seds": 7
+          }
+        }
+      ],
+      "config": {
+        "field": {
+          "length_scale": 0.1,
+          "covariance_floor": 1e-06,
+          "stability_margin": 0.01,
+          "max_condition": 1000000.0,
+          "max_matrix_norm": 20.0,
+          "restarts": 3,
+          "max_iterations": 300,
+          "seed": 20261122
+        },
+        "control": {
+          "dt": 0.05,
+          "max_speed": 0.3,
+          "max_angular_speed": 0.5,
+          "rotation_gain": 2.0,
+          "position_tolerance": 0.005,
+          "rotation_tolerance": 0.08726646259971647,
+          "speed_tolerance": 0.02,
+          "angular_speed_tolerance": 0.1,
+          "arrival_seconds": 0.1,
+          "extra_convergence_seconds": 2.0,
+          "position_rms_tolerance": 0.01,
+          "rotation_rms_tolerance": 0.08726646259971647,
+          "hold_position_range": 0.002,
+          "hold_rotation_range": 0.03490658503988659
+        },
+        "selection": {
+          "initial_candidates": 128,
+          "expanded_candidates": 256,
+          "field_penalty": 0.1,
+          "max_sequences": 3,
+          "grid_seconds": 0.25,
+          "minimum_seconds": 0.25
+        },
+        "representation": null,
+        "reference_mode": null,
+        "teacher_source": null
+      }
+    },
+    {
+      "directory": "strong_margin_6000",
+      "status": "complete",
+      "run_sha256": "ad9033d227d9736cb1240fe3a44f18c594174e5a2522fe91b2578be93377fc2f",
+      "fingerprint": "fbdc17705b6f22b98d2c51a2dcd6b59ed1ca64384662ad502600475e53b4667b",
+      "episodes": [
+        {
+          "episode_index": 6000,
+          "task": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate_demo",
+          "artifact_sha256": "153cf1cd6bed7e0d883ec5818bbba22972d674878b5c9edd4315c3354f343c7f",
+          "summary": {
+            "evaluated_candidates": 128,
+            "accepted_candidates": 101,
+            "complete_offline_sequence": true,
+            "failure_counts": {
+              "position_rms": 27,
+              "rotation_rms": 1,
+              "nominal_arrival_timeout": 6
+            },
+            "wall_seconds_this_invocation": 140.14860164899437,
+            "total_fitting_wall_seconds": 138.10476028699486
+          },
+          "best_sequence_fields": 9,
+          "best_sequence_teacher_kinds": {
+            "short_linear": 2,
+            "seds": 7
+          }
+        }
+      ],
+      "config": {
+        "field": {
+          "length_scale": 0.1,
+          "covariance_floor": 1e-06,
+          "stability_margin": 0.5,
+          "max_condition": 1000000.0,
+          "max_matrix_norm": 20.0,
+          "restarts": 3,
+          "max_iterations": 300,
+          "seed": 20261122
+        },
+        "control": {
+          "dt": 0.05,
+          "reference_seconds": 0.05,
+          "max_speed": 0.3,
+          "max_angular_speed": 0.5,
+          "rotation_gain": 2.0,
+          "position_tolerance": 0.005,
+          "rotation_tolerance": 0.08726646259971647,
+          "speed_tolerance": 0.02,
+          "angular_speed_tolerance": 0.1,
+          "arrival_seconds": 0.1,
+          "extra_convergence_seconds": 2.0,
+          "position_rms_tolerance": 0.01,
+          "rotation_rms_tolerance": 0.08726646259971647,
+          "hold_position_range": 0.002,
+          "hold_rotation_range": 0.03490658503988659
+        },
+        "selection": {
+          "initial_candidates": 128,
+          "expanded_candidates": 256,
+          "field_penalty": 0.1,
+          "max_sequences": 3,
+          "grid_seconds": 0.25,
+          "minimum_seconds": 0.25
+        },
+        "representation": null,
+        "reference_mode": null,
+        "teacher_source": null
+      }
+    },
+    {
+      "directory": "strong_margin_compensated_6000",
+      "status": "complete",
+      "run_sha256": "02dd4d920f57a7c849b54d5497600109536322cfc5ea6d8d6241357db1013a20",
+      "fingerprint": "1d2e2f54024d2ad37cd0ab4d68d616b06ceec4c9602a16f8158e8f53859222fc",
+      "episodes": [
+        {
+          "episode_index": 6000,
+          "task": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate_demo",
+          "artifact_sha256": "cea73c9b34daa5a060e410afc1685bd021318ecc74dced348907bd882f2ef443",
+          "summary": {
+            "evaluated_candidates": 128,
+            "accepted_candidates": 100,
+            "complete_offline_sequence": true,
+            "failure_counts": {
+              "position_rms": 27,
+              "rotation_rms": 1,
+              "nominal_arrival_timeout": 8
+            },
+            "wall_seconds_this_invocation": 5.64002137198986,
+            "total_fitting_wall_seconds": 138.10476028699486,
+            "speed_only_impossible_candidates": 0
+          },
+          "best_sequence_fields": 9,
+          "best_sequence_teacher_kinds": {
+            "short_linear": 2,
+            "seds": 7
+          }
+        }
+      ],
+      "config": {
+        "field": {
+          "length_scale": 0.1,
+          "covariance_floor": 1e-06,
+          "stability_margin": 0.5,
+          "max_condition": 1000000.0,
+          "max_matrix_norm": 20.0,
+          "restarts": 3,
+          "max_iterations": 300,
+          "seed": 20261122
+        },
+        "control": {
+          "dt": 0.05,
+          "reference_seconds": 0.16329931618554522,
+          "max_speed": 0.3,
+          "max_angular_speed": 0.5,
+          "rotation_gain": 2.0,
+          "position_tolerance": 0.005,
+          "rotation_tolerance": 0.08726646259971647,
+          "speed_tolerance": 0.02,
+          "angular_speed_tolerance": 0.1,
+          "arrival_seconds": 0.1,
+          "extra_convergence_seconds": 2.0,
+          "position_rms_tolerance": 0.01,
+          "rotation_rms_tolerance": 0.08726646259971647,
+          "hold_position_range": 0.002,
+          "hold_rotation_range": 0.03490658503988659
+        },
+        "selection": {
+          "initial_candidates": 128,
+          "expanded_candidates": 256,
+          "field_penalty": 0.1,
+          "max_sequences": 3,
+          "grid_seconds": 0.25,
+          "minimum_seconds": 0.25
+        },
+        "representation": "fitted",
+        "reference_mode": "damping-compensated",
+        "teacher_source": null
+      }
+    },
+    {
+      "directory": "two_linear_compensated",
+      "status": "complete",
+      "run_sha256": "b45a0b3d217dd601204c31c9c1ef71c4f476a1bd0b8e770147437f3c73adf6c4",
+      "fingerprint": "230c0eee9c117e41bfc1e8cd7d4b664bcdaf789e263c3583db7d450323ecb652",
+      "episodes": [
+        {
+          "episode_index": 200,
+          "task": "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket_demo",
+          "artifact_sha256": "dcca5062d85e0af21ee34a78cc5ea4967f96dd5be1669f5652c52f9611587513",
+          "summary": {
+            "evaluated_candidates": 128,
+            "accepted_candidates": 103,
+            "complete_offline_sequence": true,
+            "failure_counts": {
+              "position_rms": 25,
+              "nominal_arrival_timeout": 4,
+              "rotation_rms": 1
+            },
+            "wall_seconds_this_invocation": 5.428153900007601,
+            "total_fitting_wall_seconds": 86.1177222020633,
+            "speed_only_impossible_candidates": 0
+          },
+          "best_sequence_fields": 39,
+          "best_sequence_teacher_kinds": {
+            "linear_baseline": 39
+          }
+        },
+        {
+          "episode_index": 304,
+          "task": "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket_demo",
+          "artifact_sha256": "8d36b0716abafd25cbf44ea8f5a7c90b2bd26859398e1bc331a000ce52a8bd14",
+          "summary": {
+            "evaluated_candidates": 128,
+            "accepted_candidates": 109,
+            "complete_offline_sequence": true,
+            "failure_counts": {
+              "position_rms": 19,
+              "nominal_arrival_timeout": 4,
+              "rotation_rms": 2
+            },
+            "wall_seconds_this_invocation": 5.411265659000492,
+            "total_fitting_wall_seconds": 73.30353718905826,
+            "speed_only_impossible_candidates": 0
+          },
+          "best_sequence_fields": 38,
+          "best_sequence_teacher_kinds": {
+            "linear_baseline": 38
+          }
+        }
+      ],
+      "config": {
+        "field": {
+          "length_scale": 0.1,
+          "covariance_floor": 1e-06,
+          "stability_margin": 0.01,
+          "max_condition": 1000000.0,
+          "max_matrix_norm": 20.0,
+          "restarts": 3,
+          "max_iterations": 300,
+          "seed": 20261122
+        },
+        "control": {
+          "dt": 0.05,
+          "reference_seconds": 0.16329931618554522,
+          "max_speed": 0.3,
+          "max_angular_speed": 0.5,
+          "rotation_gain": 2.0,
+          "position_tolerance": 0.005,
+          "rotation_tolerance": 0.08726646259971647,
+          "speed_tolerance": 0.02,
+          "angular_speed_tolerance": 0.1,
+          "arrival_seconds": 0.1,
+          "extra_convergence_seconds": 2.0,
+          "position_rms_tolerance": 0.01,
+          "rotation_rms_tolerance": 0.08726646259971647,
+          "hold_position_range": 0.002,
+          "hold_rotation_range": 0.03490658503988659
+        },
+        "selection": {
+          "initial_candidates": 128,
+          "expanded_candidates": 256,
+          "field_penalty": 0.1,
+          "max_sequences": 3,
+          "grid_seconds": 0.25,
+          "minimum_seconds": 0.25
+        },
+        "representation": "linear",
+        "reference_mode": "damping-compensated",
+        "teacher_source": null
+      }
+    },
+    {
+      "directory": "two_object_v1",
+      "status": "complete",
+      "run_sha256": "fd83e2775a6a2a073bd635f2925b6a92c086e04b54c3586c9098032f285da84f",
+      "fingerprint": "89f62bea78e6c8cbadbc3c5a18572327e8827610ea9d7ef54e3ef046d6331309",
+      "episodes": [
+        {
+          "episode_index": 200,
+          "task": "LIVING_ROOM_SCENE1_put_both_the_alphabet_soup_and_the_cream_cheese_box_in_the_basket_demo",
+          "artifact_sha256": "a593c375cc0394f4e6460302bf5baf508bab69dd5bc39774a9c1a195a9202f20",
+          "summary": {
+            "evaluated_candidates": 128,
+            "accepted_candidates": 114,
+            "complete_offline_sequence": true,
+            "failure_counts": {
+              "position_rms": 10,
+              "nominal_arrival_timeout": 8,
+              "rotation_rms": 1,
+              "optimizer_or_constraints": 1
+            },
+            "wall_seconds_this_invocation": 88.07558317600342,
+            "total_fitting_wall_seconds": 86.1177222020633
+          },
+          "best_sequence_fields": 35,
+          "best_sequence_teacher_kinds": {
+            "seds": 14,
+            "short_linear": 21
+          }
+        },
+        {
+          "episode_index": 304,
+          "task": "LIVING_ROOM_SCENE2_put_both_the_cream_cheese_box_and_the_butter_in_the_basket_demo",
+          "artifact_sha256": "77ecfb130ca3f7c6cc896bd36f38ebf04809207fec0ec3cb2771ae95a03c2da7",
+          "summary": {
+            "evaluated_candidates": 128,
+            "accepted_candidates": 117,
+            "complete_offline_sequence": true,
+            "failure_counts": {
+              "position_rms": 9,
+              "rotation_rms": 2,
+              "nominal_arrival_timeout": 7
+            },
+            "wall_seconds_this_invocation": 75.25041412499559,
+            "total_fitting_wall_seconds": 73.30353718905826
+          },
+          "best_sequence_fields": 34,
+          "best_sequence_teacher_kinds": {
+            "seds": 17,
+            "short_linear": 17
+          }
+        }
+      ],
+      "config": {
+        "field": {
+          "length_scale": 0.1,
+          "covariance_floor": 1e-06,
+          "stability_margin": 0.01,
+          "max_condition": 1000000.0,
+          "max_matrix_norm": 20.0,
+          "restarts": 3,
+          "max_iterations": 300,
+          "seed": 20261122
+        },
+        "control": {
+          "dt": 0.05,
+          "max_speed": 0.3,
+          "max_angular_speed": 0.5,
+          "rotation_gain": 2.0,
+          "position_tolerance": 0.005,
+          "rotation_tolerance": 0.08726646259971647,
+          "speed_tolerance": 0.02,
+          "angular_speed_tolerance": 0.1,
+          "arrival_seconds": 0.1,
+          "extra_convergence_seconds": 2.0,
+          "position_rms_tolerance": 0.01,
+          "rotation_rms_tolerance": 0.08726646259971647,
+          "hold_position_range": 0.002,
+          "hold_rotation_range": 0.03490658503988659
+        },
+        "selection": {
+          "initial_candidates": 128,
+          "expanded_candidates": 256,
+          "field_penalty": 0.1,
+          "max_sequences": 3,
+          "grid_seconds": 0.25,
+          "minimum_seconds": 0.25
+        },
+        "representation": null,
+        "reference_mode": null,
+        "teacher_source": null
+      }
+    }
+  ],
+  "executions": [
+    {
+      "directory": "field_execution_200_delta",
+      "status": "complete",
+      "worker_status": "complete",
+      "source_episode_index": 200,
+      "mode": "fields",
+      "environment": {
+        "python": "3.8.20",
+        "robosuite": "1.4.1",
+        "mujoco": "3.2.3",
+        "numpy": "1.22.4",
+        "scipy": "1.10.1"
+      },
+      "max_steps": 520,
+      "source_sha256": {
+        "osc.py": "cfa62a0e719bc53ef0c701efa66f7b3e2272d4fca2150ec73c05bb145eba85cb",
+        "base_controller.py": "61f99a2daeb4eb6e39bfb996d94c5a5689ef3bc771d030d070193ea56d6a8332",
+        "fields.py": "ab156f18af8aa9d39e4de0d409b8e726c312560fb339897ff8f58d9870295659",
+        "field_control.py": "5f3cbc4841c7fbbcc2a352c16b3c4cb6a4d4e049ca81d947177a2b76596cf4bc",
+        "primitive.py": "c961c06f8be6c103f088f242b6e7942d77266c604a28a75e1ba4d9f99e96240d",
+        "seds.py": "dfcb5611be2061cfb245fad80609e4953cf5be41f557f6bb2287ec4263ada9de"
+      },
+      "error": null,
+      "wall_seconds": 27.142230612997082,
+      "gripper_feedback_required": false,
+      "result_sha256": "474d2764f0a208de68553e5db2fb9f3cc9d75118c2a63535d7de417fb00726ea",
+      "request_sha256": "8df016b5e1f277c8770d014577f6740a06f83045e29d1b202a1798a0fd1a2c90",
+      "trials": [
+        {
+          "trial": 0,
+          "task_predicate": false,
+          "geometric_sequence_complete": false,
+          "control_steps": 520,
+          "completed_fields": 7,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "8372537e2a58b8aad1a0f5362781bec8f08abe885a7e6e239588a4dacc7ab0cb",
+          "final_goal_predicates": null
+        },
+        {
+          "trial": 1,
+          "task_predicate": false,
+          "geometric_sequence_complete": false,
+          "control_steps": 520,
+          "completed_fields": 7,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "6759cfcb4681aad444bdddc1befc84b73aa03e16074267b796f19401cede4135",
+          "final_goal_predicates": null
+        },
+        {
+          "trial": 2,
+          "task_predicate": false,
+          "geometric_sequence_complete": false,
+          "control_steps": 520,
+          "completed_fields": 7,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "ab2c58ac51d5d63939a85141b4ffab48b02613219e8e5d6b3a770a7b3cd70634",
+          "final_goal_predicates": null
+        }
+      ]
+    },
+    {
+      "directory": "field_execution_304_delta",
+      "status": "complete",
+      "worker_status": "complete",
+      "source_episode_index": 304,
+      "mode": "fields",
+      "environment": {
+        "python": "3.8.20",
+        "robosuite": "1.4.1",
+        "mujoco": "3.2.3",
+        "numpy": "1.22.4",
+        "scipy": "1.10.1"
+      },
+      "max_steps": 520,
+      "source_sha256": {
+        "osc.py": "cfa62a0e719bc53ef0c701efa66f7b3e2272d4fca2150ec73c05bb145eba85cb",
+        "base_controller.py": "61f99a2daeb4eb6e39bfb996d94c5a5689ef3bc771d030d070193ea56d6a8332",
+        "fields.py": "ab156f18af8aa9d39e4de0d409b8e726c312560fb339897ff8f58d9870295659",
+        "field_control.py": "5f3cbc4841c7fbbcc2a352c16b3c4cb6a4d4e049ca81d947177a2b76596cf4bc",
+        "primitive.py": "c961c06f8be6c103f088f242b6e7942d77266c604a28a75e1ba4d9f99e96240d",
+        "seds.py": "dfcb5611be2061cfb245fad80609e4953cf5be41f557f6bb2287ec4263ada9de"
+      },
+      "error": null,
+      "wall_seconds": 30.067206221006927,
+      "gripper_feedback_required": false,
+      "result_sha256": "a32f927fc64261bbd20d9c732c0769de5ae4cf86dc2738b9218def34ab15d022",
+      "request_sha256": "e4d061f30d6e3ab23e96894f1b33fb8b22b180bcc91e9d0853b0990b4ddf6b24",
+      "trials": [
+        {
+          "trial": 0,
+          "task_predicate": false,
+          "geometric_sequence_complete": false,
+          "control_steps": 520,
+          "completed_fields": 2,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "2b22acbbc65596c05df6d4bd1540a4f306dc5f27fe348a8414dad751981e8a76",
+          "final_goal_predicates": null
+        },
+        {
+          "trial": 1,
+          "task_predicate": false,
+          "geometric_sequence_complete": false,
+          "control_steps": 520,
+          "completed_fields": 2,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "cd30381a886f7ab912f5700819342b168c0541a2860e277ea7c16aa496e029b0",
+          "final_goal_predicates": null
+        },
+        {
+          "trial": 2,
+          "task_predicate": false,
+          "geometric_sequence_complete": false,
+          "control_steps": 520,
+          "completed_fields": 2,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "2db0df5bf46fc070d3c90ce86d5f609080ef6778aa7b2d1b821ee77bb99a64b2",
+          "final_goal_predicates": null
+        }
+      ]
+    },
+    {
+      "directory": "field_execution_5800_delta",
+      "status": "complete",
+      "worker_status": "complete",
+      "source_episode_index": 5800,
+      "mode": "fields",
+      "environment": {
+        "python": "3.8.20",
+        "robosuite": "1.4.1",
+        "mujoco": "3.2.3",
+        "numpy": "1.22.4",
+        "scipy": "1.10.1"
+      },
+      "max_steps": 280,
+      "source_sha256": {
+        "osc.py": "cfa62a0e719bc53ef0c701efa66f7b3e2272d4fca2150ec73c05bb145eba85cb",
+        "base_controller.py": "61f99a2daeb4eb6e39bfb996d94c5a5689ef3bc771d030d070193ea56d6a8332",
+        "fields.py": "ab156f18af8aa9d39e4de0d409b8e726c312560fb339897ff8f58d9870295659",
+        "field_control.py": "5f3cbc4841c7fbbcc2a352c16b3c4cb6a4d4e049ca81d947177a2b76596cf4bc",
+        "primitive.py": "c961c06f8be6c103f088f242b6e7942d77266c604a28a75e1ba4d9f99e96240d",
+        "seds.py": "dfcb5611be2061cfb245fad80609e4953cf5be41f557f6bb2287ec4263ada9de"
+      },
+      "error": null,
+      "wall_seconds": 15.1936385279987,
+      "gripper_feedback_required": false,
+      "result_sha256": "bcbcca6fa40c559f98f6bdd6856dfb579598722e66d392d1ad1b57b044dbc95b",
+      "request_sha256": "0f0db9c735168375f26895fe7c12435048dfc7a0d6b2792b8ec702d0a4a54b25",
+      "trials": [
+        {
+          "trial": 0,
+          "task_predicate": false,
+          "geometric_sequence_complete": false,
+          "control_steps": 280,
+          "completed_fields": 0,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "9c551532d718c7910a9a8cf6ebf64a8cecb1fc6b918c5c03c5f206c643df5ce9",
+          "final_goal_predicates": null
+        },
+        {
+          "trial": 1,
+          "task_predicate": false,
+          "geometric_sequence_complete": false,
+          "control_steps": 280,
+          "completed_fields": 3,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "bbe77136eb0d3cbab2716285c48b996dbcc89f797119f263622701ca617ab2fe",
+          "final_goal_predicates": null
+        },
+        {
+          "trial": 2,
+          "task_predicate": false,
+          "geometric_sequence_complete": false,
+          "control_steps": 280,
+          "completed_fields": 0,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "7923ce5effefe2e06d84532580d5132a752b158a2d1461d89a63fff2f8e6cb9f",
+          "final_goal_predicates": null
+        }
+      ]
+    },
+    {
+      "directory": "field_execution_6000_a",
+      "status": "failed",
+      "worker_status": "failed",
+      "source_episode_index": 6000,
+      "mode": "fields",
+      "environment": {
+        "python": "3.8.20",
+        "robosuite": "1.4.1",
+        "mujoco": "3.2.3",
+        "numpy": "1.22.4",
+        "scipy": "1.10.1"
+      },
+      "max_steps": 220,
+      "source_sha256": {
+        "osc.py": "cfa62a0e719bc53ef0c701efa66f7b3e2272d4fca2150ec73c05bb145eba85cb",
+        "base_controller.py": "61f99a2daeb4eb6e39bfb996d94c5a5689ef3bc771d030d070193ea56d6a8332",
+        "fields.py": "b5812214b6929a32887f34d18d0602d3f9d0827ad1d3dda2a8e17c9c483c8589",
+        "field_control.py": "5544235d5ce43f027988cf8943462d6c931f7090b1b98b792e1b238007c357f9",
+        "primitive.py": "37955780e34a8409aa0cfaace33de43d16e64070531efc5d1d4ff44bdf3a48b9"
+      },
+      "error": "Installed OSC goals disagree with actual-state field references",
+      "wall_seconds": 2.247985084002721,
+      "gripper_feedback_required": false,
+      "result_sha256": "cbb95ad72341a558c6ea057f1a5aecb10d5f672dff468c00407559a8092a3937",
+      "request_sha256": "bbfaec14ad9866d3f415c65e325931ce38cbb0d9e6540bf59de0113768727504",
+      "trials": []
+    },
+    {
+      "directory": "field_execution_6000_b",
+      "status": "failed",
+      "worker_status": "failed",
+      "source_episode_index": 6000,
+      "mode": "fields",
+      "environment": {
+        "python": "3.8.20",
+        "robosuite": "1.4.1",
+        "mujoco": "3.2.3",
+        "numpy": "1.22.4",
+        "scipy": "1.10.1"
+      },
+      "max_steps": 220,
+      "source_sha256": {
+        "osc.py": "cfa62a0e719bc53ef0c701efa66f7b3e2272d4fca2150ec73c05bb145eba85cb",
+        "base_controller.py": "61f99a2daeb4eb6e39bfb996d94c5a5689ef3bc771d030d070193ea56d6a8332",
+        "fields.py": "fe08ff1fb6595767a100db4dd0ae091c6759e15f0344a0b701e10979af7c11b3",
+        "field_control.py": "0611098a5e34aa7d67c4ff9783414474141cd0c09e618d52f7122c9f3c40cb15",
+        "primitive.py": "37955780e34a8409aa0cfaace33de43d16e64070531efc5d1d4ff44bdf3a48b9",
+        "seds.py": "dfcb5611be2061cfb245fad80609e4953cf5be41f557f6bb2287ec4263ada9de"
+      },
+      "error": "Installed OSC goal mismatch: position=0.00547529 m; rotation=0",
+      "wall_seconds": 2.1841688139975304,
+      "gripper_feedback_required": false,
+      "result_sha256": "a7df73dc19d5922fe56887646ac6c1bc514dbc50d98a3069d1a6535e0981aaf4",
+      "request_sha256": "bbfaec14ad9866d3f415c65e325931ce38cbb0d9e6540bf59de0113768727504",
+      "trials": []
+    },
+    {
+      "directory": "field_execution_6000_c",
+      "status": "complete",
+      "worker_status": "complete",
+      "source_episode_index": 6000,
+      "mode": "fields",
+      "environment": {
+        "python": "3.8.20",
+        "robosuite": "1.4.1",
+        "mujoco": "3.2.3",
+        "numpy": "1.22.4",
+        "scipy": "1.10.1"
+      },
+      "max_steps": 220,
+      "source_sha256": {
+        "osc.py": "cfa62a0e719bc53ef0c701efa66f7b3e2272d4fca2150ec73c05bb145eba85cb",
+        "base_controller.py": "61f99a2daeb4eb6e39bfb996d94c5a5689ef3bc771d030d070193ea56d6a8332",
+        "fields.py": "ab156f18af8aa9d39e4de0d409b8e726c312560fb339897ff8f58d9870295659",
+        "field_control.py": "59ca22829622f5059b4641a5c7fb990559c9d13657f64b849a9cd4047bf38e3c",
+        "primitive.py": "37955780e34a8409aa0cfaace33de43d16e64070531efc5d1d4ff44bdf3a48b9",
+        "seds.py": "dfcb5611be2061cfb245fad80609e4953cf5be41f557f6bb2287ec4263ada9de"
+      },
+      "error": null,
+      "wall_seconds": 16.50093165600265,
+      "gripper_feedback_required": false,
+      "result_sha256": "7af1ec16b7ed762b8a2ab4c33d53ddc99546e20f9f99c1f17932c1fc136a6194",
+      "request_sha256": "bbfaec14ad9866d3f415c65e325931ce38cbb0d9e6540bf59de0113768727504",
+      "trials": [
+        {
+          "trial": 0,
+          "task_predicate": false,
+          "geometric_sequence_complete": false,
+          "control_steps": 220,
+          "completed_fields": 4,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "650036991f1a5ea24985c59ea988fc5e67096715859c5d99e55ea11dfc74032d",
+          "final_goal_predicates": null
+        },
+        {
+          "trial": 1,
+          "task_predicate": false,
+          "geometric_sequence_complete": false,
+          "control_steps": 220,
+          "completed_fields": 3,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "a7104eeb07116450dfe5b69660119a9a844d8149f0c544ca2577269cbf5351e4",
+          "final_goal_predicates": null
+        },
+        {
+          "trial": 2,
+          "task_predicate": false,
+          "geometric_sequence_complete": false,
+          "control_steps": 220,
+          "completed_fields": 4,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "d50df83f801ae7555b75b5924ed7570d32bce56b8925fc50ce51a53933fd6eae",
+          "final_goal_predicates": null
+        }
+      ]
+    },
+    {
+      "directory": "field_execution_6000_compensated",
+      "status": "complete",
+      "worker_status": "complete",
+      "source_episode_index": 6000,
+      "mode": "fields",
+      "environment": {
+        "python": "3.8.20",
+        "robosuite": "1.4.1",
+        "mujoco": "3.2.3",
+        "numpy": "1.22.4",
+        "scipy": "1.10.1"
+      },
+      "max_steps": 220,
+      "source_sha256": {
+        "osc.py": "cfa62a0e719bc53ef0c701efa66f7b3e2272d4fca2150ec73c05bb145eba85cb",
+        "base_controller.py": "61f99a2daeb4eb6e39bfb996d94c5a5689ef3bc771d030d070193ea56d6a8332",
+        "fields.py": "ab156f18af8aa9d39e4de0d409b8e726c312560fb339897ff8f58d9870295659",
+        "field_control.py": "5f3cbc4841c7fbbcc2a352c16b3c4cb6a4d4e049ca81d947177a2b76596cf4bc",
+        "primitive.py": "c961c06f8be6c103f088f242b6e7942d77266c604a28a75e1ba4d9f99e96240d",
+        "seds.py": "dfcb5611be2061cfb245fad80609e4953cf5be41f557f6bb2287ec4263ada9de"
+      },
+      "error": null,
+      "wall_seconds": 16.42683381799725,
+      "gripper_feedback_required": false,
+      "result_sha256": "af2669935584b82958d6c85ce1e59c81461bd0f1f6ddd09f50e3c360c5d2bd7e",
+      "request_sha256": "6ca75882e2f30cb4089909752e19d239f30f0f67e8352c4c85aa928f68cef6bd",
+      "trials": [
+        {
+          "trial": 0,
+          "task_predicate": false,
+          "geometric_sequence_complete": false,
+          "control_steps": 220,
+          "completed_fields": 2,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "9fc5326100a2e01f3c1fdf629c473503a42e62646233ae7df1cdd8415ba62f30",
+          "final_goal_predicates": null
+        },
+        {
+          "trial": 1,
+          "task_predicate": false,
+          "geometric_sequence_complete": false,
+          "control_steps": 220,
+          "completed_fields": 2,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "86438cd7c9d523ad16e0b349407fc5c2766e4fd7643e82648aa9c76869bd409b",
+          "final_goal_predicates": null
+        },
+        {
+          "trial": 2,
+          "task_predicate": false,
+          "geometric_sequence_complete": false,
+          "control_steps": 220,
+          "completed_fields": 2,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "a931afc401b0abd21ea2165be8b5fdc7c4f5f28e658faff3f1b67ec2d9ad3f28",
+          "final_goal_predicates": null
+        }
+      ]
+    },
+    {
+      "directory": "field_execution_6050_delta",
+      "status": "complete",
+      "worker_status": "complete",
+      "source_episode_index": 6050,
+      "mode": "fields",
+      "environment": {
+        "python": "3.8.20",
+        "robosuite": "1.4.1",
+        "mujoco": "3.2.3",
+        "numpy": "1.22.4",
+        "scipy": "1.10.1"
+      },
+      "max_steps": 220,
+      "source_sha256": {
+        "osc.py": "cfa62a0e719bc53ef0c701efa66f7b3e2272d4fca2150ec73c05bb145eba85cb",
+        "base_controller.py": "61f99a2daeb4eb6e39bfb996d94c5a5689ef3bc771d030d070193ea56d6a8332",
+        "fields.py": "ab156f18af8aa9d39e4de0d409b8e726c312560fb339897ff8f58d9870295659",
+        "field_control.py": "5f3cbc4841c7fbbcc2a352c16b3c4cb6a4d4e049ca81d947177a2b76596cf4bc",
+        "primitive.py": "c961c06f8be6c103f088f242b6e7942d77266c604a28a75e1ba4d9f99e96240d",
+        "seds.py": "dfcb5611be2061cfb245fad80609e4953cf5be41f557f6bb2287ec4263ada9de"
+      },
+      "error": null,
+      "wall_seconds": 17.040644791006343,
+      "gripper_feedback_required": false,
+      "result_sha256": "11a2bae4bd2c20690ad57b983f4f4194e42d7bb43eb21488c59bed9129211e71",
+      "request_sha256": "ef601ce7bd1f60aea684f027ccaee76527c45dba855e6bda2cc3a9d05addb3d5",
+      "trials": [
+        {
+          "trial": 0,
+          "task_predicate": false,
+          "geometric_sequence_complete": false,
+          "control_steps": 220,
+          "completed_fields": 3,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "d9efb5e84e1f95608143b5f99e86b25cb4aff542d8f1f7f1a48e89376b4226c6",
+          "final_goal_predicates": null
+        },
+        {
+          "trial": 1,
+          "task_predicate": false,
+          "geometric_sequence_complete": false,
+          "control_steps": 220,
+          "completed_fields": 3,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "262ca77c437409584d6d1c21591eca0be146190442c78a2118fc864554c3614e",
+          "final_goal_predicates": null
+        },
+        {
+          "trial": 2,
+          "task_predicate": false,
+          "geometric_sequence_complete": false,
+          "control_steps": 220,
+          "completed_fields": 3,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "fd98c41e98938c994928c0b46c7f5e39524ad471433d0510141dba79df217337",
+          "final_goal_predicates": null
+        }
+      ]
+    },
+    {
+      "directory": "linear_execution_200",
+      "status": "complete",
+      "worker_status": "complete",
+      "source_episode_index": 200,
+      "mode": "fields",
+      "environment": {
+        "python": "3.8.20",
+        "robosuite": "1.4.1",
+        "mujoco": "3.2.3",
+        "numpy": "1.22.4",
+        "scipy": "1.10.1"
+      },
+      "max_steps": 520,
+      "source_sha256": {
+        "osc.py": "cfa62a0e719bc53ef0c701efa66f7b3e2272d4fca2150ec73c05bb145eba85cb",
+        "base_controller.py": "61f99a2daeb4eb6e39bfb996d94c5a5689ef3bc771d030d070193ea56d6a8332",
+        "fields.py": "4ba97e2a9e169e51ba6de8e697d45f4739c3898baa0aa741d37270fe53ef088e",
+        "field_control.py": "5f3cbc4841c7fbbcc2a352c16b3c4cb6a4d4e049ca81d947177a2b76596cf4bc",
+        "primitive.py": "f887804438d508dd52a06f4103a96f57ed7dfa8bdd3ec8f4e60aa823c29bc833",
+        "seds.py": "823d6943d8c227585b939b0a48d96f5d8f6f71617c34d34e7be3bf3049123406"
+      },
+      "error": null,
+      "wall_seconds": 23.77444993899553,
+      "gripper_feedback_required": false,
+      "result_sha256": "e32eb6e589e91d710c6bdb769c5cbe4e121272a0f7e06d78870264953e2a10d7",
+      "request_sha256": "f2450b3d2cd7821b2bd98cbaca727f04c33aa122f1ed830d28e98a6f8526cbb9",
+      "trials": [
+        {
+          "trial": 0,
+          "task_predicate": false,
+          "geometric_sequence_complete": true,
+          "control_steps": 456,
+          "completed_fields": 39,
+          "status": "geometric_sequence_complete",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "14c63b072ec8f9039e426d4f617fc448edb65f38a7cf68684ebc98c4ee713f64",
+          "final_goal_predicates": null
+        },
+        {
+          "trial": 1,
+          "task_predicate": false,
+          "geometric_sequence_complete": true,
+          "control_steps": 453,
+          "completed_fields": 39,
+          "status": "geometric_sequence_complete",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "42fb5436f9d4eadc6dfce92c7e3c46bd9e28b5c7ad9a9cec1e6728056a312427",
+          "final_goal_predicates": null
+        },
+        {
+          "trial": 2,
+          "task_predicate": false,
+          "geometric_sequence_complete": true,
+          "control_steps": 463,
+          "completed_fields": 39,
+          "status": "geometric_sequence_complete",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "92b55189f4be023f124fd2c0dec85f04f84b1df9d5345245cc693696ee349fd2",
+          "final_goal_predicates": null
+        }
+      ]
+    },
+    {
+      "directory": "linear_execution_200_audit",
+      "status": "complete",
+      "worker_status": "complete",
+      "source_episode_index": 200,
+      "mode": "fields",
+      "environment": {
+        "python": "3.8.20",
+        "robosuite": "1.4.1",
+        "mujoco": "3.2.3",
+        "numpy": "1.22.4",
+        "scipy": "1.10.1"
+      },
+      "max_steps": 520,
+      "source_sha256": {
+        "osc.py": "cfa62a0e719bc53ef0c701efa66f7b3e2272d4fca2150ec73c05bb145eba85cb",
+        "base_controller.py": "61f99a2daeb4eb6e39bfb996d94c5a5689ef3bc771d030d070193ea56d6a8332",
+        "fields.py": "964da8e81274c714d2d172724d921f862bed1b5683e1c6786678c65175c95a64",
+        "field_control.py": "5f3cbc4841c7fbbcc2a352c16b3c4cb6a4d4e049ca81d947177a2b76596cf4bc",
+        "primitive.py": "a624bad0b02ca69ce1eb076d7294df11109c9b76d74a980e2f9c79f024fd2356",
+        "seds.py": "823d6943d8c227585b939b0a48d96f5d8f6f71617c34d34e7be3bf3049123406"
+      },
+      "error": null,
+      "wall_seconds": 9.52206326900341,
+      "gripper_feedback_required": true,
+      "result_sha256": "b546fa5253c019d9621945d05b2b922d4ce3f7e3096e2a6d248b00a9358b2f8f",
+      "request_sha256": "1d2183214b6615552b3dabdabdf38505823d8922cc2da0aeee2469f62a0c790f",
+      "trials": [
+        {
+          "trial": 0,
+          "task_predicate": false,
+          "geometric_sequence_complete": true,
+          "control_steps": 475,
+          "completed_fields": 39,
+          "status": "geometric_sequence_complete",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "2821bd1661d84cbd5f8f5131d749f91d3f72aa525fe8fe235bb7a2a07909a384",
+          "final_goal_predicates": [
+            {
+              "predicate": [
+                "in",
+                "alphabet_soup_1",
+                "basket_1_contain_region"
+              ],
+              "value": true
+            },
+            {
+              "predicate": [
+                "in",
+                "cream_cheese_1",
+                "basket_1_contain_region"
+              ],
+              "value": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "directory": "linear_execution_200_audit_v2",
+      "status": "complete",
+      "worker_status": "complete",
+      "source_episode_index": 200,
+      "mode": "fields",
+      "environment": {
+        "python": "3.8.20",
+        "robosuite": "1.4.1",
+        "mujoco": "3.2.3",
+        "numpy": "1.22.4",
+        "scipy": "1.10.1"
+      },
+      "max_steps": 520,
+      "source_sha256": {
+        "osc.py": "cfa62a0e719bc53ef0c701efa66f7b3e2272d4fca2150ec73c05bb145eba85cb",
+        "base_controller.py": "61f99a2daeb4eb6e39bfb996d94c5a5689ef3bc771d030d070193ea56d6a8332",
+        "fields.py": "6671ac745e2677de5a0b8c7c8b13d450ba303ffc90c74be03feb374f3379dee1",
+        "field_control.py": "5f3cbc4841c7fbbcc2a352c16b3c4cb6a4d4e049ca81d947177a2b76596cf4bc",
+        "primitive.py": "01c29e871046d9496ac9d02192bfe54332f0ef5afe132ecee617bcb4b81da052",
+        "seds.py": "823d6943d8c227585b939b0a48d96f5d8f6f71617c34d34e7be3bf3049123406"
+      },
+      "error": null,
+      "wall_seconds": 9.78222259899485,
+      "gripper_feedback_required": true,
+      "result_sha256": "9a26393b57e4455598f5c4f4591cdfe82301240e7899efa920b0039b454bcd15",
+      "request_sha256": "6a6c37f912f635ace6162100bc4f67af5443e0ae19e456a2808d6da283a44b23",
+      "trials": [
+        {
+          "trial": 0,
+          "task_predicate": false,
+          "geometric_sequence_complete": true,
+          "control_steps": 475,
+          "completed_fields": 39,
+          "status": "geometric_sequence_complete",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "c3b0fe84c567a022a0f82a3e1994e1fd0e0ef5cf44be5a12c395c73ffdf73db5",
+          "final_goal_predicates": [
+            {
+              "predicate": [
+                "in",
+                "alphabet_soup_1",
+                "basket_1_contain_region"
+              ],
+              "value": true
+            },
+            {
+              "predicate": [
+                "in",
+                "cream_cheese_1",
+                "basket_1_contain_region"
+              ],
+              "value": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "directory": "linear_execution_200_feedback",
+      "status": "complete",
+      "worker_status": "complete",
+      "source_episode_index": 200,
+      "mode": "fields",
+      "environment": {
+        "python": "3.8.20",
+        "robosuite": "1.4.1",
+        "mujoco": "3.2.3",
+        "numpy": "1.22.4",
+        "scipy": "1.10.1"
+      },
+      "max_steps": 520,
+      "source_sha256": {
+        "osc.py": "cfa62a0e719bc53ef0c701efa66f7b3e2272d4fca2150ec73c05bb145eba85cb",
+        "base_controller.py": "61f99a2daeb4eb6e39bfb996d94c5a5689ef3bc771d030d070193ea56d6a8332",
+        "fields.py": "db67a9a195be8d347e7a573a8b864dc08e80cd5be239a783cc1a0932cda72b48",
+        "field_control.py": "5f3cbc4841c7fbbcc2a352c16b3c4cb6a4d4e049ca81d947177a2b76596cf4bc",
+        "primitive.py": "a624bad0b02ca69ce1eb076d7294df11109c9b76d74a980e2f9c79f024fd2356",
+        "seds.py": "823d6943d8c227585b939b0a48d96f5d8f6f71617c34d34e7be3bf3049123406"
+      },
+      "error": null,
+      "wall_seconds": 24.570783896997455,
+      "gripper_feedback_required": true,
+      "result_sha256": "12c53993bc05698c71adbeb3e83aa637c573f591fbf72d976cba53a7c226f27e",
+      "request_sha256": "66990ee995c2a108358643bf15abc5a9978f8d014937946b1a8abbf84af1039b",
+      "trials": [
+        {
+          "trial": 0,
+          "task_predicate": false,
+          "geometric_sequence_complete": true,
+          "control_steps": 475,
+          "completed_fields": 39,
+          "status": "geometric_sequence_complete",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "5ae0f133e0626031b536a223b32390a588ad8e3a4bd187ba766811703827176c",
+          "final_goal_predicates": null
+        },
+        {
+          "trial": 1,
+          "task_predicate": false,
+          "geometric_sequence_complete": true,
+          "control_steps": 471,
+          "completed_fields": 39,
+          "status": "geometric_sequence_complete",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "633d05749c89e71f2a06661593f00cfc4f77c9653b7f8267d752f0e9b3a31fe0",
+          "final_goal_predicates": null
+        },
+        {
+          "trial": 2,
+          "task_predicate": false,
+          "geometric_sequence_complete": true,
+          "control_steps": 479,
+          "completed_fields": 39,
+          "status": "geometric_sequence_complete",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "825c725a0355cbd1148d109432c288670a9189bab0dfd9d892cb1b793ac0f744",
+          "final_goal_predicates": null
+        }
+      ]
+    },
+    {
+      "directory": "linear_execution_304",
+      "status": "complete",
+      "worker_status": "complete",
+      "source_episode_index": 304,
+      "mode": "fields",
+      "environment": {
+        "python": "3.8.20",
+        "robosuite": "1.4.1",
+        "mujoco": "3.2.3",
+        "numpy": "1.22.4",
+        "scipy": "1.10.1"
+      },
+      "max_steps": 520,
+      "source_sha256": {
+        "osc.py": "cfa62a0e719bc53ef0c701efa66f7b3e2272d4fca2150ec73c05bb145eba85cb",
+        "base_controller.py": "61f99a2daeb4eb6e39bfb996d94c5a5689ef3bc771d030d070193ea56d6a8332",
+        "fields.py": "4ba97e2a9e169e51ba6de8e697d45f4739c3898baa0aa741d37270fe53ef088e",
+        "field_control.py": "5f3cbc4841c7fbbcc2a352c16b3c4cb6a4d4e049ca81d947177a2b76596cf4bc",
+        "primitive.py": "f887804438d508dd52a06f4103a96f57ed7dfa8bdd3ec8f4e60aa823c29bc833",
+        "seds.py": "823d6943d8c227585b939b0a48d96f5d8f6f71617c34d34e7be3bf3049123406"
+      },
+      "error": null,
+      "wall_seconds": 32.34812928599422,
+      "gripper_feedback_required": false,
+      "result_sha256": "c8a3e930c7e28ef8f054ad3369a9221f6652b724eef7716393dd52f800e7a984",
+      "request_sha256": "77d6dec4231de4c7f3a064ef6aa12aeef4c4add57321b24b83dc15c29de36c26",
+      "trials": [
+        {
+          "trial": 0,
+          "task_predicate": true,
+          "geometric_sequence_complete": false,
+          "control_steps": 520,
+          "completed_fields": 37,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "a0c27773dab8dae23abdca0ccf7858a46f1a5442df65cf19eac1bc67b3c113d1",
+          "final_goal_predicates": null
+        },
+        {
+          "trial": 1,
+          "task_predicate": true,
+          "geometric_sequence_complete": false,
+          "control_steps": 520,
+          "completed_fields": 37,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "cea16f5272a5abdfc016b0138527fdb660b0380f1a74ab6e10cd476489859702",
+          "final_goal_predicates": null
+        },
+        {
+          "trial": 2,
+          "task_predicate": true,
+          "geometric_sequence_complete": false,
+          "control_steps": 520,
+          "completed_fields": 37,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "813cfefb952d5f0a83c68c59b29eab9a153e7270944607ef59f7aadc025d666d",
+          "final_goal_predicates": null
+        }
+      ]
+    },
+    {
+      "directory": "linear_execution_5800",
+      "status": "complete",
+      "worker_status": "complete",
+      "source_episode_index": 5800,
+      "mode": "fields",
+      "environment": {
+        "python": "3.8.20",
+        "robosuite": "1.4.1",
+        "mujoco": "3.2.3",
+        "numpy": "1.22.4",
+        "scipy": "1.10.1"
+      },
+      "max_steps": 280,
+      "source_sha256": {
+        "osc.py": "cfa62a0e719bc53ef0c701efa66f7b3e2272d4fca2150ec73c05bb145eba85cb",
+        "base_controller.py": "61f99a2daeb4eb6e39bfb996d94c5a5689ef3bc771d030d070193ea56d6a8332",
+        "fields.py": "4ba97e2a9e169e51ba6de8e697d45f4739c3898baa0aa741d37270fe53ef088e",
+        "field_control.py": "5f3cbc4841c7fbbcc2a352c16b3c4cb6a4d4e049ca81d947177a2b76596cf4bc",
+        "primitive.py": "f887804438d508dd52a06f4103a96f57ed7dfa8bdd3ec8f4e60aa823c29bc833",
+        "seds.py": "823d6943d8c227585b939b0a48d96f5d8f6f71617c34d34e7be3bf3049123406"
+      },
+      "error": null,
+      "wall_seconds": 16.061178559000837,
+      "gripper_feedback_required": false,
+      "result_sha256": "0ab3659df435498b5fb519b360a37c1c07b2939540e86339896283fc03d6af67",
+      "request_sha256": "c1cb03525e5b666f98508cc34ad2ad7d58aee179591504398d802dc3e02d5fc0",
+      "trials": [
+        {
+          "trial": 0,
+          "task_predicate": false,
+          "geometric_sequence_complete": false,
+          "control_steps": 280,
+          "completed_fields": 16,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "52368a1b1b40f88bedaed0e3a2fa7f6c064ed1821c4b02862afed266b8bd4e5e",
+          "final_goal_predicates": null
+        },
+        {
+          "trial": 1,
+          "task_predicate": false,
+          "geometric_sequence_complete": false,
+          "control_steps": 280,
+          "completed_fields": 16,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "3612e964d44a04f423794d490a50875d3656bf8ec7ea7fff03e03e29bab09ddc",
+          "final_goal_predicates": null
+        },
+        {
+          "trial": 2,
+          "task_predicate": false,
+          "geometric_sequence_complete": false,
+          "control_steps": 280,
+          "completed_fields": 16,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "6406d503e2be07e6455cddb5fa2aea3d0efe1f19bbf07218efebd347fdc92b27",
+          "final_goal_predicates": null
+        }
+      ]
+    },
+    {
+      "directory": "linear_execution_6000",
+      "status": "complete",
+      "worker_status": "complete",
+      "source_episode_index": 6000,
+      "mode": "fields",
+      "environment": {
+        "python": "3.8.20",
+        "robosuite": "1.4.1",
+        "mujoco": "3.2.3",
+        "numpy": "1.22.4",
+        "scipy": "1.10.1"
+      },
+      "max_steps": 220,
+      "source_sha256": {
+        "osc.py": "cfa62a0e719bc53ef0c701efa66f7b3e2272d4fca2150ec73c05bb145eba85cb",
+        "base_controller.py": "61f99a2daeb4eb6e39bfb996d94c5a5689ef3bc771d030d070193ea56d6a8332",
+        "fields.py": "ab156f18af8aa9d39e4de0d409b8e726c312560fb339897ff8f58d9870295659",
+        "field_control.py": "5f3cbc4841c7fbbcc2a352c16b3c4cb6a4d4e049ca81d947177a2b76596cf4bc",
+        "primitive.py": "c961c06f8be6c103f088f242b6e7942d77266c604a28a75e1ba4d9f99e96240d",
+        "seds.py": "dfcb5611be2061cfb245fad80609e4953cf5be41f557f6bb2287ec4263ada9de"
+      },
+      "error": null,
+      "wall_seconds": 17.036277449005865,
+      "gripper_feedback_required": false,
+      "result_sha256": "c3d7a919d5ffac7804bb9d86c1f6f0e2a5566c989538a230c7b013377f086f25",
+      "request_sha256": "d2e57c271ece08f4362e84cde1ffce62262b5565c7ee99c19f69cfcb41bad814",
+      "trials": [
+        {
+          "trial": 0,
+          "task_predicate": true,
+          "geometric_sequence_complete": false,
+          "control_steps": 220,
+          "completed_fields": 16,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "121f7dda580dbaaf34e1c3cf2ef88e5f1a7a5b679823263f7f79277304c4966c",
+          "final_goal_predicates": null
+        },
+        {
+          "trial": 1,
+          "task_predicate": true,
+          "geometric_sequence_complete": false,
+          "control_steps": 220,
+          "completed_fields": 16,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "24a250ec084bcde42921467a848c6d796a4ccad72dbf40c7b5b3092652d0a50f",
+          "final_goal_predicates": null
+        },
+        {
+          "trial": 2,
+          "task_predicate": false,
+          "geometric_sequence_complete": false,
+          "control_steps": 220,
+          "completed_fields": 11,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "97bcc14cdd715fe34eb669bd8a05c46046a9471bd0b1c80b2f27d4b4a168c505",
+          "final_goal_predicates": null
+        }
+      ]
+    },
+    {
+      "directory": "linear_execution_6000_budget150",
+      "status": "complete",
+      "worker_status": "complete",
+      "source_episode_index": 6000,
+      "mode": "fields",
+      "environment": {
+        "python": "3.8.20",
+        "robosuite": "1.4.1",
+        "mujoco": "3.2.3",
+        "numpy": "1.22.4",
+        "scipy": "1.10.1"
+      },
+      "max_steps": 330,
+      "source_sha256": {
+        "osc.py": "cfa62a0e719bc53ef0c701efa66f7b3e2272d4fca2150ec73c05bb145eba85cb",
+        "base_controller.py": "61f99a2daeb4eb6e39bfb996d94c5a5689ef3bc771d030d070193ea56d6a8332",
+        "fields.py": "4ba97e2a9e169e51ba6de8e697d45f4739c3898baa0aa741d37270fe53ef088e",
+        "field_control.py": "5f3cbc4841c7fbbcc2a352c16b3c4cb6a4d4e049ca81d947177a2b76596cf4bc",
+        "primitive.py": "f887804438d508dd52a06f4103a96f57ed7dfa8bdd3ec8f4e60aa823c29bc833",
+        "seds.py": "823d6943d8c227585b939b0a48d96f5d8f6f71617c34d34e7be3bf3049123406"
+      },
+      "error": null,
+      "wall_seconds": 19.611176334001357,
+      "gripper_feedback_required": false,
+      "result_sha256": "efd784f726d91bf02de04f9f2ea83dcd951baa1fcf5dfe7d5579f41a02704598",
+      "request_sha256": "027f3a43aa2d1b6ff444c8923acdde1617ec62a3abd07000737edcfd986b024f",
+      "trials": [
+        {
+          "trial": 0,
+          "task_predicate": true,
+          "geometric_sequence_complete": true,
+          "control_steps": 229,
+          "completed_fields": 17,
+          "status": "geometric_sequence_complete",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "057ee906ea6b48cd2dc52418d3f324a01fecae1f2ebac6fa0ec9e3edc5af571f",
+          "final_goal_predicates": null
+        },
+        {
+          "trial": 1,
+          "task_predicate": true,
+          "geometric_sequence_complete": true,
+          "control_steps": 229,
+          "completed_fields": 17,
+          "status": "geometric_sequence_complete",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "16179a3b0df146a56f4ff93541f96d1d22ee087dbf17c80aff025c0bfc7e68f3",
+          "final_goal_predicates": null
+        },
+        {
+          "trial": 2,
+          "task_predicate": true,
+          "geometric_sequence_complete": true,
+          "control_steps": 305,
+          "completed_fields": 17,
+          "status": "geometric_sequence_complete",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "b2013ba29a008cb67427338c7292e6cb793052c098217a93b21f033ad28b80f2",
+          "final_goal_predicates": null
+        }
+      ]
+    },
+    {
+      "directory": "linear_execution_6050",
+      "status": "complete",
+      "worker_status": "complete",
+      "source_episode_index": 6050,
+      "mode": "fields",
+      "environment": {
+        "python": "3.8.20",
+        "robosuite": "1.4.1",
+        "mujoco": "3.2.3",
+        "numpy": "1.22.4",
+        "scipy": "1.10.1"
+      },
+      "max_steps": 220,
+      "source_sha256": {
+        "osc.py": "cfa62a0e719bc53ef0c701efa66f7b3e2272d4fca2150ec73c05bb145eba85cb",
+        "base_controller.py": "61f99a2daeb4eb6e39bfb996d94c5a5689ef3bc771d030d070193ea56d6a8332",
+        "fields.py": "4ba97e2a9e169e51ba6de8e697d45f4739c3898baa0aa741d37270fe53ef088e",
+        "field_control.py": "5f3cbc4841c7fbbcc2a352c16b3c4cb6a4d4e049ca81d947177a2b76596cf4bc",
+        "primitive.py": "f887804438d508dd52a06f4103a96f57ed7dfa8bdd3ec8f4e60aa823c29bc833",
+        "seds.py": "823d6943d8c227585b939b0a48d96f5d8f6f71617c34d34e7be3bf3049123406"
+      },
+      "error": null,
+      "wall_seconds": 16.84437026400701,
+      "gripper_feedback_required": false,
+      "result_sha256": "5fce20ddf2642b13e41570c7c71b024ef3dc249737d5e98129a970a3acee82f0",
+      "request_sha256": "2f4284bbfc040f74814d0cd0acd4967a1522ff7d35661381e8be17800ab765f4",
+      "trials": [
+        {
+          "trial": 0,
+          "task_predicate": true,
+          "geometric_sequence_complete": false,
+          "control_steps": 220,
+          "completed_fields": 12,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "ffdc158e224372727d2ba9f5f641a4f41efb95e9fa23f2d62a4fdb753cf39e5b",
+          "final_goal_predicates": null
+        },
+        {
+          "trial": 1,
+          "task_predicate": true,
+          "geometric_sequence_complete": false,
+          "control_steps": 220,
+          "completed_fields": 12,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "bb308363e5f78cfe171452177a1fdaeca655702565c55a4a527f0e2eb008ab28",
+          "final_goal_predicates": null
+        },
+        {
+          "trial": 2,
+          "task_predicate": true,
+          "geometric_sequence_complete": false,
+          "control_steps": 220,
+          "completed_fields": 12,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "977ec1451ce6cfa82488fd0e3e0e94456072a783a63bfe7fb123e7d2dba7851f",
+          "final_goal_predicates": null
+        }
+      ]
+    },
+    {
+      "directory": "replay_linear_execution_200",
+      "status": "complete",
+      "worker_status": "complete",
+      "source_episode_index": 200,
+      "mode": "fields",
+      "environment": {
+        "python": "3.8.20",
+        "robosuite": "1.4.1",
+        "mujoco": "3.2.3",
+        "numpy": "1.22.4",
+        "scipy": "1.10.1"
+      },
+      "max_steps": 520,
+      "source_sha256": {
+        "osc.py": "cfa62a0e719bc53ef0c701efa66f7b3e2272d4fca2150ec73c05bb145eba85cb",
+        "base_controller.py": "61f99a2daeb4eb6e39bfb996d94c5a5689ef3bc771d030d070193ea56d6a8332",
+        "fields.py": "6671ac745e2677de5a0b8c7c8b13d450ba303ffc90c74be03feb374f3379dee1",
+        "field_control.py": "5f3cbc4841c7fbbcc2a352c16b3c4cb6a4d4e049ca81d947177a2b76596cf4bc",
+        "primitive.py": "aac653f44f650eea58821390888ceba047180e1c9c3beaad85d68f6d0e4f29d0",
+        "seds.py": "f01e4e10285f4210133db7522f70d88bde19340a52c42f1f8709f99df5d54e7c"
+      },
+      "error": null,
+      "wall_seconds": 26.06167623800866,
+      "gripper_feedback_required": true,
+      "result_sha256": "152383e69ba2265e38d35c480b43bf3146475ddb3745e3725443ac1836f31a95",
+      "request_sha256": "47c7698c61d9d3d369ce2a2fc2284efc86664ca1c6bc5f4bcec83a3b55047eb3",
+      "trials": [
+        {
+          "trial": 0,
+          "task_predicate": false,
+          "geometric_sequence_complete": true,
+          "control_steps": 474,
+          "completed_fields": 39,
+          "status": "geometric_sequence_complete",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "367a3e5d5ed913d46cfc685c67dea5e544b9298840a65fe31048bff65dcbb1e6",
+          "final_goal_predicates": [
+            {
+              "predicate": [
+                "in",
+                "alphabet_soup_1",
+                "basket_1_contain_region"
+              ],
+              "value": true
+            },
+            {
+              "predicate": [
+                "in",
+                "cream_cheese_1",
+                "basket_1_contain_region"
+              ],
+              "value": false
+            }
+          ]
+        },
+        {
+          "trial": 1,
+          "task_predicate": false,
+          "geometric_sequence_complete": true,
+          "control_steps": 471,
+          "completed_fields": 39,
+          "status": "geometric_sequence_complete",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "389442e5857516297361b24eb068011ad6a3bfed78715f1adecdfa594fde25fa",
+          "final_goal_predicates": [
+            {
+              "predicate": [
+                "in",
+                "alphabet_soup_1",
+                "basket_1_contain_region"
+              ],
+              "value": true
+            },
+            {
+              "predicate": [
+                "in",
+                "cream_cheese_1",
+                "basket_1_contain_region"
+              ],
+              "value": false
+            }
+          ]
+        },
+        {
+          "trial": 2,
+          "task_predicate": false,
+          "geometric_sequence_complete": true,
+          "control_steps": 479,
+          "completed_fields": 39,
+          "status": "geometric_sequence_complete",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "a7a18c7d8237049dc7c177821bcb8be352d19e305a4fb5a664bf5635b531900d",
+          "final_goal_predicates": [
+            {
+              "predicate": [
+                "in",
+                "alphabet_soup_1",
+                "basket_1_contain_region"
+              ],
+              "value": true
+            },
+            {
+              "predicate": [
+                "in",
+                "cream_cheese_1",
+                "basket_1_contain_region"
+              ],
+              "value": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "directory": "replay_linear_tight_execution_200",
+      "status": "complete",
+      "worker_status": "complete",
+      "source_episode_index": 200,
+      "mode": "fields",
+      "environment": {
+        "python": "3.8.20",
+        "robosuite": "1.4.1",
+        "mujoco": "3.2.3",
+        "numpy": "1.22.4",
+        "scipy": "1.10.1"
+      },
+      "max_steps": 520,
+      "source_sha256": {
+        "osc.py": "cfa62a0e719bc53ef0c701efa66f7b3e2272d4fca2150ec73c05bb145eba85cb",
+        "base_controller.py": "61f99a2daeb4eb6e39bfb996d94c5a5689ef3bc771d030d070193ea56d6a8332",
+        "fields.py": "6671ac745e2677de5a0b8c7c8b13d450ba303ffc90c74be03feb374f3379dee1",
+        "field_control.py": "5f3cbc4841c7fbbcc2a352c16b3c4cb6a4d4e049ca81d947177a2b76596cf4bc",
+        "primitive.py": "aac653f44f650eea58821390888ceba047180e1c9c3beaad85d68f6d0e4f29d0",
+        "seds.py": "f01e4e10285f4210133db7522f70d88bde19340a52c42f1f8709f99df5d54e7c"
+      },
+      "error": null,
+      "wall_seconds": 29.45267085499654,
+      "gripper_feedback_required": true,
+      "result_sha256": "274d1834a30cd4a7815ddae879b4b1843e1d6c266a8c8a488d54d72db3c29f93",
+      "request_sha256": "b6e4fbe1c73173dfbc7396d7c69b991b1ad2ff6456f359f11fb09176211ce43b",
+      "trials": [
+        {
+          "trial": 0,
+          "task_predicate": false,
+          "geometric_sequence_complete": false,
+          "control_steps": 520,
+          "completed_fields": 8,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "0730c491ac83254608b304d0f323d17042322669b61fc51cb3be80f2d7a8bd9e",
+          "final_goal_predicates": [
+            {
+              "predicate": [
+                "in",
+                "alphabet_soup_1",
+                "basket_1_contain_region"
+              ],
+              "value": false
+            },
+            {
+              "predicate": [
+                "in",
+                "cream_cheese_1",
+                "basket_1_contain_region"
+              ],
+              "value": false
+            }
+          ]
+        },
+        {
+          "trial": 1,
+          "task_predicate": false,
+          "geometric_sequence_complete": false,
+          "control_steps": 520,
+          "completed_fields": 8,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "306d6c9302f2f794f41b47e1b5aae126dd2bbe406b8b579c0b9d31b3cc489073",
+          "final_goal_predicates": [
+            {
+              "predicate": [
+                "in",
+                "alphabet_soup_1",
+                "basket_1_contain_region"
+              ],
+              "value": false
+            },
+            {
+              "predicate": [
+                "in",
+                "cream_cheese_1",
+                "basket_1_contain_region"
+              ],
+              "value": false
+            }
+          ]
+        },
+        {
+          "trial": 2,
+          "task_predicate": false,
+          "geometric_sequence_complete": false,
+          "control_steps": 520,
+          "completed_fields": 27,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "0aa582823f071a6ff7216ba05de20389fe4bbd5fa0a56bef528eb65e7a10dd6f",
+          "final_goal_predicates": [
+            {
+              "predicate": [
+                "in",
+                "alphabet_soup_1",
+                "basket_1_contain_region"
+              ],
+              "value": true
+            },
+            {
+              "predicate": [
+                "in",
+                "cream_cheese_1",
+                "basket_1_contain_region"
+              ],
+              "value": false
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "directory": "source_replay_200_audit",
+      "status": "complete",
+      "worker_status": "complete",
+      "source_episode_index": 200,
+      "mode": "source_actions",
+      "environment": {
+        "python": "3.8.20",
+        "robosuite": "1.4.1",
+        "mujoco": "3.2.3",
+        "numpy": "1.22.4",
+        "scipy": "1.10.1"
+      },
+      "max_steps": 520,
+      "source_sha256": {
+        "osc.py": "cfa62a0e719bc53ef0c701efa66f7b3e2272d4fca2150ec73c05bb145eba85cb",
+        "base_controller.py": "61f99a2daeb4eb6e39bfb996d94c5a5689ef3bc771d030d070193ea56d6a8332",
+        "fields.py": "176665afdb7c87bae8e55ae783a33c15dbe998594c921abe9d52e98a7b23e4bf",
+        "field_control.py": "5f3cbc4841c7fbbcc2a352c16b3c4cb6a4d4e049ca81d947177a2b76596cf4bc",
+        "primitive.py": "a624bad0b02ca69ce1eb076d7294df11109c9b76d74a980e2f9c79f024fd2356",
+        "seds.py": "823d6943d8c227585b939b0a48d96f5d8f6f71617c34d34e7be3bf3049123406"
+      },
+      "error": null,
+      "wall_seconds": 5.473258817990427,
+      "gripper_feedback_required": false,
+      "result_sha256": "ba7138c80a72833f1892941314d13f22ea7b9994845b23f2a18c7c1d8b54936c",
+      "request_sha256": "311168a20e978577fa83189caf1621cf50ff0aa93509712778a3e0e5a56066c4",
+      "trials": [
+        {
+          "trial": 0,
+          "task_predicate": true,
+          "geometric_sequence_complete": false,
+          "control_steps": 242,
+          "completed_fields": 0,
+          "status": "complete",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "1f73778feb366a570d117eda3e2497978299659fb16dc16224dcb3d0c156a9a9",
+          "final_goal_predicates": [
+            {
+              "predicate": [
+                "in",
+                "alphabet_soup_1",
+                "basket_1_contain_region"
+              ],
+              "value": true
+            },
+            {
+              "predicate": [
+                "in",
+                "cream_cheese_1",
+                "basket_1_contain_region"
+              ],
+              "value": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "directory": "source_replay_200_audit_v2",
+      "status": "complete",
+      "worker_status": "complete",
+      "source_episode_index": 200,
+      "mode": "source_actions",
+      "environment": {
+        "python": "3.8.20",
+        "robosuite": "1.4.1",
+        "mujoco": "3.2.3",
+        "numpy": "1.22.4",
+        "scipy": "1.10.1"
+      },
+      "max_steps": 520,
+      "source_sha256": {
+        "osc.py": "cfa62a0e719bc53ef0c701efa66f7b3e2272d4fca2150ec73c05bb145eba85cb",
+        "base_controller.py": "61f99a2daeb4eb6e39bfb996d94c5a5689ef3bc771d030d070193ea56d6a8332",
+        "fields.py": "6671ac745e2677de5a0b8c7c8b13d450ba303ffc90c74be03feb374f3379dee1",
+        "field_control.py": "5f3cbc4841c7fbbcc2a352c16b3c4cb6a4d4e049ca81d947177a2b76596cf4bc",
+        "primitive.py": "01c29e871046d9496ac9d02192bfe54332f0ef5afe132ecee617bcb4b81da052",
+        "seds.py": "823d6943d8c227585b939b0a48d96f5d8f6f71617c34d34e7be3bf3049123406"
+      },
+      "error": null,
+      "wall_seconds": 5.744994762004353,
+      "gripper_feedback_required": false,
+      "result_sha256": "f7466e0a09262a2b773ad315bfc9475534d76a175efe3634212eeca13cf88336",
+      "request_sha256": "9e867d027eef5b66d1d33c84efb48be345f67a9110f7cb27b77626aab228e7c9",
+      "trials": [
+        {
+          "trial": 0,
+          "task_predicate": true,
+          "geometric_sequence_complete": false,
+          "control_steps": 242,
+          "completed_fields": 0,
+          "status": "complete",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "1ee974426ff8c5be8cf3f14a0e6d3c6e1dfe1917d94fc5a16d6dd83f289fbee6",
+          "final_goal_predicates": [
+            {
+              "predicate": [
+                "in",
+                "alphabet_soup_1",
+                "basket_1_contain_region"
+              ],
+              "value": true
+            },
+            {
+              "predicate": [
+                "in",
+                "cream_cheese_1",
+                "basket_1_contain_region"
+              ],
+              "value": true
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "directory": "source_replay_200_v2",
+      "status": "complete",
+      "worker_status": "complete",
+      "source_episode_index": 200,
+      "mode": "source_actions",
+      "environment": {
+        "python": "3.8.20",
+        "robosuite": "1.4.1",
+        "mujoco": "3.2.3",
+        "numpy": "1.22.4",
+        "scipy": "1.10.1"
+      },
+      "max_steps": 520,
+      "source_sha256": {
+        "osc.py": "cfa62a0e719bc53ef0c701efa66f7b3e2272d4fca2150ec73c05bb145eba85cb",
+        "base_controller.py": "61f99a2daeb4eb6e39bfb996d94c5a5689ef3bc771d030d070193ea56d6a8332",
+        "fields.py": "ab156f18af8aa9d39e4de0d409b8e726c312560fb339897ff8f58d9870295659",
+        "field_control.py": "5f3cbc4841c7fbbcc2a352c16b3c4cb6a4d4e049ca81d947177a2b76596cf4bc",
+        "primitive.py": "c961c06f8be6c103f088f242b6e7942d77266c604a28a75e1ba4d9f99e96240d",
+        "seds.py": "dfcb5611be2061cfb245fad80609e4953cf5be41f557f6bb2287ec4263ada9de"
+      },
+      "error": null,
+      "wall_seconds": 5.30900593700062,
+      "gripper_feedback_required": false,
+      "result_sha256": "44b1b8387d65abebca4ebb28d886c9acfe6ec4e0b994fa0bbaf29e38b6b6ca20",
+      "request_sha256": "3103b2953f26405cef4b15dbf419c3184a7b34b45ea50338660b8de1af60d3ad",
+      "trials": [
+        {
+          "trial": 0,
+          "task_predicate": true,
+          "geometric_sequence_complete": false,
+          "control_steps": 242,
+          "completed_fields": 0,
+          "status": "complete",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "1b8b8d69357063a311acf3d8b61be56c779fbc45ab98820330437020f433c165",
+          "final_goal_predicates": null
+        }
+      ]
+    },
+    {
+      "directory": "source_replay_304_v2",
+      "status": "complete",
+      "worker_status": "complete",
+      "source_episode_index": 304,
+      "mode": "source_actions",
+      "environment": {
+        "python": "3.8.20",
+        "robosuite": "1.4.1",
+        "mujoco": "3.2.3",
+        "numpy": "1.22.4",
+        "scipy": "1.10.1"
+      },
+      "max_steps": 520,
+      "source_sha256": {
+        "osc.py": "cfa62a0e719bc53ef0c701efa66f7b3e2272d4fca2150ec73c05bb145eba85cb",
+        "base_controller.py": "61f99a2daeb4eb6e39bfb996d94c5a5689ef3bc771d030d070193ea56d6a8332",
+        "fields.py": "ab156f18af8aa9d39e4de0d409b8e726c312560fb339897ff8f58d9870295659",
+        "field_control.py": "5f3cbc4841c7fbbcc2a352c16b3c4cb6a4d4e049ca81d947177a2b76596cf4bc",
+        "primitive.py": "c961c06f8be6c103f088f242b6e7942d77266c604a28a75e1ba4d9f99e96240d",
+        "seds.py": "dfcb5611be2061cfb245fad80609e4953cf5be41f557f6bb2287ec4263ada9de"
+      },
+      "error": null,
+      "wall_seconds": 6.758052291988861,
+      "gripper_feedback_required": false,
+      "result_sha256": "2a126365994a2dca559847410c7e9c8a419e432b7a3b016d7dcbfd62e6632000",
+      "request_sha256": "d4cb1970d010b7c8cb9d28cf99b3ce962140eb97237be64245253554bf15af67",
+      "trials": [
+        {
+          "trial": 0,
+          "task_predicate": true,
+          "geometric_sequence_complete": false,
+          "control_steps": 257,
+          "completed_fields": 0,
+          "status": "complete",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "e4c627fbc5597641a51502e6bf1a807a7f837bf5bb8c6cc8a413830b5c6d29d3",
+          "final_goal_predicates": null
+        }
+      ]
+    },
+    {
+      "directory": "source_replay_5800_v2",
+      "status": "complete",
+      "worker_status": "complete",
+      "source_episode_index": 5800,
+      "mode": "source_actions",
+      "environment": {
+        "python": "3.8.20",
+        "robosuite": "1.4.1",
+        "mujoco": "3.2.3",
+        "numpy": "1.22.4",
+        "scipy": "1.10.1"
+      },
+      "max_steps": 280,
+      "source_sha256": {
+        "osc.py": "cfa62a0e719bc53ef0c701efa66f7b3e2272d4fca2150ec73c05bb145eba85cb",
+        "base_controller.py": "61f99a2daeb4eb6e39bfb996d94c5a5689ef3bc771d030d070193ea56d6a8332",
+        "fields.py": "ab156f18af8aa9d39e4de0d409b8e726c312560fb339897ff8f58d9870295659",
+        "field_control.py": "5f3cbc4841c7fbbcc2a352c16b3c4cb6a4d4e049ca81d947177a2b76596cf4bc",
+        "primitive.py": "c961c06f8be6c103f088f242b6e7942d77266c604a28a75e1ba4d9f99e96240d",
+        "seds.py": "dfcb5611be2061cfb245fad80609e4953cf5be41f557f6bb2287ec4263ada9de"
+      },
+      "error": null,
+      "wall_seconds": 4.08238166400406,
+      "gripper_feedback_required": false,
+      "result_sha256": "50eccb6e2218e9dbc49337f3cfb3c7053e4dc4faf996d73d61cbe777b4b04617",
+      "request_sha256": "f5612b7fc368ab243a74c59a8416d65b5cf287861d3a749cf0103a573b644d78",
+      "trials": [
+        {
+          "trial": 0,
+          "task_predicate": true,
+          "geometric_sequence_complete": false,
+          "control_steps": 150,
+          "completed_fields": 0,
+          "status": "complete",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "0cc2a16891acd84a1d86531bd037171c35c8c2815cb805a3cdb4709cb94a32c8",
+          "final_goal_predicates": null
+        }
+      ]
+    },
+    {
+      "directory": "source_replay_6000_a",
+      "status": "complete",
+      "worker_status": "complete",
+      "source_episode_index": 6000,
+      "mode": "source_actions",
+      "environment": {
+        "python": "3.8.20",
+        "robosuite": "1.4.1",
+        "mujoco": "3.2.3",
+        "numpy": "1.22.4",
+        "scipy": "1.10.1"
+      },
+      "max_steps": 220,
+      "source_sha256": {
+        "osc.py": "cfa62a0e719bc53ef0c701efa66f7b3e2272d4fca2150ec73c05bb145eba85cb",
+        "base_controller.py": "61f99a2daeb4eb6e39bfb996d94c5a5689ef3bc771d030d070193ea56d6a8332",
+        "fields.py": "b5812214b6929a32887f34d18d0602d3f9d0827ad1d3dda2a8e17c9c483c8589",
+        "field_control.py": "5544235d5ce43f027988cf8943462d6c931f7090b1b98b792e1b238007c357f9",
+        "primitive.py": "37955780e34a8409aa0cfaace33de43d16e64070531efc5d1d4ff44bdf3a48b9"
+      },
+      "error": null,
+      "wall_seconds": 4.2470636749931145,
+      "gripper_feedback_required": false,
+      "result_sha256": "8723bf3b9a2488cd6fe3d515c86c74517c8e08b0269fbf03bb2168dbb2a48fcf",
+      "request_sha256": "99ed75353d9586cb606f446551645b5c6426929f15feecdd153582b51f9c7325",
+      "trials": [
+        {
+          "trial": 0,
+          "task_predicate": true,
+          "geometric_sequence_complete": false,
+          "control_steps": 98,
+          "completed_fields": 0,
+          "status": "complete",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "fd00f621e66193f71c219d368d8c073db2a070bb6104ac1587d05915c8845648",
+          "final_goal_predicates": null
+        }
+      ]
+    },
+    {
+      "directory": "source_replay_6000_v2",
+      "status": "complete",
+      "worker_status": "complete",
+      "source_episode_index": 6000,
+      "mode": "source_actions",
+      "environment": {
+        "python": "3.8.20",
+        "robosuite": "1.4.1",
+        "mujoco": "3.2.3",
+        "numpy": "1.22.4",
+        "scipy": "1.10.1"
+      },
+      "max_steps": 220,
+      "source_sha256": {
+        "osc.py": "cfa62a0e719bc53ef0c701efa66f7b3e2272d4fca2150ec73c05bb145eba85cb",
+        "base_controller.py": "61f99a2daeb4eb6e39bfb996d94c5a5689ef3bc771d030d070193ea56d6a8332",
+        "fields.py": "ab156f18af8aa9d39e4de0d409b8e726c312560fb339897ff8f58d9870295659",
+        "field_control.py": "5f3cbc4841c7fbbcc2a352c16b3c4cb6a4d4e049ca81d947177a2b76596cf4bc",
+        "primitive.py": "c961c06f8be6c103f088f242b6e7942d77266c604a28a75e1ba4d9f99e96240d",
+        "seds.py": "dfcb5611be2061cfb245fad80609e4953cf5be41f557f6bb2287ec4263ada9de"
+      },
+      "error": null,
+      "wall_seconds": 4.051197767999838,
+      "gripper_feedback_required": false,
+      "result_sha256": "04728e54dcae943a6223aae908a8a3d9ece1dde359810e16db44e8d37709dfe3",
+      "request_sha256": "8c5d7e5d68987f5290ef3702f7a69e2fb403d0eb243766770325abbd1200e13a",
+      "trials": [
+        {
+          "trial": 0,
+          "task_predicate": true,
+          "geometric_sequence_complete": false,
+          "control_steps": 98,
+          "completed_fields": 0,
+          "status": "complete",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "61991681d3824764403971b9f3656a69da78e8047f5a575237a23cee09ba476f",
+          "final_goal_predicates": null
+        }
+      ]
+    },
+    {
+      "directory": "source_replay_6050_v2",
+      "status": "complete",
+      "worker_status": "complete",
+      "source_episode_index": 6050,
+      "mode": "source_actions",
+      "environment": {
+        "python": "3.8.20",
+        "robosuite": "1.4.1",
+        "mujoco": "3.2.3",
+        "numpy": "1.22.4",
+        "scipy": "1.10.1"
+      },
+      "max_steps": 220,
+      "source_sha256": {
+        "osc.py": "cfa62a0e719bc53ef0c701efa66f7b3e2272d4fca2150ec73c05bb145eba85cb",
+        "base_controller.py": "61f99a2daeb4eb6e39bfb996d94c5a5689ef3bc771d030d070193ea56d6a8332",
+        "fields.py": "ab156f18af8aa9d39e4de0d409b8e726c312560fb339897ff8f58d9870295659",
+        "field_control.py": "5f3cbc4841c7fbbcc2a352c16b3c4cb6a4d4e049ca81d947177a2b76596cf4bc",
+        "primitive.py": "c961c06f8be6c103f088f242b6e7942d77266c604a28a75e1ba4d9f99e96240d",
+        "seds.py": "dfcb5611be2061cfb245fad80609e4953cf5be41f557f6bb2287ec4263ada9de"
+      },
+      "error": null,
+      "wall_seconds": 4.230510573994252,
+      "gripper_feedback_required": false,
+      "result_sha256": "2c683d81a92e4032571d011a68fb9f1283e85a67f3cdce2e21d6da781f653e36",
+      "request_sha256": "48872f7b584c57b290db59eaa1bd6dd8e63ffaf758d8f03572ceb364d68796e9",
+      "trials": [
+        {
+          "trial": 0,
+          "task_predicate": true,
+          "geometric_sequence_complete": false,
+          "control_steps": 103,
+          "completed_fields": 0,
+          "status": "complete",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "4158ca0c1130e81ad7e41198e5751b3810291945263b989fec006a45726d8f04",
+          "final_goal_predicates": null
+        }
+      ]
+    },
+    {
+      "directory": "strong_margin_execution_6000",
+      "status": "complete",
+      "worker_status": "complete",
+      "source_episode_index": 6000,
+      "mode": "fields",
+      "environment": {
+        "python": "3.8.20",
+        "robosuite": "1.4.1",
+        "mujoco": "3.2.3",
+        "numpy": "1.22.4",
+        "scipy": "1.10.1"
+      },
+      "max_steps": 220,
+      "source_sha256": {
+        "osc.py": "cfa62a0e719bc53ef0c701efa66f7b3e2272d4fca2150ec73c05bb145eba85cb",
+        "base_controller.py": "61f99a2daeb4eb6e39bfb996d94c5a5689ef3bc771d030d070193ea56d6a8332",
+        "fields.py": "4ba97e2a9e169e51ba6de8e697d45f4739c3898baa0aa741d37270fe53ef088e",
+        "field_control.py": "5f3cbc4841c7fbbcc2a352c16b3c4cb6a4d4e049ca81d947177a2b76596cf4bc",
+        "primitive.py": "f887804438d508dd52a06f4103a96f57ed7dfa8bdd3ec8f4e60aa823c29bc833",
+        "seds.py": "823d6943d8c227585b939b0a48d96f5d8f6f71617c34d34e7be3bf3049123406"
+      },
+      "error": null,
+      "wall_seconds": 17.32070814499457,
+      "gripper_feedback_required": false,
+      "result_sha256": "f4c44de45f7d253a82f94566f0965904839a1319e7946e311a2c9f853aa26b53",
+      "request_sha256": "7a3ebb6803fff6774ef8b617714f30b9aa3884c6b08e6b811f13b8155719c3f5",
+      "trials": [
+        {
+          "trial": 0,
+          "task_predicate": false,
+          "geometric_sequence_complete": false,
+          "control_steps": 220,
+          "completed_fields": 4,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "548dc188257d582aa3b3c41748cf64f7351f9f9559b2c538645083c359395d8e",
+          "final_goal_predicates": null
+        },
+        {
+          "trial": 1,
+          "task_predicate": false,
+          "geometric_sequence_complete": false,
+          "control_steps": 220,
+          "completed_fields": 7,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "8cea52fd3d0cb7b8c7a80c40af8af4f0a6fd6c9d9770fe05ac16cbf65d5c1949",
+          "final_goal_predicates": null
+        },
+        {
+          "trial": 2,
+          "task_predicate": false,
+          "geometric_sequence_complete": false,
+          "control_steps": 220,
+          "completed_fields": 5,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "9b94130d592c2ccedbd89e0ba6303fa3245f4a9ee90f1648b0d38b814c27f190",
+          "final_goal_predicates": null
+        }
+      ]
+    },
+    {
+      "directory": "strong_margin_execution_6000_budget150",
+      "status": "complete",
+      "worker_status": "complete",
+      "source_episode_index": 6000,
+      "mode": "fields",
+      "environment": {
+        "python": "3.8.20",
+        "robosuite": "1.4.1",
+        "mujoco": "3.2.3",
+        "numpy": "1.22.4",
+        "scipy": "1.10.1"
+      },
+      "max_steps": 330,
+      "source_sha256": {
+        "osc.py": "cfa62a0e719bc53ef0c701efa66f7b3e2272d4fca2150ec73c05bb145eba85cb",
+        "base_controller.py": "61f99a2daeb4eb6e39bfb996d94c5a5689ef3bc771d030d070193ea56d6a8332",
+        "fields.py": "4ba97e2a9e169e51ba6de8e697d45f4739c3898baa0aa741d37270fe53ef088e",
+        "field_control.py": "5f3cbc4841c7fbbcc2a352c16b3c4cb6a4d4e049ca81d947177a2b76596cf4bc",
+        "primitive.py": "f887804438d508dd52a06f4103a96f57ed7dfa8bdd3ec8f4e60aa823c29bc833",
+        "seds.py": "823d6943d8c227585b939b0a48d96f5d8f6f71617c34d34e7be3bf3049123406"
+      },
+      "error": null,
+      "wall_seconds": 24.868662349006627,
+      "gripper_feedback_required": false,
+      "result_sha256": "30b16b1cc00cff29766ec9c0a7c3874ba5e182ffead74ac721ba43fbac357295",
+      "request_sha256": "440e0b7f1a425902218fcc359d4eaae5b450fdb1697ec947f622c674fde0031c",
+      "trials": [
+        {
+          "trial": 0,
+          "task_predicate": false,
+          "geometric_sequence_complete": false,
+          "control_steps": 330,
+          "completed_fields": 6,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "c1c64d29d886e7feb67029e3b587e43d607f80e3a5f1170d952f23a1e8e01ed9",
+          "final_goal_predicates": null
+        },
+        {
+          "trial": 1,
+          "task_predicate": true,
+          "geometric_sequence_complete": false,
+          "control_steps": 330,
+          "completed_fields": 7,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "be5f25e60d1d7d9b2957ae49c7cfe5cbdcd2cfa340564711b61d6fa271462d7b",
+          "final_goal_predicates": null
+        },
+        {
+          "trial": 2,
+          "task_predicate": false,
+          "geometric_sequence_complete": false,
+          "control_steps": 330,
+          "completed_fields": 6,
+          "status": "task_budget_exhausted",
+          "intermediate_resets": 0,
+          "trajectory_sha256": "34e01e5cbe2ce1e5a6b5430b484ec2e8730aec76c3ca00c31b778437918a742c",
+          "final_goal_predicates": null
+        }
+      ]
+    }
+  ],
+  "operation_evidence": [
+    {
+      "file": "operation_evidence_200.json",
+      "sha256": "9c1f73c8ef858f467e74a3fd8da4f40fa971fe7bfd098e02e1a497557bfb0a86",
+      "schema": "vlds.libero.operation_evidence.v1",
+      "training_ready": false,
+      "thresholds": {
+        "dwell_seconds": 0.15,
+        "lift_metres": 0.02,
+        "relative_position_range_metres": 0.01,
+        "relative_rotation_range_radians": 0.17453292519943295,
+        "placement_speed_metres_per_second": 0.02
+      },
+      "collector_sha256": "7ba92b9c154371c20b98dcc9a2378aeffb04f48865826affec8da3477c80f90c",
+      "scope": "evaluation-only privileged evidence; candidates require factual and camera review; no validated observer",
+      "execution": {
+        "directory": "linear_execution_200_audit_v2",
+        "mode": "fields",
+        "source_signature": "82451e0509cd9da86fd825652c3fe697bd4728d7c97179b9be5556e1393339ee",
+        "source_episode_index": 200,
+        "seed": 20261122,
+        "source_manifest_sha256": "03d2c1f7c2ef60cfd00be950437a08747c6c0ca39bfea164987ebf47ab841794",
+        "initial_position": [
+          -0.04447301045956164,
+          -0.011746567773864463,
+          0.6791866336816637
+        ],
+        "request_sha256": "6a6c37f912f635ace6162100bc4f67af5443e0ae19e456a2808d6da283a44b23",
+        "result_sha256": "9a26393b57e4455598f5c4f4591cdfe82301240e7899efa920b0039b454bcd15",
+        "trials": [
+          {
+            "trajectory_file": "trial_0.hdf5",
+            "trajectory_sha256": "c3b0fe84c567a022a0f82a3e1994e1fd0e0ef5cf44be5a12c395c73ffdf73db5",
+            "trial": 0,
+            "status": "geometric_sequence_complete",
+            "task_success": false,
+            "completed_fields": 39,
+            "control_steps": 475,
+            "final_goal_predicates": [
+              {
+                "predicate": [
+                  "in",
+                  "alphabet_soup_1",
+                  "basket_1_contain_region"
+                ],
+                "value": true
+              },
+              {
+                "predicate": [
+                  "in",
+                  "cream_cheese_1",
+                  "basket_1_contain_region"
+                ],
+                "value": false
+              }
+            ],
+            "baseline_pose_basis": "first post-action sample; no exact pre-action object pose claimed",
+            "predicate_trace_available": true,
+            "objects": [
+              {
+                "object": "alphabet_soup_1",
+                "bilateral_contact_samples": 101,
+                "contact_intervals": [
+                  {
+                    "start_step": 111,
+                    "end_step": 211,
+                    "sample_count": 101,
+                    "sample_span_seconds": 5.000000000000693
+                  }
+                ],
+                "height_range_metres": 0.20132512574181383,
+                "maximum_lift_from_first_sample_metres": 0.20132512574181383,
+                "maximum_displacement_metres": 0.37038276111344287,
+                "lifted_contact_candidate_steps": [
+                  122
+                ]
+              },
+              {
+                "object": "basket_1",
+                "bilateral_contact_samples": 0,
+                "contact_intervals": [],
+                "height_range_metres": 1.1701221053206368e-07,
+                "maximum_lift_from_first_sample_metres": 2.3282707428684546e-09,
+                "maximum_displacement_metres": 1.1469151609845021e-07,
+                "lifted_contact_candidate_steps": []
+              },
+              {
+                "object": "cream_cheese_1",
+                "bilateral_contact_samples": 5,
+                "contact_intervals": [
+                  {
+                    "start_step": 332,
+                    "end_step": 334,
+                    "sample_count": 3,
+                    "sample_span_seconds": 0.09999999999994458
+                  },
+                  {
+                    "start_step": 336,
+                    "end_step": 337,
+                    "sample_count": 2,
+                    "sample_span_seconds": 0.04999999999997229
+                  }
+                ],
+                "height_range_metres": 0.007257114274935417,
+                "maximum_lift_from_first_sample_metres": 0.007134472478576459,
+                "maximum_displacement_metres": 0.020068036733307145,
+                "lifted_contact_candidate_steps": []
+              },
+              {
+                "object": "ketchup_1",
+                "bilateral_contact_samples": 0,
+                "contact_intervals": [],
+                "height_range_metres": 0.0788492824655126,
+                "maximum_lift_from_first_sample_metres": 0.0,
+                "maximum_displacement_metres": 0.07884928305139186,
+                "lifted_contact_candidate_steps": []
+              },
+              {
+                "object": "tomato_sauce_1",
+                "bilateral_contact_samples": 0,
+                "contact_intervals": [],
+                "height_range_metres": 3.810396442816e-12,
+                "maximum_lift_from_first_sample_metres": 3.810396442816e-12,
+                "maximum_displacement_metres": 4.731052367018481e-11,
+                "lifted_contact_candidate_steps": []
+              }
+            ],
+            "candidates": [
+              {
+                "kind": "lifted_contact_candidate",
+                "object": "alphabet_soup_1",
+                "observation_index": 122,
+                "control_step": 122,
+                "simulation_time": 6.349999999999523,
+                "field_index": 9,
+                "window_start_step": 119,
+                "verified": false,
+                "observable": false,
+                "review_status": "requires image and factual review; not a fitting boundary",
+                "evidence": {
+                  "basis": "privileged sustained bilateral contact, lift, and relative pose consistency",
+                  "minimum_lift_metres": 0.022948824560809933,
+                  "relative_position_range_metres": 3.7520135363598985e-05,
+                  "relative_rotation_range_radians": 0.0014649709781189646,
+                  "contact_run_start_step": 111
+                },
+                "causal_image_group": "audit_observations/120",
+                "causal_image_age_seconds": 0.09999999999998899
+              },
+              {
+                "kind": "placement_candidate",
+                "object": "alphabet_soup_1",
+                "observation_index": 223,
+                "control_step": 223,
+                "simulation_time": 11.400000000000476,
+                "field_index": 20,
+                "window_start_step": 220,
+                "verified": false,
+                "observable": false,
+                "review_status": "requires image and factual review; not a fitting boundary",
+                "evidence": {
+                  "basis": "privileged predicate, open command, no bilateral contact, low object speed",
+                  "predicate": [
+                    "in",
+                    "alphabet_soup_1",
+                    "basket_1_contain_region"
+                  ],
+                  "maximum_object_speed_metres_per_second": 0.008832316398381898
+                },
+                "causal_image_group": "audit_observations/220",
+                "causal_image_age_seconds": 0.1500000000000501
+              }
+            ]
+          }
+        ]
+      },
+      "source_replay": {
+        "directory": "source_replay_200_audit_v2",
+        "mode": "source_actions",
+        "source_signature": "82451e0509cd9da86fd825652c3fe697bd4728d7c97179b9be5556e1393339ee",
+        "source_episode_index": 200,
+        "seed": 20261122,
+        "source_manifest_sha256": "03d2c1f7c2ef60cfd00be950437a08747c6c0ca39bfea164987ebf47ab841794",
+        "initial_position": [
+          -0.04447301045956164,
+          -0.011746567773864463,
+          0.6791866336816637
+        ],
+        "request_sha256": "9e867d027eef5b66d1d33c84efb48be345f67a9110f7cb27b77626aab228e7c9",
+        "result_sha256": "f7466e0a09262a2b773ad315bfc9475534d76a175efe3634212eeca13cf88336",
+        "trials": [
+          {
+            "trajectory_file": "trial_0.hdf5",
+            "trajectory_sha256": "1ee974426ff8c5be8cf3f14a0e6d3c6e1dfe1917d94fc5a16d6dd83f289fbee6",
+            "trial": 0,
+            "status": "complete",
+            "task_success": true,
+            "completed_fields": 0,
+            "control_steps": 242,
+            "final_goal_predicates": [
+              {
+                "predicate": [
+                  "in",
+                  "alphabet_soup_1",
+                  "basket_1_contain_region"
+                ],
+                "value": true
+              },
+              {
+                "predicate": [
+                  "in",
+                  "cream_cheese_1",
+                  "basket_1_contain_region"
+                ],
+                "value": true
+              }
+            ],
+            "baseline_pose_basis": "first post-action sample; no exact pre-action object pose claimed",
+            "predicate_trace_available": true,
+            "objects": [
+              {
+                "object": "alphabet_soup_1",
+                "bilateral_contact_samples": 50,
+                "contact_intervals": [
+                  {
+                    "start_step": 63,
+                    "end_step": 112,
+                    "sample_count": 50,
+                    "sample_span_seconds": 2.4499999999997306
+                  }
+                ],
+                "height_range_metres": 0.20753559633031882,
+                "maximum_lift_from_first_sample_metres": 0.2075283272581292,
+                "maximum_displacement_metres": 0.3688142200975455,
+                "lifted_contact_candidate_steps": [
+                  70
+                ]
+              },
+              {
+                "object": "basket_1",
+                "bilateral_contact_samples": 0,
+                "contact_intervals": [],
+                "height_range_metres": 2.5190036334610255e-08,
+                "maximum_lift_from_first_sample_metres": 2.3282707428684546e-09,
+                "maximum_displacement_metres": 2.2885022644846007e-08,
+                "lifted_contact_candidate_steps": []
+              },
+              {
+                "object": "cream_cheese_1",
+                "bilateral_contact_samples": 49,
+                "contact_intervals": [
+                  {
+                    "start_step": 180,
+                    "end_step": 228,
+                    "sample_count": 49,
+                    "sample_span_seconds": 2.4000000000008015
+                  }
+                ],
+                "height_range_metres": 0.2452443384803329,
+                "maximum_lift_from_first_sample_metres": 0.24521658360146192,
+                "maximum_displacement_metres": 0.3134554680885656,
+                "lifted_contact_candidate_steps": [
+                  188
+                ]
+              },
+              {
+                "object": "ketchup_1",
+                "bilateral_contact_samples": 0,
+                "contact_intervals": [],
+                "height_range_metres": 0.0788492824655126,
+                "maximum_lift_from_first_sample_metres": 0.0,
+                "maximum_displacement_metres": 0.07884928305139186,
+                "lifted_contact_candidate_steps": []
+              },
+              {
+                "object": "tomato_sauce_1",
+                "bilateral_contact_samples": 0,
+                "contact_intervals": [],
+                "height_range_metres": 3.810396442816e-12,
+                "maximum_lift_from_first_sample_metres": 3.810396442816e-12,
+                "maximum_displacement_metres": 4.731052367018481e-11,
+                "lifted_contact_candidate_steps": []
+              }
+            ],
+            "candidates": [
+              {
+                "kind": "lifted_contact_candidate",
+                "object": "alphabet_soup_1",
+                "observation_index": 70,
+                "control_step": 70,
+                "simulation_time": 3.7499999999998086,
+                "field_index": -1,
+                "window_start_step": 67,
+                "verified": false,
+                "observable": false,
+                "review_status": "requires image and factual review; not a fitting boundary",
+                "evidence": {
+                  "basis": "privileged sustained bilateral contact, lift, and relative pose consistency",
+                  "minimum_lift_metres": 0.021470471132632896,
+                  "relative_position_range_metres": 3.249470513784623e-05,
+                  "relative_rotation_range_radians": 0.0006984068037129549,
+                  "contact_run_start_step": 63
+                },
+                "causal_image_group": "audit_observations/70",
+                "causal_image_age_seconds": 0.0
+              },
+              {
+                "kind": "placement_candidate",
+                "object": "alphabet_soup_1",
+                "observation_index": 129,
+                "control_step": 129,
+                "simulation_time": 6.699999999999484,
+                "field_index": -1,
+                "window_start_step": 126,
+                "verified": false,
+                "observable": false,
+                "review_status": "requires image and factual review; not a fitting boundary",
+                "evidence": {
+                  "basis": "privileged predicate, open command, no bilateral contact, low object speed",
+                  "predicate": [
+                    "in",
+                    "alphabet_soup_1",
+                    "basket_1_contain_region"
+                  ],
+                  "maximum_object_speed_metres_per_second": 0.014311908151582715
+                },
+                "causal_image_group": "audit_observations/125",
+                "causal_image_age_seconds": 0.19999999999997797
+              },
+              {
+                "kind": "lifted_contact_candidate",
+                "object": "cream_cheese_1",
+                "observation_index": 188,
+                "control_step": 188,
+                "simulation_time": 9.649999999999892,
+                "field_index": -1,
+                "window_start_step": 185,
+                "verified": false,
+                "observable": false,
+                "review_status": "requires image and factual review; not a fitting boundary",
+                "evidence": {
+                  "basis": "privileged sustained bilateral contact, lift, and relative pose consistency",
+                  "minimum_lift_metres": 0.023897092550730026,
+                  "relative_position_range_metres": 0.0008641859334202453,
+                  "relative_rotation_range_radians": 0.006518426382136248,
+                  "contact_run_start_step": 180
+                },
+                "causal_image_group": "audit_observations/185",
+                "causal_image_age_seconds": 0.1500000000000501
+              },
+              {
+                "kind": "placement_candidate",
+                "object": "cream_cheese_1",
+                "observation_index": 237,
+                "control_step": 237,
+                "simulation_time": 12.10000000000071,
+                "field_index": -1,
+                "window_start_step": 234,
+                "verified": false,
+                "observable": false,
+                "review_status": "requires image and factual review; not a fitting boundary",
+                "evidence": {
+                  "basis": "privileged predicate, open command, no bilateral contact, low object speed",
+                  "predicate": [
+                    "in",
+                    "cream_cheese_1",
+                    "basket_1_contain_region"
+                  ],
+                  "maximum_object_speed_metres_per_second": 0.016384201574203314
+                },
+                "causal_image_group": "audit_observations/235",
+                "causal_image_age_seconds": 0.1000000000000334
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "file": "operation_evidence_200_replay_teacher.json",
+      "sha256": "5debb6ec7d070daaa17972bfbda736aa144727558c03a8008a3c2639a97ae349",
+      "schema": "vlds.libero.operation_evidence.v1",
+      "training_ready": false,
+      "thresholds": {
+        "dwell_seconds": 0.15,
+        "lift_metres": 0.02,
+        "relative_position_range_metres": 0.01,
+        "relative_rotation_range_radians": 0.17453292519943295,
+        "placement_speed_metres_per_second": 0.02
+      },
+      "collector_sha256": "7ba92b9c154371c20b98dcc9a2378aeffb04f48865826affec8da3477c80f90c",
+      "scope": "evaluation-only privileged evidence; candidates require factual and camera review; no validated observer",
+      "execution": {
+        "directory": "replay_linear_execution_200",
+        "mode": "fields",
+        "source_signature": "82451e0509cd9da86fd825652c3fe697bd4728d7c97179b9be5556e1393339ee",
+        "source_episode_index": 200,
+        "seed": 20261122,
+        "source_manifest_sha256": "03d2c1f7c2ef60cfd00be950437a08747c6c0ca39bfea164987ebf47ab841794",
+        "initial_position": [
+          -0.04447301045956164,
+          -0.011746567773864463,
+          0.6791866336816637
+        ],
+        "request_sha256": "47c7698c61d9d3d369ce2a2fc2284efc86664ca1c6bc5f4bcec83a3b55047eb3",
+        "result_sha256": "152383e69ba2265e38d35c480b43bf3146475ddb3745e3725443ac1836f31a95",
+        "trials": [
+          {
+            "trajectory_file": "trial_0.hdf5",
+            "trajectory_sha256": "367a3e5d5ed913d46cfc685c67dea5e544b9298840a65fe31048bff65dcbb1e6",
+            "trial": 0,
+            "status": "geometric_sequence_complete",
+            "task_success": false,
+            "completed_fields": 39,
+            "control_steps": 474,
+            "final_goal_predicates": [
+              {
+                "predicate": [
+                  "in",
+                  "alphabet_soup_1",
+                  "basket_1_contain_region"
+                ],
+                "value": true
+              },
+              {
+                "predicate": [
+                  "in",
+                  "cream_cheese_1",
+                  "basket_1_contain_region"
+                ],
+                "value": false
+              }
+            ],
+            "baseline_pose_basis": "first post-action sample; no exact pre-action object pose claimed",
+            "predicate_trace_available": true,
+            "objects": [
+              {
+                "object": "alphabet_soup_1",
+                "bilateral_contact_samples": 101,
+                "contact_intervals": [
+                  {
+                    "start_step": 112,
+                    "end_step": 212,
+                    "sample_count": 101,
+                    "sample_span_seconds": 5.000000000000715
+                  }
+                ],
+                "height_range_metres": 0.20155280714665924,
+                "maximum_lift_from_first_sample_metres": 0.20155280714665924,
+                "maximum_displacement_metres": 0.3700854694583594,
+                "lifted_contact_candidate_steps": [
+                  123
+                ]
+              },
+              {
+                "object": "basket_1",
+                "bilateral_contact_samples": 0,
+                "contact_intervals": [],
+                "height_range_metres": 2.0935211342276716e-08,
+                "maximum_lift_from_first_sample_metres": 2.3282707428684546e-09,
+                "maximum_displacement_metres": 1.8615148671372895e-08,
+                "lifted_contact_candidate_steps": []
+              },
+              {
+                "object": "cream_cheese_1",
+                "bilateral_contact_samples": 2,
+                "contact_intervals": [
+                  {
+                    "start_step": 335,
+                    "end_step": 336,
+                    "sample_count": 2,
+                    "sample_span_seconds": 0.04999999999997229
+                  }
+                ],
+                "height_range_metres": 0.011690609776306649,
+                "maximum_lift_from_first_sample_metres": 0.011464231340686803,
+                "maximum_displacement_metres": 0.021285522748821742,
+                "lifted_contact_candidate_steps": []
+              },
+              {
+                "object": "ketchup_1",
+                "bilateral_contact_samples": 0,
+                "contact_intervals": [],
+                "height_range_metres": 0.0788492824655126,
+                "maximum_lift_from_first_sample_metres": 0.0,
+                "maximum_displacement_metres": 0.07884928305139186,
+                "lifted_contact_candidate_steps": []
+              },
+              {
+                "object": "tomato_sauce_1",
+                "bilateral_contact_samples": 0,
+                "contact_intervals": [],
+                "height_range_metres": 3.810396442816e-12,
+                "maximum_lift_from_first_sample_metres": 3.810396442816e-12,
+                "maximum_displacement_metres": 4.731052367018481e-11,
+                "lifted_contact_candidate_steps": []
+              }
+            ],
+            "candidates": [
+              {
+                "kind": "lifted_contact_candidate",
+                "object": "alphabet_soup_1",
+                "observation_index": 123,
+                "control_step": 123,
+                "simulation_time": 6.399999999999517,
+                "field_index": 9,
+                "window_start_step": 120,
+                "verified": false,
+                "observable": false,
+                "review_status": "requires image and factual review; not a fitting boundary",
+                "evidence": {
+                  "basis": "privileged sustained bilateral contact, lift, and relative pose consistency",
+                  "minimum_lift_metres": 0.023609086205576335,
+                  "relative_position_range_metres": 2.5918360203448647e-05,
+                  "relative_rotation_range_radians": 0.001965473953763012,
+                  "contact_run_start_step": 112
+                },
+                "causal_image_group": "audit_observations/120",
+                "causal_image_age_seconds": 0.14999999999998348
+              },
+              {
+                "kind": "placement_candidate",
+                "object": "alphabet_soup_1",
+                "observation_index": 222,
+                "control_step": 222,
+                "simulation_time": 11.35000000000046,
+                "field_index": 19,
+                "window_start_step": 219,
+                "verified": false,
+                "observable": false,
+                "review_status": "requires image and factual review; not a fitting boundary",
+                "evidence": {
+                  "basis": "privileged predicate, open command, no bilateral contact, low object speed",
+                  "predicate": [
+                    "in",
+                    "alphabet_soup_1",
+                    "basket_1_contain_region"
+                  ],
+                  "maximum_object_speed_metres_per_second": 0.010800283421708686
+                },
+                "causal_image_group": "audit_observations/220",
+                "causal_image_age_seconds": 0.1000000000000334
+              }
+            ]
+          },
+          {
+            "trajectory_file": "trial_1.hdf5",
+            "trajectory_sha256": "389442e5857516297361b24eb068011ad6a3bfed78715f1adecdfa594fde25fa",
+            "trial": 1,
+            "status": "geometric_sequence_complete",
+            "task_success": false,
+            "completed_fields": 39,
+            "control_steps": 471,
+            "final_goal_predicates": [
+              {
+                "predicate": [
+                  "in",
+                  "alphabet_soup_1",
+                  "basket_1_contain_region"
+                ],
+                "value": true
+              },
+              {
+                "predicate": [
+                  "in",
+                  "cream_cheese_1",
+                  "basket_1_contain_region"
+                ],
+                "value": false
+              }
+            ],
+            "baseline_pose_basis": "first post-action sample; no exact pre-action object pose claimed",
+            "predicate_trace_available": true,
+            "objects": [
+              {
+                "object": "alphabet_soup_1",
+                "bilateral_contact_samples": 101,
+                "contact_intervals": [
+                  {
+                    "start_step": 112,
+                    "end_step": 212,
+                    "sample_count": 101,
+                    "sample_span_seconds": 5.000000000000715
+                  }
+                ],
+                "height_range_metres": 0.20155280714665924,
+                "maximum_lift_from_first_sample_metres": 0.20155280714665924,
+                "maximum_displacement_metres": 0.3700854694583594,
+                "lifted_contact_candidate_steps": [
+                  123
+                ]
+              },
+              {
+                "object": "basket_1",
+                "bilateral_contact_samples": 0,
+                "contact_intervals": [],
+                "height_range_metres": 2.0935211342276716e-08,
+                "maximum_lift_from_first_sample_metres": 2.3282707428684546e-09,
+                "maximum_displacement_metres": 1.8615148671372895e-08,
+                "lifted_contact_candidate_steps": []
+              },
+              {
+                "object": "cream_cheese_1",
+                "bilateral_contact_samples": 3,
+                "contact_intervals": [
+                  {
+                    "start_step": 330,
+                    "end_step": 332,
+                    "sample_count": 3,
+                    "sample_span_seconds": 0.09999999999994458
+                  }
+                ],
+                "height_range_metres": 0.012116564429110133,
+                "maximum_lift_from_first_sample_metres": 0.012004442171380303,
+                "maximum_displacement_metres": 0.021594088734856843,
+                "lifted_contact_candidate_steps": []
+              },
+              {
+                "object": "ketchup_1",
+                "bilateral_contact_samples": 0,
+                "contact_intervals": [],
+                "height_range_metres": 0.0788492824655126,
+                "maximum_lift_from_first_sample_metres": 0.0,
+                "maximum_displacement_metres": 0.07884928305139186,
+                "lifted_contact_candidate_steps": []
+              },
+              {
+                "object": "tomato_sauce_1",
+                "bilateral_contact_samples": 0,
+                "contact_intervals": [],
+                "height_range_metres": 3.810396442816e-12,
+                "maximum_lift_from_first_sample_metres": 3.810396442816e-12,
+                "maximum_displacement_metres": 4.731052367018481e-11,
+                "lifted_contact_candidate_steps": []
+              }
+            ],
+            "candidates": [
+              {
+                "kind": "lifted_contact_candidate",
+                "object": "alphabet_soup_1",
+                "observation_index": 123,
+                "control_step": 123,
+                "simulation_time": 6.399999999999517,
+                "field_index": 9,
+                "window_start_step": 120,
+                "verified": false,
+                "observable": false,
+                "review_status": "requires image and factual review; not a fitting boundary",
+                "evidence": {
+                  "basis": "privileged sustained bilateral contact, lift, and relative pose consistency",
+                  "minimum_lift_metres": 0.023609086205576335,
+                  "relative_position_range_metres": 2.5918360203448647e-05,
+                  "relative_rotation_range_radians": 0.001965473953763012,
+                  "contact_run_start_step": 112
+                },
+                "causal_image_group": "audit_observations/120",
+                "causal_image_age_seconds": 0.14999999999998348
+              },
+              {
+                "kind": "placement_candidate",
+                "object": "alphabet_soup_1",
+                "observation_index": 222,
+                "control_step": 222,
+                "simulation_time": 11.35000000000046,
+                "field_index": 19,
+                "window_start_step": 219,
+                "verified": false,
+                "observable": false,
+                "review_status": "requires image and factual review; not a fitting boundary",
+                "evidence": {
+                  "basis": "privileged predicate, open command, no bilateral contact, low object speed",
+                  "predicate": [
+                    "in",
+                    "alphabet_soup_1",
+                    "basket_1_contain_region"
+                  ],
+                  "maximum_object_speed_metres_per_second": 0.010800283421708686
+                },
+                "causal_image_group": "audit_observations/220",
+                "causal_image_age_seconds": 0.1000000000000334
+              }
+            ]
+          },
+          {
+            "trajectory_file": "trial_2.hdf5",
+            "trajectory_sha256": "a7a18c7d8237049dc7c177821bcb8be352d19e305a4fb5a664bf5635b531900d",
+            "trial": 2,
+            "status": "geometric_sequence_complete",
+            "task_success": false,
+            "completed_fields": 39,
+            "control_steps": 479,
+            "final_goal_predicates": [
+              {
+                "predicate": [
+                  "in",
+                  "alphabet_soup_1",
+                  "basket_1_contain_region"
+                ],
+                "value": true
+              },
+              {
+                "predicate": [
+                  "in",
+                  "cream_cheese_1",
+                  "basket_1_contain_region"
+                ],
+                "value": false
+              }
+            ],
+            "baseline_pose_basis": "first post-action sample; no exact pre-action object pose claimed",
+            "predicate_trace_available": true,
+            "objects": [
+              {
+                "object": "alphabet_soup_1",
+                "bilateral_contact_samples": 105,
+                "contact_intervals": [
+                  {
+                    "start_step": 113,
+                    "end_step": 217,
+                    "sample_count": 105,
+                    "sample_span_seconds": 5.200000000000804
+                  }
+                ],
+                "height_range_metres": 0.20288610107714056,
+                "maximum_lift_from_first_sample_metres": 0.2028816310972702,
+                "maximum_displacement_metres": 0.3701109194092745,
+                "lifted_contact_candidate_steps": [
+                  125
+                ]
+              },
+              {
+                "object": "basket_1",
+                "bilateral_contact_samples": 0,
+                "contact_intervals": [],
+                "height_range_metres": 8.802138717900476e-08,
+                "maximum_lift_from_first_sample_metres": 2.3282707428684546e-09,
+                "maximum_displacement_metres": 8.570314018828853e-08,
+                "lifted_contact_candidate_steps": []
+              },
+              {
+                "object": "cream_cheese_1",
+                "bilateral_contact_samples": 2,
+                "contact_intervals": [
+                  {
+                    "start_step": 340,
+                    "end_step": 341,
+                    "sample_count": 2,
+                    "sample_span_seconds": 0.04999999999997229
+                  }
+                ],
+                "height_range_metres": 0.01169060974675823,
+                "maximum_lift_from_first_sample_metres": 0.011464231331918595,
+                "maximum_displacement_metres": 0.021285522772256312,
+                "lifted_contact_candidate_steps": []
+              },
+              {
+                "object": "ketchup_1",
+                "bilateral_contact_samples": 0,
+                "contact_intervals": [],
+                "height_range_metres": 0.0788492824655126,
+                "maximum_lift_from_first_sample_metres": 0.0,
+                "maximum_displacement_metres": 0.07884928305139186,
+                "lifted_contact_candidate_steps": []
+              },
+              {
+                "object": "tomato_sauce_1",
+                "bilateral_contact_samples": 0,
+                "contact_intervals": [],
+                "height_range_metres": 3.810396442816e-12,
+                "maximum_lift_from_first_sample_metres": 3.810396442816e-12,
+                "maximum_displacement_metres": 4.731052367018481e-11,
+                "lifted_contact_candidate_steps": []
+              }
+            ],
+            "candidates": [
+              {
+                "kind": "lifted_contact_candidate",
+                "object": "alphabet_soup_1",
+                "observation_index": 125,
+                "control_step": 125,
+                "simulation_time": 6.499999999999506,
+                "field_index": 9,
+                "window_start_step": 122,
+                "verified": false,
+                "observable": false,
+                "review_status": "requires image and factual review; not a fitting boundary",
+                "evidence": {
+                  "basis": "privileged sustained bilateral contact, lift, and relative pose consistency",
+                  "minimum_lift_metres": 0.022289800929393866,
+                  "relative_position_range_metres": 1.0392797161179426e-05,
+                  "relative_rotation_range_radians": 0.0007260723382162118,
+                  "contact_run_start_step": 113
+                },
+                "causal_image_group": "audit_observations/125",
+                "causal_image_age_seconds": 0.0
+              },
+              {
+                "kind": "placement_candidate",
+                "object": "alphabet_soup_1",
+                "observation_index": 227,
+                "control_step": 227,
+                "simulation_time": 11.600000000000543,
+                "field_index": 19,
+                "window_start_step": 224,
+                "verified": false,
+                "observable": false,
+                "review_status": "requires image and factual review; not a fitting boundary",
+                "evidence": {
+                  "basis": "privileged predicate, open command, no bilateral contact, low object speed",
+                  "predicate": [
+                    "in",
+                    "alphabet_soup_1",
+                    "basket_1_contain_region"
+                  ],
+                  "maximum_object_speed_metres_per_second": 0.005669068889897286
+                },
+                "causal_image_group": "audit_observations/225",
+                "causal_image_age_seconds": 0.1000000000000334
+              }
+            ]
+          }
+        ]
+      },
+      "source_replay": {
+        "directory": "source_replay_200_audit_v2",
+        "mode": "source_actions",
+        "source_signature": "82451e0509cd9da86fd825652c3fe697bd4728d7c97179b9be5556e1393339ee",
+        "source_episode_index": 200,
+        "seed": 20261122,
+        "source_manifest_sha256": "03d2c1f7c2ef60cfd00be950437a08747c6c0ca39bfea164987ebf47ab841794",
+        "initial_position": [
+          -0.04447301045956164,
+          -0.011746567773864463,
+          0.6791866336816637
+        ],
+        "request_sha256": "9e867d027eef5b66d1d33c84efb48be345f67a9110f7cb27b77626aab228e7c9",
+        "result_sha256": "f7466e0a09262a2b773ad315bfc9475534d76a175efe3634212eeca13cf88336",
+        "trials": [
+          {
+            "trajectory_file": "trial_0.hdf5",
+            "trajectory_sha256": "1ee974426ff8c5be8cf3f14a0e6d3c6e1dfe1917d94fc5a16d6dd83f289fbee6",
+            "trial": 0,
+            "status": "complete",
+            "task_success": true,
+            "completed_fields": 0,
+            "control_steps": 242,
+            "final_goal_predicates": [
+              {
+                "predicate": [
+                  "in",
+                  "alphabet_soup_1",
+                  "basket_1_contain_region"
+                ],
+                "value": true
+              },
+              {
+                "predicate": [
+                  "in",
+                  "cream_cheese_1",
+                  "basket_1_contain_region"
+                ],
+                "value": true
+              }
+            ],
+            "baseline_pose_basis": "first post-action sample; no exact pre-action object pose claimed",
+            "predicate_trace_available": true,
+            "objects": [
+              {
+                "object": "alphabet_soup_1",
+                "bilateral_contact_samples": 50,
+                "contact_intervals": [
+                  {
+                    "start_step": 63,
+                    "end_step": 112,
+                    "sample_count": 50,
+                    "sample_span_seconds": 2.4499999999997306
+                  }
+                ],
+                "height_range_metres": 0.20753559633031882,
+                "maximum_lift_from_first_sample_metres": 0.2075283272581292,
+                "maximum_displacement_metres": 0.3688142200975455,
+                "lifted_contact_candidate_steps": [
+                  70
+                ]
+              },
+              {
+                "object": "basket_1",
+                "bilateral_contact_samples": 0,
+                "contact_intervals": [],
+                "height_range_metres": 2.5190036334610255e-08,
+                "maximum_lift_from_first_sample_metres": 2.3282707428684546e-09,
+                "maximum_displacement_metres": 2.2885022644846007e-08,
+                "lifted_contact_candidate_steps": []
+              },
+              {
+                "object": "cream_cheese_1",
+                "bilateral_contact_samples": 49,
+                "contact_intervals": [
+                  {
+                    "start_step": 180,
+                    "end_step": 228,
+                    "sample_count": 49,
+                    "sample_span_seconds": 2.4000000000008015
+                  }
+                ],
+                "height_range_metres": 0.2452443384803329,
+                "maximum_lift_from_first_sample_metres": 0.24521658360146192,
+                "maximum_displacement_metres": 0.3134554680885656,
+                "lifted_contact_candidate_steps": [
+                  188
+                ]
+              },
+              {
+                "object": "ketchup_1",
+                "bilateral_contact_samples": 0,
+                "contact_intervals": [],
+                "height_range_metres": 0.0788492824655126,
+                "maximum_lift_from_first_sample_metres": 0.0,
+                "maximum_displacement_metres": 0.07884928305139186,
+                "lifted_contact_candidate_steps": []
+              },
+              {
+                "object": "tomato_sauce_1",
+                "bilateral_contact_samples": 0,
+                "contact_intervals": [],
+                "height_range_metres": 3.810396442816e-12,
+                "maximum_lift_from_first_sample_metres": 3.810396442816e-12,
+                "maximum_displacement_metres": 4.731052367018481e-11,
+                "lifted_contact_candidate_steps": []
+              }
+            ],
+            "candidates": [
+              {
+                "kind": "lifted_contact_candidate",
+                "object": "alphabet_soup_1",
+                "observation_index": 70,
+                "control_step": 70,
+                "simulation_time": 3.7499999999998086,
+                "field_index": -1,
+                "window_start_step": 67,
+                "verified": false,
+                "observable": false,
+                "review_status": "requires image and factual review; not a fitting boundary",
+                "evidence": {
+                  "basis": "privileged sustained bilateral contact, lift, and relative pose consistency",
+                  "minimum_lift_metres": 0.021470471132632896,
+                  "relative_position_range_metres": 3.249470513784623e-05,
+                  "relative_rotation_range_radians": 0.0006984068037129549,
+                  "contact_run_start_step": 63
+                },
+                "causal_image_group": "audit_observations/70",
+                "causal_image_age_seconds": 0.0
+              },
+              {
+                "kind": "placement_candidate",
+                "object": "alphabet_soup_1",
+                "observation_index": 129,
+                "control_step": 129,
+                "simulation_time": 6.699999999999484,
+                "field_index": -1,
+                "window_start_step": 126,
+                "verified": false,
+                "observable": false,
+                "review_status": "requires image and factual review; not a fitting boundary",
+                "evidence": {
+                  "basis": "privileged predicate, open command, no bilateral contact, low object speed",
+                  "predicate": [
+                    "in",
+                    "alphabet_soup_1",
+                    "basket_1_contain_region"
+                  ],
+                  "maximum_object_speed_metres_per_second": 0.014311908151582715
+                },
+                "causal_image_group": "audit_observations/125",
+                "causal_image_age_seconds": 0.19999999999997797
+              },
+              {
+                "kind": "lifted_contact_candidate",
+                "object": "cream_cheese_1",
+                "observation_index": 188,
+                "control_step": 188,
+                "simulation_time": 9.649999999999892,
+                "field_index": -1,
+                "window_start_step": 185,
+                "verified": false,
+                "observable": false,
+                "review_status": "requires image and factual review; not a fitting boundary",
+                "evidence": {
+                  "basis": "privileged sustained bilateral contact, lift, and relative pose consistency",
+                  "minimum_lift_metres": 0.023897092550730026,
+                  "relative_position_range_metres": 0.0008641859334202453,
+                  "relative_rotation_range_radians": 0.006518426382136248,
+                  "contact_run_start_step": 180
+                },
+                "causal_image_group": "audit_observations/185",
+                "causal_image_age_seconds": 0.1500000000000501
+              },
+              {
+                "kind": "placement_candidate",
+                "object": "cream_cheese_1",
+                "observation_index": 237,
+                "control_step": 237,
+                "simulation_time": 12.10000000000071,
+                "field_index": -1,
+                "window_start_step": 234,
+                "verified": false,
+                "observable": false,
+                "review_status": "requires image and factual review; not a fitting boundary",
+                "evidence": {
+                  "basis": "privileged predicate, open command, no bilateral contact, low object speed",
+                  "predicate": [
+                    "in",
+                    "cream_cheese_1",
+                    "basket_1_contain_region"
+                  ],
+                  "maximum_object_speed_metres_per_second": 0.016384201574203314
+                },
+                "causal_image_group": "audit_observations/235",
+                "causal_image_age_seconds": 0.1000000000000334
+              }
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "file": "operation_evidence_200_tight.json",
+      "sha256": "528a220835f99b39b971cdd02d7b5bfc26e921c3a098168497816f856f26b2fa",
+      "schema": "vlds.libero.operation_evidence.v1",
+      "training_ready": false,
+      "thresholds": {
+        "dwell_seconds": 0.15,
+        "lift_metres": 0.02,
+        "relative_position_range_metres": 0.01,
+        "relative_rotation_range_radians": 0.17453292519943295,
+        "placement_speed_metres_per_second": 0.02
+      },
+      "collector_sha256": "7ba92b9c154371c20b98dcc9a2378aeffb04f48865826affec8da3477c80f90c",
+      "scope": "evaluation-only privileged evidence; candidates require factual and camera review; no validated observer",
+      "execution": {
+        "directory": "replay_linear_tight_execution_200",
+        "mode": "fields",
+        "source_signature": "82451e0509cd9da86fd825652c3fe697bd4728d7c97179b9be5556e1393339ee",
+        "source_episode_index": 200,
+        "seed": 20261122,
+        "source_manifest_sha256": "03d2c1f7c2ef60cfd00be950437a08747c6c0ca39bfea164987ebf47ab841794",
+        "initial_position": [
+          -0.04447301045956164,
+          -0.011746567773864463,
+          0.6791866336816637
+        ],
+        "request_sha256": "b6e4fbe1c73173dfbc7396d7c69b991b1ad2ff6456f359f11fb09176211ce43b",
+        "result_sha256": "274d1834a30cd4a7815ddae879b4b1843e1d6c266a8c8a488d54d72db3c29f93",
+        "trials": [
+          {
+            "trajectory_file": "trial_0.hdf5",
+            "trajectory_sha256": "0730c491ac83254608b304d0f323d17042322669b61fc51cb3be80f2d7a8bd9e",
+            "trial": 0,
+            "status": "task_budget_exhausted",
+            "task_success": false,
+            "completed_fields": 8,
+            "control_steps": 520,
+            "final_goal_predicates": [
+              {
+                "predicate": [
+                  "in",
+                  "alphabet_soup_1",
+                  "basket_1_contain_region"
+                ],
+                "value": false
+              },
+              {
+                "predicate": [
+                  "in",
+                  "cream_cheese_1",
+                  "basket_1_contain_region"
+                ],
+                "value": false
+              }
+            ],
+            "baseline_pose_basis": "first post-action sample; no exact pre-action object pose claimed",
+            "predicate_trace_available": true,
+            "objects": [
+              {
+                "object": "alphabet_soup_1",
+                "bilateral_contact_samples": 376,
+                "contact_intervals": [
+                  {
+                    "start_step": 145,
+                    "end_step": 520,
+                    "sample_count": 376,
+                    "sample_span_seconds": 18.749999999996934
+                  }
+                ],
+                "height_range_metres": 0.00078360943165251,
+                "maximum_lift_from_first_sample_metres": 0.00078360943165251,
+                "maximum_displacement_metres": 0.0059324177859742975,
+                "lifted_contact_candidate_steps": []
+              },
+              {
+                "object": "basket_1",
+                "bilateral_contact_samples": 0,
+                "contact_intervals": [],
+                "height_range_metres": 2.3282707428684546e-09,
+                "maximum_lift_from_first_sample_metres": 2.3282707428684546e-09,
+                "maximum_displacement_metres": 2.3282737609357237e-09,
+                "lifted_contact_candidate_steps": []
+              },
+              {
+                "object": "cream_cheese_1",
+                "bilateral_contact_samples": 0,
+                "contact_intervals": [],
+                "height_range_metres": 1.3977152768518408e-12,
+                "maximum_lift_from_first_sample_metres": 1.3977152768518408e-12,
+                "maximum_displacement_metres": 1.3979993102532378e-12,
+                "lifted_contact_candidate_steps": []
+              },
+              {
+                "object": "ketchup_1",
+                "bilateral_contact_samples": 0,
+                "contact_intervals": [],
+                "height_range_metres": 0.0788492824655126,
+                "maximum_lift_from_first_sample_metres": 0.0,
+                "maximum_displacement_metres": 0.07884928305139186,
+                "lifted_contact_candidate_steps": []
+              },
+              {
+                "object": "tomato_sauce_1",
+                "bilateral_contact_samples": 0,
+                "contact_intervals": [],
+                "height_range_metres": 3.810396442816e-12,
+                "maximum_lift_from_first_sample_metres": 3.810396442816e-12,
+                "maximum_displacement_metres": 4.731052367018481e-11,
+                "lifted_contact_candidate_steps": []
+              }
+            ],
+            "candidates": []
+          },
+          {
+            "trajectory_file": "trial_1.hdf5",
+            "trajectory_sha256": "306d6c9302f2f794f41b47e1b5aae126dd2bbe406b8b579c0b9d31b3cc489073",
+            "trial": 1,
+            "status": "task_budget_exhausted",
+            "task_success": false,
+            "completed_fields": 8,
+            "control_steps": 520,
+            "final_goal_predicates": [
+              {
+                "predicate": [
+                  "in",
+                  "alphabet_soup_1",
+                  "basket_1_contain_region"
+                ],
+                "value": false
+              },
+              {
+                "predicate": [
+                  "in",
+                  "cream_cheese_1",
+                  "basket_1_contain_region"
+                ],
+                "value": false
+              }
+            ],
+            "baseline_pose_basis": "first post-action sample; no exact pre-action object pose claimed",
+            "predicate_trace_available": true,
+            "objects": [
+              {
+                "object": "alphabet_soup_1",
+                "bilateral_contact_samples": 376,
+                "contact_intervals": [
+                  {
+                    "start_step": 145,
+                    "end_step": 520,
+                    "sample_count": 376,
+                    "sample_span_seconds": 18.749999999996934
+                  }
+                ],
+                "height_range_metres": 0.00078360943165251,
+                "maximum_lift_from_first_sample_metres": 0.00078360943165251,
+                "maximum_displacement_metres": 0.0059324177859742975,
+                "lifted_contact_candidate_steps": []
+              },
+              {
+                "object": "basket_1",
+                "bilateral_contact_samples": 0,
+                "contact_intervals": [],
+                "height_range_metres": 2.3282707428684546e-09,
+                "maximum_lift_from_first_sample_metres": 2.3282707428684546e-09,
+                "maximum_displacement_metres": 2.3282737609357237e-09,
+                "lifted_contact_candidate_steps": []
+              },
+              {
+                "object": "cream_cheese_1",
+                "bilateral_contact_samples": 0,
+                "contact_intervals": [],
+                "height_range_metres": 1.3977152768518408e-12,
+                "maximum_lift_from_first_sample_metres": 1.3977152768518408e-12,
+                "maximum_displacement_metres": 1.3979993102532378e-12,
+                "lifted_contact_candidate_steps": []
+              },
+              {
+                "object": "ketchup_1",
+                "bilateral_contact_samples": 0,
+                "contact_intervals": [],
+                "height_range_metres": 0.0788492824655126,
+                "maximum_lift_from_first_sample_metres": 0.0,
+                "maximum_displacement_metres": 0.07884928305139186,
+                "lifted_contact_candidate_steps": []
+              },
+              {
+                "object": "tomato_sauce_1",
+                "bilateral_contact_samples": 0,
+                "contact_intervals": [],
+                "height_range_metres": 3.810396442816e-12,
+                "maximum_lift_from_first_sample_metres": 3.810396442816e-12,
+                "maximum_displacement_metres": 4.731052367018481e-11,
+                "lifted_contact_candidate_steps": []
+              }
+            ],
+            "candidates": []
+          },
+          {
+            "trajectory_file": "trial_2.hdf5",
+            "trajectory_sha256": "0aa582823f071a6ff7216ba05de20389fe4bbd5fa0a56bef528eb65e7a10dd6f",
+            "trial": 2,
+            "status": "task_budget_exhausted",
+            "task_success": false,
+            "completed_fields": 27,
+            "control_steps": 520,
+            "final_goal_predicates": [
+              {
+                "predicate": [
+                  "in",
+                  "alphabet_soup_1",
+                  "basket_1_contain_region"
+                ],
+                "value": true
+              },
+              {
+                "predicate": [
+                  "in",
+                  "cream_cheese_1",
+                  "basket_1_contain_region"
+                ],
+                "value": false
+              }
+            ],
+            "baseline_pose_basis": "first post-action sample; no exact pre-action object pose claimed",
+            "predicate_trace_available": true,
+            "objects": [
+              {
+                "object": "alphabet_soup_1",
+                "bilateral_contact_samples": 196,
+                "contact_intervals": [
+                  {
+                    "start_step": 145,
+                    "end_step": 340,
+                    "sample_count": 196,
+                    "sample_span_seconds": 9.750000000001922
+                  }
+                ],
+                "height_range_metres": 0.2043998369802944,
+                "maximum_lift_from_first_sample_metres": 0.2043998369802944,
+                "maximum_displacement_metres": 0.3683168504617156,
+                "lifted_contact_candidate_steps": [
+                  237
+                ]
+              },
+              {
+                "object": "basket_1",
+                "bilateral_contact_samples": 0,
+                "contact_intervals": [],
+                "height_range_metres": 6.080942704933534e-08,
+                "maximum_lift_from_first_sample_metres": 2.3282707428684546e-09,
+                "maximum_displacement_metres": 5.8487492191731166e-08,
+                "lifted_contact_candidate_steps": []
+              },
+              {
+                "object": "cream_cheese_1",
+                "bilateral_contact_samples": 0,
+                "contact_intervals": [],
+                "height_range_metres": 0.011545916672570322,
+                "maximum_lift_from_first_sample_metres": 0.01146293904200818,
+                "maximum_displacement_metres": 0.014979397394467676,
+                "lifted_contact_candidate_steps": []
+              },
+              {
+                "object": "ketchup_1",
+                "bilateral_contact_samples": 0,
+                "contact_intervals": [],
+                "height_range_metres": 0.0788492824655126,
+                "maximum_lift_from_first_sample_metres": 0.0,
+                "maximum_displacement_metres": 0.07884928305139186,
+                "lifted_contact_candidate_steps": []
+              },
+              {
+                "object": "tomato_sauce_1",
+                "bilateral_contact_samples": 0,
+                "contact_intervals": [],
+                "height_range_metres": 3.810396442816e-12,
+                "maximum_lift_from_first_sample_metres": 3.810396442816e-12,
+                "maximum_displacement_metres": 4.731052367018481e-11,
+                "lifted_contact_candidate_steps": []
+              }
+            ],
+            "candidates": [
+              {
+                "kind": "lifted_contact_candidate",
+                "object": "alphabet_soup_1",
+                "observation_index": 237,
+                "control_step": 237,
+                "simulation_time": 12.10000000000071,
+                "field_index": 9,
+                "window_start_step": 234,
+                "verified": false,
+                "observable": false,
+                "review_status": "requires image and factual review; not a fitting boundary",
+                "evidence": {
+                  "basis": "privileged sustained bilateral contact, lift, and relative pose consistency",
+                  "minimum_lift_metres": 0.020161074037747417,
+                  "relative_position_range_metres": 1.6066165242473406e-05,
+                  "relative_rotation_range_radians": 0.00039699664029053315,
+                  "contact_run_start_step": 145
+                },
+                "causal_image_group": "audit_observations/235",
+                "causal_image_age_seconds": 0.1000000000000334
+              },
+              {
+                "kind": "placement_candidate",
+                "object": "alphabet_soup_1",
+                "observation_index": 348,
+                "control_step": 348,
+                "simulation_time": 17.650000000001096,
+                "field_index": 17,
+                "window_start_step": 345,
+                "verified": false,
+                "observable": false,
+                "review_status": "requires image and factual review; not a fitting boundary",
+                "evidence": {
+                  "basis": "privileged predicate, open command, no bilateral contact, low object speed",
+                  "predicate": [
+                    "in",
+                    "alphabet_soup_1",
+                    "basket_1_contain_region"
+                  ],
+                  "maximum_object_speed_metres_per_second": 0.005920994196364508
+                },
+                "causal_image_group": "audit_observations/345",
+                "causal_image_age_seconds": 0.14999999999991687
+              }
+            ]
+          }
+        ]
+      },
+      "source_replay": {
+        "directory": "source_replay_200_audit_v2",
+        "mode": "source_actions",
+        "source_signature": "82451e0509cd9da86fd825652c3fe697bd4728d7c97179b9be5556e1393339ee",
+        "source_episode_index": 200,
+        "seed": 20261122,
+        "source_manifest_sha256": "03d2c1f7c2ef60cfd00be950437a08747c6c0ca39bfea164987ebf47ab841794",
+        "initial_position": [
+          -0.04447301045956164,
+          -0.011746567773864463,
+          0.6791866336816637
+        ],
+        "request_sha256": "9e867d027eef5b66d1d33c84efb48be345f67a9110f7cb27b77626aab228e7c9",
+        "result_sha256": "f7466e0a09262a2b773ad315bfc9475534d76a175efe3634212eeca13cf88336",
+        "trials": [
+          {
+            "trajectory_file": "trial_0.hdf5",
+            "trajectory_sha256": "1ee974426ff8c5be8cf3f14a0e6d3c6e1dfe1917d94fc5a16d6dd83f289fbee6",
+            "trial": 0,
+            "status": "complete",
+            "task_success": true,
+            "completed_fields": 0,
+            "control_steps": 242,
+            "final_goal_predicates": [
+              {
+                "predicate": [
+                  "in",
+                  "alphabet_soup_1",
+                  "basket_1_contain_region"
+                ],
+                "value": true
+              },
+              {
+                "predicate": [
+                  "in",
+                  "cream_cheese_1",
+                  "basket_1_contain_region"
+                ],
+                "value": true
+              }
+            ],
+            "baseline_pose_basis": "first post-action sample; no exact pre-action object pose claimed",
+            "predicate_trace_available": true,
+            "objects": [
+              {
+                "object": "alphabet_soup_1",
+                "bilateral_contact_samples": 50,
+                "contact_intervals": [
+                  {
+                    "start_step": 63,
+                    "end_step": 112,
+                    "sample_count": 50,
+                    "sample_span_seconds": 2.4499999999997306
+                  }
+                ],
+                "height_range_metres": 0.20753559633031882,
+                "maximum_lift_from_first_sample_metres": 0.2075283272581292,
+                "maximum_displacement_metres": 0.3688142200975455,
+                "lifted_contact_candidate_steps": [
+                  70
+                ]
+              },
+              {
+                "object": "basket_1",
+                "bilateral_contact_samples": 0,
+                "contact_intervals": [],
+                "height_range_metres": 2.5190036334610255e-08,
+                "maximum_lift_from_first_sample_metres": 2.3282707428684546e-09,
+                "maximum_displacement_metres": 2.2885022644846007e-08,
+                "lifted_contact_candidate_steps": []
+              },
+              {
+                "object": "cream_cheese_1",
+                "bilateral_contact_samples": 49,
+                "contact_intervals": [
+                  {
+                    "start_step": 180,
+                    "end_step": 228,
+                    "sample_count": 49,
+                    "sample_span_seconds": 2.4000000000008015
+                  }
+                ],
+                "height_range_metres": 0.2452443384803329,
+                "maximum_lift_from_first_sample_metres": 0.24521658360146192,
+                "maximum_displacement_metres": 0.3134554680885656,
+                "lifted_contact_candidate_steps": [
+                  188
+                ]
+              },
+              {
+                "object": "ketchup_1",
+                "bilateral_contact_samples": 0,
+                "contact_intervals": [],
+                "height_range_metres": 0.0788492824655126,
+                "maximum_lift_from_first_sample_metres": 0.0,
+                "maximum_displacement_metres": 0.07884928305139186,
+                "lifted_contact_candidate_steps": []
+              },
+              {
+                "object": "tomato_sauce_1",
+                "bilateral_contact_samples": 0,
+                "contact_intervals": [],
+                "height_range_metres": 3.810396442816e-12,
+                "maximum_lift_from_first_sample_metres": 3.810396442816e-12,
+                "maximum_displacement_metres": 4.731052367018481e-11,
+                "lifted_contact_candidate_steps": []
+              }
+            ],
+            "candidates": [
+              {
+                "kind": "lifted_contact_candidate",
+                "object": "alphabet_soup_1",
+                "observation_index": 70,
+                "control_step": 70,
+                "simulation_time": 3.7499999999998086,
+                "field_index": -1,
+                "window_start_step": 67,
+                "verified": false,
+                "observable": false,
+                "review_status": "requires image and factual review; not a fitting boundary",
+                "evidence": {
+                  "basis": "privileged sustained bilateral contact, lift, and relative pose consistency",
+                  "minimum_lift_metres": 0.021470471132632896,
+                  "relative_position_range_metres": 3.249470513784623e-05,
+                  "relative_rotation_range_radians": 0.0006984068037129549,
+                  "contact_run_start_step": 63
+                },
+                "causal_image_group": "audit_observations/70",
+                "causal_image_age_seconds": 0.0
+              },
+              {
+                "kind": "placement_candidate",
+                "object": "alphabet_soup_1",
+                "observation_index": 129,
+                "control_step": 129,
+                "simulation_time": 6.699999999999484,
+                "field_index": -1,
+                "window_start_step": 126,
+                "verified": false,
+                "observable": false,
+                "review_status": "requires image and factual review; not a fitting boundary",
+                "evidence": {
+                  "basis": "privileged predicate, open command, no bilateral contact, low object speed",
+                  "predicate": [
+                    "in",
+                    "alphabet_soup_1",
+                    "basket_1_contain_region"
+                  ],
+                  "maximum_object_speed_metres_per_second": 0.014311908151582715
+                },
+                "causal_image_group": "audit_observations/125",
+                "causal_image_age_seconds": 0.19999999999997797
+              },
+              {
+                "kind": "lifted_contact_candidate",
+                "object": "cream_cheese_1",
+                "observation_index": 188,
+                "control_step": 188,
+                "simulation_time": 9.649999999999892,
+                "field_index": -1,
+                "window_start_step": 185,
+                "verified": false,
+                "observable": false,
+                "review_status": "requires image and factual review; not a fitting boundary",
+                "evidence": {
+                  "basis": "privileged sustained bilateral contact, lift, and relative pose consistency",
+                  "minimum_lift_metres": 0.023897092550730026,
+                  "relative_position_range_metres": 0.0008641859334202453,
+                  "relative_rotation_range_radians": 0.006518426382136248,
+                  "contact_run_start_step": 180
+                },
+                "causal_image_group": "audit_observations/185",
+                "causal_image_age_seconds": 0.1500000000000501
+              },
+              {
+                "kind": "placement_candidate",
+                "object": "cream_cheese_1",
+                "observation_index": 237,
+                "control_step": 237,
+                "simulation_time": 12.10000000000071,
+                "field_index": -1,
+                "window_start_step": 234,
+                "verified": false,
+                "observable": false,
+                "review_status": "requires image and factual review; not a fitting boundary",
+                "evidence": {
+                  "basis": "privileged predicate, open command, no bilateral contact, low object speed",
+                  "predicate": [
+                    "in",
+                    "cream_cheese_1",
+                    "basket_1_contain_region"
+                  ],
+                  "maximum_object_speed_metres_per_second": 0.016384201574203314
+                },
+                "causal_image_group": "audit_observations/235",
+                "causal_image_age_seconds": 0.1000000000000334
+              }
+            ]
+          }
+        ]
+      }
+    }
+  ],
+  "interpretation": "Exploratory training episodes. Alternate paths on the same initial state are not independent trials. No learned VLDS, force perturbation, semantic observer or main training dataset is evaluated.",
+  "tests": {
+    "tests": 193,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "report_sha256": "0b08ad0b316f598d7f6222f078519ecae35e2bcb222bb8260103b48ff39b83b0"
+  }
+}

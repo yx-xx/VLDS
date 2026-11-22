@@ -19,6 +19,7 @@ import traceback
 import numpy as np
 from openpi_client import image_tools
 from openpi_client import websocket_client_policy
+from openpi_client.embedded_viewer import EmbeddedViewer
 from openpi_client.simulation_viewer import InteractiveViewer
 
 EVENT_PREFIX = "@simulation "
@@ -158,7 +159,7 @@ def run(args):
 
     threading.Thread(target=read_commands, daemon=True).start()
     scene = None
-    viewer = InteractiveViewer()
+    viewer = EmbeddedViewer(args.render_buffer) if args.render_buffer else InteractiveViewer()
     plan = collections.deque()
     client = None
     step = 0
@@ -183,6 +184,8 @@ def run(args):
             while not commands.empty():
                 command = commands.get_nowait()
                 action = command.get("command")
+                if args.render_buffer and viewer.command(command):
+                    continue
                 if action == "stop":
                     stopped = True
                 elif action == "policy_ready":
@@ -284,6 +287,7 @@ def main():
     parser.add_argument("--task-id", type=int, default=0)
     parser.add_argument("--initial-state", type=int, default=0)
     parser.add_argument("--seed", type=int, default=7)
+    parser.add_argument("--render-buffer", help="Render into the inspector instead of a separate window.")
     args = parser.parse_args()
 
     def interrupt(_signum, _frame):

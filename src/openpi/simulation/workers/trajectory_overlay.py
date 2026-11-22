@@ -79,9 +79,11 @@ class TrajectoryOverlay:
             if key in options:
                 setattr(self, key, bool(options[key]))
 
-    def draw(self, scene):
-        """Replace display-only geoms; caller holds the native viewer lock."""
-        scene.ngeom = 0
+    def draw(self, scene, *, clear=True):
+        """Draw display-only geoms, optionally appending to the rendered model scene."""
+        if clear:
+            scene.ngeom = 0
+        start_geom = scene.ngeom
         self.drawn_geoms = 0
         self.sampled = False
         if not self.visible:
@@ -89,7 +91,7 @@ class TrajectoryOverlay:
         shown = [self.selected] if self.current_only else list(range(len(self.intervals)))
         # Reserve room for the cursor and boundaries before allocating path connectors.
         reserve = 3 + (len(shown) + 1 if self.markers else 0)
-        capacity = max(0, scene.maxgeom - reserve)
+        capacity = max(0, scene.maxgeom - start_geom - reserve)
         if capacity < len(shown):
             raise ValueError("MuJoCo auxiliary scene has too few slots for the command intervals.")
         lengths = np.array([self.intervals[i]["end"] - self.intervals[i]["start"] for i in shown])
@@ -130,7 +132,7 @@ class TrajectoryOverlay:
         leader = self._geom(scene, mujoco.mjtGeom.mjGEOM_LINE, 1, cursor, [1, 1, 1, 1])
         mujoco.mjv_connector(leader, mujoco.mjtGeom.mjGEOM_LINE, 1, cursor, label_position)
         self._geom(scene, mujoco.mjtGeom.mjGEOM_LABEL, 0, label_position, [1, 1, 1, 1], label)
-        self.drawn_geoms = scene.ngeom
+        self.drawn_geoms = scene.ngeom - start_geom
 
     @staticmethod
     def _geom(scene, kind, radius, position, rgba, label=""):

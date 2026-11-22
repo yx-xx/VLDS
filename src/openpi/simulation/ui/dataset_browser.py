@@ -27,6 +27,7 @@ from openpi.simulation.data.watch import file_signature
 from openpi.simulation.data.watch import watch_paths
 from openpi.simulation.runtime.replay import DatasetReplay
 from openpi.simulation.ui.dataset_library import DatasetLibrary
+from openpi.simulation.ui.scene_view import SceneView
 from openpi.simulation.ui.segmentation import SegmentationPanel
 from openpi.simulation.ui.tk_runtime import filedialog
 from openpi.simulation.ui.tk_runtime import scrolledtext
@@ -36,13 +37,14 @@ from openpi.simulation.ui.tk_runtime import ttk
 
 class DatasetBrowser(ttk.Frame):
     def __init__(self, parent):
-        super().__init__(parent, padding=(0, 12, 0, 0))
+        super().__init__(parent, padding=(0, 6, 0, 0))
         self.events = queue.Queue()
         self.io = concurrent.futures.ThreadPoolExecutor(max_workers=1, thread_name_prefix="dataset-reader")
         self.library_io = concurrent.futures.ThreadPoolExecutor(max_workers=1, thread_name_prefix="dataset-library")
         self.downloads = concurrent.futures.ThreadPoolExecutor(max_workers=1, thread_name_prefix="dataset-download")
         self.replay = DatasetReplay()
         self.reader = None  # Used only on the IO thread.
+        self.reader_generation = None
         self.index = None
         self.episode = None
         self.filtered_episodes = []
@@ -62,6 +64,7 @@ class DatasetBrowser(ttk.Frame):
         self.replay_sent_at = 0.0
         self.replay_loading = False
         self.replay_after_read = False
+        self.replay_preference = None
         self.reload_restore = None
         self.reloading = False
         self.reload_retry = False
@@ -80,7 +83,7 @@ class DatasetBrowser(ttk.Frame):
         self.content = ttk.Frame(self)
         heading = ttk.Frame(self.content)
         heading.pack(fill="x", pady=(0, 7))
-        ttk.Button(heading, text="← 数据集总览", command=self.show_library).pack(side="left", padx=(0, 16))
+        ttk.Button(heading, text="← 数据集", command=self.show_library).pack(side="left", padx=(0, 16))
         self.overview_title = ttk.Label(heading, text="数据集内容", style="Subheading.TLabel")
         self.overview_title.pack(side="left")
         self.auto_refresh = tk.BooleanVar(value=False)
@@ -88,15 +91,14 @@ class DatasetBrowser(ttk.Frame):
         self.reload_button = ttk.Button(heading, text="重新载入当前数据", command=self.reload_current)
         self.reload_button.pack(side="right")
         self.overview_description = ttk.Label(self.content, text="", style="Muted.TLabel", wraplength=1080)
-        self.overview_description.pack(anchor="w", pady=(0, 5))
-        self.overview_stats = ttk.Label(self.content, text="", style="Status.TLabel")
-        self.overview_stats.pack(anchor="w", pady=(0, 14))
+        self.overview_stats = ttk.Label(heading, text="", style="Muted.TLabel")
+        self.overview_stats.pack(side="left", padx=12)
         body = ttk.Frame(self.content)
         body.pack(fill="both", expand=True)
-        sidebar = ttk.Frame(body, width=355)
-        sidebar.pack(side="left", fill="y", padx=(0, 16))
+        sidebar = ttk.Frame(body, width=290)
+        sidebar.pack(side="left", fill="y", padx=(0, 12))
         sidebar.pack_propagate(flag=False)
-        self.sidebar_canvas = tk.Canvas(sidebar, bg="#f4f6f5", highlightthickness=0, width=335)
+        self.sidebar_canvas = tk.Canvas(sidebar, bg="#f4f6f5", highlightthickness=0, width=270)
         scrollbar = ttk.Scrollbar(sidebar, orient="vertical", command=self.sidebar_canvas.yview)
         scrollbar.pack(side="right", fill="y")
         self.sidebar_canvas.configure(yscrollcommand=scrollbar.set)
@@ -111,11 +113,46 @@ class DatasetBrowser(ttk.Frame):
         )
         right = ttk.Frame(body)
         right.pack(side="left", fill="both", expand=True)
+        right.columnconfigure(0, weight=1)
+        right.rowconfigure(1, weight=1)
+        taskbar = ttk.Frame(right)
+        taskbar.grid(row=0, column=0, sticky="ew", pady=(0, 6))
+        task_heading = ttk.Frame(taskbar)
+        task_heading.pack(fill="x", pady=(0, 6))
+        self.instruction = ttk.Label(
+            task_heading, text="选择任务，查看演示。", style="Subheading.TLabel", wraplength=800
+        )
+        self.instruction.pack(side="left", fill="x", expand=True)
+        self.original_instruction = ttk.Label(task_heading, text="", style="Muted.TLabel")
+        self.status = ttk.Label(task_heading, text="尚未加载数据。", style="Muted.TLabel")
+        self.status.pack(side="right", padx=(12, 0))
+        self.task_download = ttk.Button(
+            task_heading, text="下载一个演示回合", command=self.download_selected_task, style="Accent.TButton"
+        )
+        episode_row = ttk.Frame(taskbar)
+        episode_row.pack(fill="x")
+        ttk.Label(episode_row, text="演示回合").pack(side="left", padx=(0, 8))
+        self.episode_name = tk.StringVar()
+        self.episode_box = ttk.Combobox(episode_row, textvariable=self.episode_name, state="readonly", width=1)
+        self.episode_box.pack(side="left", fill="x", expand=True)
+        self.episode_box.bind("<<ComboboxSelected>>", self._select_episode)
+        self.views = ttk.Panedwindow(right, orient="horizontal")
+        self.views.grid(row=1, column=0, sticky="nsew")
+        self.scene_view = SceneView(
+            self.views, send=self.replay.send, toggle_play=self.toggle_play, step=lambda: self.step(1)
+        )
+        self.views.add(self.scene_view, weight=5)
+        recording = ttk.Frame(self.views, width=210, padding=(8, 0, 0, 0))
+        self.views.add(recording, weight=1)
+        self.views_sized = False
+        self.views.bind("<Configure>", self._size_views)
+        self.transport = ttk.Frame(right)
+        self.transport.grid(row=2, column=0, sticky="ew", pady=(8, 0))
         self.path = tk.StringVar()
         self.local = tk.StringVar()
         self.local_box = self.combo(left, "切换数据集", self.local)
         self.local_box.bind("<<ComboboxSelected>>", self._local_changed)
-        self.summary = ttk.Label(left, text="正在读取任务目录…", wraplength=330, style="Muted.TLabel")
+        self.summary = ttk.Label(left, text="正在读取任务目录…", wraplength=265, style="Muted.TLabel")
         self.summary.pack(anchor="w", pady=(6, 8))
         self.kind = tk.StringVar(value="全部操作")
         self.kind_box = self.combo(left, "操作类型", self.kind)
@@ -135,12 +172,12 @@ class DatasetBrowser(ttk.Frame):
         task_list = ttk.Frame(left)
         task_list.pack(fill="x")
         self.task_tree = ttk.Treeview(
-            task_list, columns=("available",), show="tree headings", height=6, selectmode="browse"
+            task_list, columns=("available",), show="tree headings", height=12, selectmode="browse"
         )
         self.task_tree.heading("#0", text="任务（可搜索中英文）", anchor="w")
-        self.task_tree.heading("available", text="本地 / 总回合")
-        self.task_tree.column("#0", width=225, minwidth=100, stretch=True)
-        self.task_tree.column("available", width=95, minwidth=80, stretch=False, anchor="center")
+        self.task_tree.heading("available", text="本地 / 总数")
+        self.task_tree.column("#0", width=175, minwidth=100, stretch=True)
+        self.task_tree.column("available", width=85, minwidth=70, stretch=False, anchor="center")
         self.task_tree.tag_configure("remote", foreground="#7c8781")
         self.task_tree.tag_configure("local", foreground="#17664f")
         task_scrollbar = ttk.Scrollbar(task_list, orient="vertical", command=self.task_tree.yview)
@@ -150,36 +187,40 @@ class DatasetBrowser(ttk.Frame):
         self.task_tree.bind("<<TreeviewSelect>>", self._task_selected)
         self.task_count = ttk.Label(left, text="", style="Muted.TLabel")
         self.task_count.pack(anchor="w", pady=(4, 8))
-        self.episode_name = tk.StringVar()
-        self.episode_box = self.combo(left, "演示回合", self.episode_name)
-        self.episode_box.bind("<<ComboboxSelected>>", self._select_episode)
         self.camera = tk.StringVar()
-        self.camera_box = self.combo(left, "录制相机", self.camera)
+        self.camera_box = self.combo(recording, "录制相机", self.camera)
         self.camera_box.bind("<<ComboboxSelected>>", lambda _event: self.request_frame())
+        self.canvas = tk.Canvas(recording, bg="#17221f", highlightthickness=0, width=210, height=210)
+        self.canvas.pack(fill="x", pady=(8, 0))
+        self.canvas.bind("<Configure>", lambda _event: self._draw())
+        self.canvas.create_text(100, 100, text="选择本地演示", fill="#c7d6d0", tags="placeholder")
         self.flip = tk.BooleanVar(value=False)
-        ttk.Checkbutton(left, text="上下翻转录制画面", variable=self.flip, command=self._draw).pack(anchor="w", pady=7)
-        self.replay_button = ttk.Button(
-            left, text="打开此演示的完整三维回放", command=self.open_replay, state="disabled"
+        ttk.Checkbutton(recording, text="上下翻转录制画面", variable=self.flip, command=self._draw).pack(
+            anchor="w", pady=7
         )
+        self.replay_button = ttk.Button(recording, text="加载三维回放", command=self.open_replay, state="disabled")
         self.replay_button.pack(fill="x")
         self.auto_replay = tk.BooleanVar(value=False)
         ttk.Checkbutton(
-            left,
-            text="选择回合时自动打开三维回放",
+            recording,
+            text="自动加载三维视图",
             variable=self.auto_replay,
-            command=lambda: self.open_replay() if self.auto_replay.get() else None,
+            command=self._auto_replay_changed,
         ).pack(anchor="w", pady=(5, 0))
         self.replay_note = ttk.Label(
-            left, text="含场景 XML 与仿真状态的 LIBERO HDF5 可使用。", wraplength=330, style="Muted.TLabel"
+            recording, text="含场景 XML 与仿真状态的 LIBERO HDF5 可使用。", wraplength=205, style="Muted.TLabel"
         )
         self.replay_note.pack(anchor="w", pady=(5, 8))
-        ttk.Separator(left).pack(fill="x", pady=8)
-        ttk.Label(left, text="添加一个演示回合", style="Subheading.TLabel").pack(anchor="w")
+        self.more_data = ttk.Button(left, text="更多数据选项", command=self._toggle_data_options)
+        self.more_data.pack(fill="x", pady=(10, 0))
+        self.data_options = ttk.Frame(left)
+        ttk.Separator(self.data_options).pack(fill="x", pady=8)
+        ttk.Label(self.data_options, text="添加一个演示回合", style="Subheading.TLabel").pack(anchor="w")
         self.online = tk.StringVar()
-        self.online_box = self.combo(left, "数据源", self.online)
+        self.online_box = self.combo(self.data_options, "数据源", self.online)
         self.online_box["values"] = [item[0] for item in SOURCES.values()]
         self.online_box.current(0)
-        network = ttk.Frame(left)
+        network = ttk.Frame(self.data_options)
         network.pack(fill="x", pady=6)
         self.remote_episode = tk.StringVar(value="0")
         ttk.Label(network, text="回合编号").pack(side="left")
@@ -187,39 +228,22 @@ class DatasetBrowser(ttk.Frame):
         self.download_button = ttk.Button(network, text="下载并打开", command=self.download)
         self.download_button.pack(side="right")
         self.endpoint = tk.StringVar(value=os.environ.get("HF_ENDPOINT", ENDPOINTS[0]))
-        self.endpoint_box = self.combo(left, "下载源（连接失败时可切换）", self.endpoint)
+        self.endpoint_box = self.combo(self.data_options, "下载源（连接失败时可切换）", self.endpoint)
         self.endpoint_box["values"] = ENDPOINTS
         if self.endpoint.get() not in ENDPOINTS:
             self.endpoint.set(ENDPOINTS[0])
 
-        self.instruction = ttk.Label(
-            right, text="查看真实演示，理解模型应当完成的动作。", style="Subheading.TLabel", wraplength=750
-        )
-        self.instruction.pack(anchor="w", pady=(0, 5))
-        self.original_instruction = ttk.Label(right, text="", wraplength=750, style="Muted.TLabel")
-        self.original_instruction.pack(anchor="w", pady=(0, 5))
-        self.status = ttk.Label(right, text="尚未加载数据。", wraplength=750, style="Muted.TLabel")
-        self.status.pack(anchor="w", pady=(0, 8))
-        self.task_download = ttk.Button(
-            right, text="下载此任务的一个演示回合", command=self.download_selected_task, style="Accent.TButton"
-        )
-        self.canvas = tk.Canvas(right, bg="#17221f", highlightthickness=0, height=220)
-        self.canvas.pack(fill="both", expand=True)
-        self.canvas.bind("<Configure>", lambda _event: self._draw())
-        self.canvas.create_text(300, 150, text="选择本地数据，或下载一个演示回合", fill="#c7d6d0", tags="placeholder")
         self.segments = SegmentationPanel(
-            right,
+            self.transport,
             seek=self.seek_frame,
             play=self.play_segment,
             configure_overlay=self.replay.configure_overlay,
         )
         self.position = tk.DoubleVar(value=0)
-        self.scale = ttk.Scale(right, from_=0, to=1, variable=self.position, command=self._seek)
-        self.scale.pack(fill="x", pady=(10, 3))
-        self.frame_label = ttk.Label(right, text="帧 — · 时间 —", style="Muted.TLabel")
-        self.frame_label.pack(anchor="w")
-        controls = ttk.Frame(right)
-        controls.pack(fill="x", pady=(8, 10))
+        self.scale = ttk.Scale(self.transport, from_=0, to=1, variable=self.position, command=self._seek)
+        self.scale.pack(fill="x", pady=(5, 3))
+        controls = ttk.Frame(self.transport)
+        controls.pack(fill="x", pady=(4, 0))
         self.play_button = ttk.Button(
             controls, text="播放", style="Accent.TButton", command=self.toggle_play, state="disabled"
         )
@@ -228,6 +252,10 @@ class DatasetBrowser(ttk.Frame):
         self.previous_button.pack(side="left", padx=6)
         self.next_button = ttk.Button(controls, text="下一帧 →", command=lambda: self.step(1), state="disabled")
         self.next_button.pack(side="left")
+        self.frame_label = ttk.Label(controls, text="帧 — · 时间 —", style="Muted.TLabel")
+        self.frame_label.pack(side="left", padx=12)
+        self.values_button = ttk.Button(controls, text="显示数值", command=self._toggle_values)
+        self.values_button.pack(side="right", padx=(8, 0))
         self.speed = tk.StringVar(value="1×")
         speed = ttk.Combobox(
             controls, textvariable=self.speed, values=("0.25×", "0.5×", "1×", "2×"), state="readonly", width=7
@@ -236,18 +264,14 @@ class DatasetBrowser(ttk.Frame):
         speed.bind("<<ComboboxSelected>>", lambda _event: self._restart_clock())
         ttk.Label(controls, text="播放速度").pack(side="right", padx=6)
         self.values = scrolledtext.ScrolledText(
-            right,
-            height=4,
+            self.transport,
+            height=3,
             font="TkFixedFont",
             relief="flat",
             bg="#ffffff",
             fg="#46534e",
             state="disabled",
             wrap="word",
-        )
-        self.values.pack(fill="x")
-        ttk.Label(right, text="回放到末尾会暂停并保留画面；切换回合由你手动选择。", style="Muted.TLabel").pack(
-            anchor="w", pady=(7, 0)
         )
         self._bind_sidebar_scroll(left)
         self.library = DatasetLibrary(
@@ -259,6 +283,27 @@ class DatasetBrowser(ttk.Frame):
         )
         self.show_library()
         self.after(30, self.poll)
+
+    def _size_views(self, event):
+        if not self.views_sized and event.width > 500:
+            self.views.sashpos(0, max(300, event.width - 225))
+            self.views_sized = True
+
+    def _toggle_data_options(self):
+        if self.data_options.winfo_manager():
+            self.data_options.pack_forget()
+            self.more_data.configure(text="更多数据选项")
+        else:
+            self.data_options.pack(fill="x")
+            self.more_data.configure(text="收起数据选项")
+
+    def _toggle_values(self):
+        if self.values.frame.winfo_manager():
+            self.values.pack_forget()
+            self.values_button.configure(text="显示数值")
+        else:
+            self.values.pack(fill="x", pady=(6, 0))
+            self.values_button.configure(text="收起数值")
 
     def _bind_sidebar_scroll(self, widget):
         def scroll(event):
@@ -469,6 +514,7 @@ class DatasetBrowser(ttk.Frame):
         self.replay_pending = None
         self.replay_loading = False
         self.episode = None
+        self.scene_view.clear(message)
         self.requested = None
         self.filtered_episodes = []
         self.image = self.photo = None
@@ -516,7 +562,7 @@ class DatasetBrowser(ttk.Frame):
             self.status.configure(text=f"{task.kind} · {total} · 本地可播放 0 个", style="Muted.TLabel")
             if self._download_source() is not None and task.example_episode is not None:
                 self.task_download.configure(state="disabled" if self.downloading else "normal")
-                self.task_download.pack(anchor="w", pady=(0, 10), before=self.canvas)
+                self.task_download.pack(side="left", padx=8)
 
     def _download_source(self):
         if self.index:
@@ -546,6 +592,13 @@ class DatasetBrowser(ttk.Frame):
         self.episode = self.filtered_episodes[self.episode_box.current()]
         episode = self.episode
         same_episode = restore and self._episode_key(episode) == restore["episode"]
+        automatic_replay = self.auto_replay.get() or (same_episode and restore["replay"])
+        if not same_episode:
+            self.scene_view.clear(
+                "正在准备三维回放…"
+                if automatic_replay
+                else "点击右侧“加载三维回放”查看场景。\n勾选“自动加载三维视图”可在切换回合时自动打开。"
+            )
         if episode.processed_root and not same_episode:
             self.flip.set(True)
         self.frame = min(restore["frame"], episode.frames - 1) if same_episode else 0
@@ -576,7 +629,7 @@ class DatasetBrowser(ttk.Frame):
         self.request_frame()
         self.replay_loading = False
         self.replay_after_read = False
-        if episode.replay and (self.auto_replay.get() or (same_episode and restore["replay"])):
+        if episode.replay and automatic_replay:
             self.replay_loading = True
             self.replay_after_read = bool(episode.processed_root)
             if not self.replay_after_read:
@@ -591,6 +644,7 @@ class DatasetBrowser(ttk.Frame):
         if self.reader is not None:
             self.reader.close()
             self.reader = None
+        self.reader_generation = None
 
     def request_frame(self):
         if self.episode is None or self.closed:
@@ -611,6 +665,8 @@ class DatasetBrowser(ttk.Frame):
                 if self.reader is None or self.reader.episode is not episode:
                     self._close_reader()
                     self.reader = EpisodeReader(episode)
+                if self.reader_generation != generation:
+                    self.reader_generation = generation
                     self.events.put((generation, "segmentation", self.reader.segmentation))
                 image, values = self.reader.read(frame, camera)
                 self.events.put((generation, "frame", (frame, camera, image, values)))
@@ -627,7 +683,7 @@ class DatasetBrowser(ttk.Frame):
         self.updating_scale = False
         self.segments.update_frame(self.frame)
         self.frame_label.configure(
-            text=f"帧 {self.frame} / {self.episode.frames - 1} · {self.frame / self.episode.fps:.2f} / {(self.episode.frames - 1) / self.episode.fps:.2f} 秒"
+            text=f"帧 {self.frame}/{self.episode.frames - 1} · {self.frame / self.episode.fps:.2f}/{(self.episode.frames - 1) / self.episode.fps:.2f} s"
         )
 
     def _seek(self, value):
@@ -719,6 +775,11 @@ class DatasetBrowser(ttk.Frame):
         self.values.insert("1.0", "\n".join(lines) or "此帧未包含动作或机器人状态。")
         self.values.configure(state="disabled")
 
+    def _auto_replay_changed(self):
+        self.replay_preference = self.auto_replay.get()
+        if self.replay_preference:
+            self.open_replay()
+
     def open_replay(self):
         if self.episode is not None and self.episode.replay:
             if self.episode.replay_source and self.episode.replay_source.frame(self.frame) is None:
@@ -726,10 +787,14 @@ class DatasetBrowser(ttk.Frame):
                 return
             self.pause()
             self.replay_ready = False
-            self.replay_note.configure(text="正在打开三维回放窗口…")
+            self.replay_note.configure(text="正在加载内嵌三维回放…")
             self.replay_pending = None
             self.replay_loading = True
-            self.replay.reload(self.episode, frame=self.frame)
+            if self.episode.processed_root and self.episode.replay_source is None:
+                self.replay_after_read = True
+                self.request_frame()
+            else:
+                self.replay.reload(self.episode, frame=self.frame)
 
     def download(self):
         if self.downloading:
@@ -784,16 +849,23 @@ class DatasetBrowser(ttk.Frame):
         return "此回合提供录制画面；完整三维回放需要场景 XML 和仿真 states，或明确的来源帧映射。"
 
     def _sync_replay_frame(self, frame):
-        if self.episode and self.episode.replay_source and self.episode.replay_source.frame(frame) is None:
+        if self.episode is None or not self.episode.replay:
+            return
+        if self.episode.replay_source and self.episode.replay_source.frame(frame) is None:
             self.replay_ready = self.replay_loading = False
             self.replay_pending = None
             self.replay.stop()
-            self.replay_note.configure(text="终端观测无完整仿真状态，三维窗口已关闭；录制末帧与本体仍可查看。")
+            self.scene_view.clear("终端观测没有完整仿真状态。\n请跳回此前区间查看三维场景。")
+            self.replay_note.configure(text="终端观测无完整仿真状态，三维视图已停止；录制末帧与本体仍可查看。")
             return
         if self.replay_ready:
             self.replay_pending = frame
             self.replay_sent_at = time.monotonic()
             self.replay.send("frame", frame=frame)
+        elif self.auto_replay.get() and not self.replay_loading and not self.replay_after_read:
+            self.replay_loading = True
+            self.replay_note.configure(text="正在恢复三维回放…")
+            self.replay.reload(self.episode, frame=frame)
 
     def reload_current(self):
         if self.index is None or self.reloading or self.closed:
@@ -850,6 +922,8 @@ class DatasetBrowser(ttk.Frame):
         self.restoring = restore
         try:
             self.index = value
+            if self.replay_preference is None:
+                self.auto_replay.set(any(episode.processed_root is not None for episode in value.episodes))
             self.refresh_local(value.root)
             title, description, robot = dataset_description(value)
             self.overview_title.configure(text=title)
@@ -860,13 +934,8 @@ class DatasetBrowser(ttk.Frame):
                 fields.append("动作")
             contents = "、".join(["录制画面" if value.cameras else "仿真状态", *fields])
             self.overview_description.configure(text=f"{robot} · {description}  数据包含：{contents}。")
-            total = (
-                f"元数据 {value.declared_episodes:,} 个回合"
-                if value.declared_episodes is not None
-                else "总回合数未标注"
-            )
             self.overview_stats.configure(
-                text=f"{len(value.tasks)} 项任务    ·    {total}    ·    本地可播放 {len(value.episodes)} 个    ·    {len(value.cameras)} 路相机"
+                text=f"{len(value.tasks)} 项任务 · {len(value.episodes):,} 个本地回合 · {len(value.cameras)} 路相机"
             )
             local_tasks = sum(bool(task.local_episodes) for task in value.tasks)
             self.summary.configure(
@@ -926,6 +995,9 @@ class DatasetBrowser(ttk.Frame):
                         self.segments.pack(fill="x", pady=(8, 0), before=self.scale)
                         self.segments.update_frame(self.frame)
                     self.replay_button.configure(state="normal" if self.episode.replay else "disabled")
+                    self.replay_note.configure(text=self._replay_description())
+                    if not self.episode.replay:
+                        self.scene_view.clear(self._replay_description())
                     if self.replay_after_read:
                         self.replay_after_read = False
                         if self.episode.replay and self.episode.replay_source.frame(self.frame) is not None:
@@ -964,9 +1036,10 @@ class DatasetBrowser(ttk.Frame):
                 if event.get("ready"):
                     self.replay_loading = False
                     self.replay_ready = True
+                    self.scene_view.resize_view()
                     self._sync_replay_frame(self.frame)
                     self.replay.send("playing", playing=self.playing)
-                    self.replay_note.configure(text=self._replay_description() + " 三维窗口已就绪。")
+                    self.replay_note.configure(text=self._replay_description() + " 内嵌三维视图已就绪。")
                 if "frame" in event:
                     if event["frame"] == self.replay_pending:
                         self.replay_pending = None
@@ -991,9 +1064,11 @@ class DatasetBrowser(ttk.Frame):
             pass
         if self.replay_pending is not None and time.monotonic() - self.replay_sent_at > 5:
             self.replay_pending = None
-            self.error("三维回放响应较慢，已暂停；可重新打开三维窗口。")
+            self.error("三维回放响应较慢，已暂停；可重新加载三维视图。")
+        if self.replay_ready:
+            self.scene_view.update_frame(self.replay.read_frame())
         self._poll_watch()
-        # Advance only after both the numeric/image read and the native 3D update are acknowledged.
+        # Advance after both the numeric/image read and embedded 3D render are acknowledged.
         if (
             self.playing
             and self.episode is not None

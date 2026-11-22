@@ -6,6 +6,8 @@ import queue
 import subprocess
 import threading
 
+from openpi_client.simulation_frames import FrameBuffer
+
 from openpi.datasets.libero import SEGMENT_COLORS
 from openpi.simulation import paths
 from openpi.simulation.runtime.controller import InspectorController
@@ -15,6 +17,7 @@ from openpi.simulation.runtime.controller import simulation_environment
 class DatasetReplay:
     def __init__(self):
         self.process = None
+        self.frames = None
         self.process_generation = None
         self.events = queue.Queue()
         self.generation = 0
@@ -41,9 +44,12 @@ class DatasetReplay:
                     return
                 self.source = episode.replay_source
                 source_path, source_group = self._location(episode)
+                self.frames = FrameBuffer()
                 command = [
                     str(interpreter),
                     str(paths.WORKERS_ROOT / "replay.py"),
+                    "--render-buffer",
+                    str(self.frames.path),
                     "--path",
                     str(source_path),
                     "--group",
@@ -69,6 +75,8 @@ class DatasetReplay:
                         start_new_session=True,
                     )
                 except OSError as error:
+                    self.frames.close()
+                    self.frames = None
                     self.events.put((generation, {"error": str(error)}))
                     return
                 self.process = process
@@ -148,10 +156,17 @@ class DatasetReplay:
         finally:
             self.lock.release()
 
+    def read_frame(self):
+        frames = self.frames
+        return frames.read() if frames is not None else None
+
     def _stop(self):
         process, self.process = self.process, None
         self.process_generation = None
         InspectorController._terminate(process, worker=True)  # noqa: SLF001 -- Shared owned-process cleanup.
+        if self.frames is not None:
+            self.frames.close()
+            self.frames = None
 
     def stop(self):
         self.generation += 1

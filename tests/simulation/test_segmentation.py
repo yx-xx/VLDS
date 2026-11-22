@@ -15,6 +15,7 @@ import numpy as np
 import pytest
 
 from openpi.datasets.libero import SEGMENT_COLORS
+from openpi.simulation import paths
 from openpi.simulation.data.discovery import discover_datasets
 from openpi.simulation.data.reader import EpisodeReader
 from openpi.simulation.data.reader import scan_dataset
@@ -298,3 +299,212 @@ def test_failed_recorded_state_preserves_overlay_cursor_and_robot_state(tmp_path
         np.testing.assert_array_equal(recording.data.qpos, original_state)
     finally:
         recording.close()
+
+
+@pytest.mark.skipif(not os.environ.get("DISPLAY"), reason="Requires a desktop display")
+def test_segmented_replay_renders_inside_browser_and_clears_missing_terminal_state(tmp_path):
+    root = segmented_dataset(tmp_path)
+    code = textwrap.dedent("""
+        import sys, time
+        import numpy as np
+        from openpi.simulation.ui.inspector import InspectorWindow
+        from openpi.simulation.runtime.controller import InspectorController
+        from openpi.simulation.ui.tk_runtime import tk
+
+        root = tk.Tk()
+        root.withdraw()
+        control = InspectorController()
+        window = InspectorWindow(root, control, dataset_path=sys.argv[1])
+        browser = window.dataset_browser
+        def wait_for(predicate):
+            deadline = time.monotonic() + 20
+            while not predicate():
+                root.update()
+                if time.monotonic() > deadline:
+                    raise AssertionError(browser.status.cget('text') + browser.replay_note.cget('text'))
+                time.sleep(0.01)
+            root.update()
+        try:
+            wait_for(lambda: browser.segments.data is not None and not browser.render_pending)
+            browser.open_replay()
+            wait_for(lambda: browser.replay_ready and browser.scene_view.photo is not None
+                     and np.array(browser.scene_view.image).shape == (120, 160, 3))
+            assert '--render-buffer' in browser.replay.process.args
+            before = np.array(browser.scene_view.image)
+            browser.replay.send('view', action='rotate', dx=0.1, dy=0.1)
+            wait_for(lambda: np.any(np.array(browser.scene_view.image) != before))
+            browser.segments._move(1)
+            wait_for(lambda: browser.frame == 2 and browser.replay_pending is None)
+            assert browser.segments.selected == 1
+            browser.replay.configure_overlay(current_only=True)
+            browser.segments._play()
+            wait_for(lambda: not browser.playing and browser.frame == 4)
+            browser.seek_frame(6)
+            wait_for(lambda: not browser.render_pending)
+            assert not browser.replay_ready
+            assert browser.scene_view.image is None
+            assert '终端观测' in browser.scene_view.message
+            browser.seek_frame(1)
+            wait_for(lambda: not browser.render_pending)
+            browser.open_replay()
+            wait_for(lambda: browser.replay_ready and browser.scene_view.photo is not None)
+            assert not any(isinstance(child, tk.Toplevel) for child in root.winfo_children())
+            root.deiconify()
+            root.geometry('1280x850')
+            wait_for(lambda: browser.scene_view.canvas.winfo_width() > 500)
+            assert browser.scene_view.canvas.winfo_width() > browser.views.winfo_width() * 0.72, (browser.scene_view.canvas.winfo_width(), browser.views.winfo_width())
+            assert not browser.values.frame.winfo_manager()
+            assert not browser.data_options.winfo_manager()
+            def inside_window(widget):
+                return widget.winfo_rooty() + widget.winfo_height() <= root.winfo_rooty() + root.winfo_height()
+            assert inside_window(browser.play_button)
+            assert inside_window(browser.scale)
+            browser._toggle_values()
+            root.update()
+            assert browser.values.frame.winfo_manager() == 'pack'
+            assert inside_window(browser.values)
+            assert inside_window(browser.play_button)
+            browser._toggle_values()
+            browser._toggle_data_options()
+            root.update()
+            assert browser.data_options.winfo_manager() == 'pack'
+        finally:
+            browser.close()
+            control.close()
+            root.destroy()
+    """)
+    environment = os.environ.copy()
+    environment.pop("PYTHONPATH", None)
+    process = subprocess.run(
+        [sys.executable, "-c", code, str(root)],
+        cwd=paths.ROOT,
+        env=environment,
+        text=True,
+        capture_output=True,
+        timeout=60,
+        check=False,
+    )
+    assert process.returncode == 0, process.stderr
+
+
+@pytest.mark.skipif(not os.environ.get("DISPLAY"), reason="Requires a desktop display")
+def test_processed_browser_automatically_switches_replays_and_recovers_after_terminal(tmp_path):
+    root = segmented_dataset(tmp_path)
+    source = tmp_path / "source.hdf5"
+    with h5py.File(source, "r+") as file:
+        file.copy("data/demo_0", "data/demo_1")
+        states = file["data/demo_1/states"][:]
+        states[:, 1] += 0.2
+        file["data/demo_1/states"][:] = states
+    manifest_path = root / "manifest.json"
+    manifest = json.loads(manifest_path.read_text())
+    entry = manifest["episodes"][0]
+    with h5py.File(root / entry["shard"], "r+") as file:
+        file["provenance"][()] = json.dumps(
+            {"source_size": source.stat().st_size, "source_mtime_ns": source.stat().st_mtime_ns}
+        )
+        file.copy("episodes/demo_0", "episodes/demo_1")
+        group = file["episodes/demo_1"]
+        group.attrs["source_group"] = "/data/demo_1"
+        del group["source"]
+        group["source"] = h5py.ExternalLink("../../../source.hdf5", "/data/demo_1")
+        positions = group["robot_state/position"][:]
+        positions[:, 0] += 0.2
+        group["robot_state/position"][:] = positions
+    other = root / "libero_spatial/other_task.hdf5"
+    other.write_bytes((root / entry["shard"]).read_bytes())
+    manifest["episodes"].extend(
+        [
+            {**entry, "group": "/episodes/demo_1", "episode": "demo_1"},
+            {
+                **entry,
+                "shard": "libero_spatial/other_task.hdf5",
+                "task": "close_drawer",
+                "language": "close the drawer",
+            },
+        ]
+    )
+    manifest_path.write_text(json.dumps(manifest))
+    code = textwrap.dedent("""
+        import sys, time
+        import numpy as np
+        from openpi.simulation.ui.inspector import InspectorWindow
+        from openpi.simulation.runtime.controller import InspectorController
+        from openpi.simulation.ui.tk_runtime import tk
+
+        root = tk.Tk()
+        root.withdraw()
+        control = InspectorController()
+        window = InspectorWindow(root, control, dataset_path=sys.argv[1])
+        browser = window.dataset_browser
+        errors = []
+        root.report_callback_exception = lambda *args: errors.append(str(args[1]))
+        def wait_for(predicate):
+            deadline = time.monotonic() + 20
+            while not predicate():
+                root.update()
+                if time.monotonic() > deadline:
+                    raise AssertionError(browser.status.cget('text') + browser.replay_note.cget('text') + str(errors))
+                time.sleep(0.01)
+            root.update()
+        def ready():
+            return (browser.replay_ready and not browser.render_pending
+                    and browser.replay_pending is None and browser.scene_view.image is not None)
+        try:
+            wait_for(ready)
+            assert browser.auto_replay.get()
+            # Reselecting the current episode must republish its cached read metadata.
+            browser.episode_box.event_generate('<<ComboboxSelected>>')
+            wait_for(ready)
+            assert browser.segments.data is not None
+            before = np.array(browser.scene_view.image)
+            browser.episode_box.current(1)
+            browser.episode_box.event_generate('<<ComboboxSelected>>')
+            wait_for(lambda: ready() and browser.replay.source.group == '/data/demo_1'
+                     and np.any(np.array(browser.scene_view.image) != before))
+            row = next(key for key, task in browser.task_rows.items() if task.name == 'close the drawer')
+            browser.task_tree.selection_set(row)
+            browser.task_tree.event_generate('<<TreeviewSelect>>')
+            wait_for(lambda: ready() and browser.episode.task == 'close the drawer')
+            browser.seek_frame(6)
+            wait_for(lambda: not browser.render_pending and browser.scene_view.image is None)
+            assert not browser.replay_ready
+            assert '终端观测' in browser.scene_view.message
+            browser.seek_frame(1)
+            wait_for(ready)
+            browser.auto_replay.set(False)
+            browser._auto_replay_changed()
+            browser.task.set('pick up the bowl')
+            browser._filter_episodes()
+            wait_for(lambda: not browser.render_pending and browser.replay.process is None)
+            assert not browser.replay_ready
+            assert '加载三维回放' in browser.scene_view.message
+            browser.reload_current()
+            wait_for(lambda: not browser.reloading and not browser.render_pending)
+            assert not browser.auto_replay.get()
+            browser.auto_replay.set(True)
+            browser._auto_replay_changed()
+            wait_for(ready)
+            root.deiconify()
+            root.geometry('1280x850')
+            wait_for(lambda: browser.episode_box.winfo_width() > 600)
+            assert browser.episode_box.winfo_width() > browser.views.winfo_width() * 0.85
+            assert browser.episode_box.winfo_rooty() < browser.scene_view.winfo_rooty()
+            assert not errors, errors
+        finally:
+            browser.close()
+            control.close()
+            root.destroy()
+    """)
+    environment = os.environ.copy()
+    environment.pop("PYTHONPATH", None)
+    process = subprocess.run(
+        [sys.executable, "-c", code, str(root)],
+        cwd=paths.ROOT,
+        env=environment,
+        text=True,
+        capture_output=True,
+        timeout=90,
+        check=False,
+    )
+    assert process.returncode == 0, process.stderr + process.stdout

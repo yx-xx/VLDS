@@ -129,6 +129,26 @@ class ProcessedLiberoDataset:
         finally:
             file.close()
 
+    def field_input(self, episode_index):
+        """Load an aligned episode for offline field construction, without images."""
+        file, episode = self._open(episode_index)
+        try:
+            source = (Path(file.filename).parent / episode.attrs["source_file"]).resolve()
+            return {
+                "entry": self.episodes[episode_index],
+                "trajectory": {key: value[:] for key, value in episode["robot_state"].items()},
+                "time": episode["time"][:],
+                "actions": episode["actions"][:],
+                "command_intervals": read_record(episode, "command_intervals"),
+                "operation_events": read_record(episode, "events"),
+                "body_to_control_rotation": episode["body_to_control_rotation"][:],
+                "source_file": source,
+                "source_group": episode.attrs["source_group"],
+                "source_provenance": read_record(file, "provenance"),
+            }
+        finally:
+            file.close()
+
     def audit(self, *, check_images=True):
         """Check all artifacts, source links, partitions, coverage, and mask invariants."""
         errors = []

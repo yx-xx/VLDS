@@ -6,11 +6,12 @@
 env -u PYTHONPATH .venv/bin/python scripts/view_simulation.py
 ```
 
-也可通过 `env -u PYTHONPATH .venv/bin/python -m openpi.simulation` 启动同一界面。首次安装请先阅读下方的 openpi 安装说明，并运行 `bash examples/libero/setup_franka.sh` 准备独立的 LIBERO 环境。
+观察台将 MuJoCo 三维视图、录制相机与播放控制放在一个窗口中。也可通过 `env -u PYTHONPATH .venv/bin/python -m openpi.simulation` 启动同一界面。首次安装请先阅读下方的 openpi 安装说明，并运行 `bash examples/libero/setup_franka.sh` 准备独立的 LIBERO 环境。
 
 - [常用启动命令](COMMANDS.md)：观察台、数据集浏览、模型服务和命令行仿真。
 - [项目结构与开发约定](docs/project_structure.md)：目录职责、模块边界、测试及运行文件位置。
 - [LIBERO 数据处理](docs/data_processing.md)：统一处理、复核和绘图入口，完整命令区间及 F 候选输入。
+- [参考动力系统拟合与连续执行](docs/field_teachers.md)：SEDS 参考 F、有限选段、完整 LIBERO 执行、简单吸引子对照与实际验证边界。
 - [模型观察台说明](docs/simulation_inspector.md)：操作方式、模型适配、数据格式和三维回放条件。
 - [文档索引](docs/README.md)：安装、训练与部署相关文档。
 

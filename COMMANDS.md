@@ -22,7 +22,7 @@ env -u PYTHONPATH .venv/bin/python scripts/view_simulation.py
 查看已安装环境和任务目录：`env -u PYTHONPATH .venv/bin/python -m openpi.simulation --catalog`。
 
 在选择面板中依次选择：**仿真环境 → 任务集合 → 操作类型 → 具体任务 → 初始状态**。
-点击“打开所选场景”后显示 MuJoCo 完整三维界面，默认暂停；模型加载完成后点击“开始 / 继续”或“单步”。
+点击“打开所选场景”后在观察台内显示 MuJoCo 三维视图，默认暂停；模型加载完成后点击“开始 / 继续”或“单步”。
 每次只运行所选任务，结束后保留现场，等待手动重置或切换。
 
 | 环境 | 可选任务 |
@@ -34,7 +34,7 @@ env -u PYTHONPATH .venv/bin/python scripts/view_simulation.py
 - “打开下一个任务”是手动切换；同一模型保持加载，避免每个场景重新加载权重。
 - 取消“打开场景时同时加载模型”，可以先只看场景，再点击“加载 / 切换模型”。
 - 默认使用软件绘制界面，模型推理仍使用 GPU；图形驱动正常的机器可取消。
-- 三维窗口：左键旋转、右键平移、滚轮缩放、空格暂停 / 继续、右方向键单步。
+- 内嵌三维视图：左键旋转、右键平移、滚轮缩放；点击视图后空格暂停 / 继续、右方向键单步，可点击“复位视角”。
 - 关闭选择面板会清理它启动的场景和模型服务。运行日志位于 `data/sim_inspector/`。
 
 更多设计说明、模型适配边界及扩展建议见 `docs/simulation_inspector.md`。
@@ -90,7 +90,7 @@ env -u PYTHONPATH .venv/bin/python scripts/serve_policy.py \
 ## 数据处理结果实时观看
 
 ```bash
-# 原始演示：选择回合后自动打开 MuJoCo，并检测文件更新。
+# 原始演示：选择回合后自动加载内嵌 MuJoCo 视图，并检测文件更新。
 env -u PYTHONPATH .venv/bin/python scripts/view_simulation.py \
   --dataset data/datasets/raw/libero --replay --watch
 
@@ -106,6 +106,8 @@ env -u PYTHONPATH .venv/bin/python scripts/view_simulation.py \
 文件更新时优先使用临时文件加 `os.replace` 发布；界面的“重新载入当前数据”可以手动刷新。处理后的 LeRobot 数据可以通过 `meta/replay.json` 关联原始场景，具体约定见 `docs/simulation_inspector.md` 的“数据处理时实时观看”。
 
 ## LIBERO 示教预处理
+
+处理后的 LIBERO 数据默认自动加载三维回放，切换任务或回合时自动更新；“演示回合”选择器在三维视图上方的通栏中。
 
 ```bash
 # 观看已处理数据：MuJoCo 内彩色末端轨迹、当前段高亮，与录制画面同步
@@ -130,3 +132,7 @@ env -u PYTHONPATH .venv/bin/python -m openpi.datasets.libero inspect \
 ```
 
 输出规范化示教、完整夹爪命令区间、拟合候选与 H=1/3/4/5 诊断窗口；候选覆盖全部动作，含耦合运动和等待。运行状态、监督可用性和 F 接入边界见 [LIBERO 数据处理](docs/data_processing.md)。
+
+## 参考动力系统拟合与完整环境诊断
+
+SEDS 参考 F、完整动作覆盖的有限选段、简单吸引子对照、控制偏移校准和连续执行，统一使用 `python -m openpi.datasets.libero` 的 `fit-fields / calibrate-fields / rescore-fields / execute-fields / inspect-fields / audit-fields` 子命令。完整命令与真实结果边界见[参考动力系统说明](docs/field_teachers.md)。新增离线池不是 `vlds.fields.v1` 主训练集；旧 v2 候选掩码保持 false。

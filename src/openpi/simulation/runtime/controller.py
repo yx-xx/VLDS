@@ -16,6 +16,8 @@ import time
 import urllib.error
 import urllib.request
 
+from openpi_client.simulation_frames import FrameBuffer
+
 from openpi.simulation import catalog
 from openpi.simulation import paths
 
@@ -58,6 +60,7 @@ class InspectorController:
         self.catalog = catalog.build_catalog()
         self.selection = None
         self.worker = None
+        self.frames = None
         self.policy = None
         self.policy_key = None
         self.policy_ready = False
@@ -107,17 +110,24 @@ class InspectorController:
         command = [str(python), "-u", str(paths.WORKERS_ROOT / "scene.py")]
         for key in ("dataset", "suite", "task_id", "initial_state", "seed"):
             command.extend(["--" + key.replace("_", "-"), str(selected[key])])
-        self.worker = subprocess.Popen(
-            command,
-            cwd=paths.ROOT,
-            env=simulation_environment(selected),
-            stdin=subprocess.PIPE,
-            stdout=subprocess.PIPE,
-            stderr=subprocess.STDOUT,
-            text=True,
-            bufsize=1,
-            start_new_session=True,
-        )
+        self.frames = FrameBuffer()
+        command.extend(["--render-buffer", str(self.frames.path)])
+        try:
+            self.worker = subprocess.Popen(
+                command,
+                cwd=paths.ROOT,
+                env=simulation_environment(selected),
+                stdin=subprocess.PIPE,
+                stdout=subprocess.PIPE,
+                stderr=subprocess.STDOUT,
+                text=True,
+                bufsize=1,
+                start_new_session=True,
+            )
+        except OSError:
+            self.frames.close()
+            self.frames = None
+            raise
         threading.Thread(target=self._read_worker, args=(self.worker, session), daemon=True).start()
         if load_model:
             self._load_policy()
@@ -274,9 +284,16 @@ class InspectorController:
         if worker and process.stdin is not None:
             process.stdin.close()
 
+    def read_frame(self):
+        frames = self.frames
+        return frames.read() if frames is not None else None
+
     def _stop_worker(self):
         process, self.worker = self.worker, None
         self._terminate(process, worker=True)
+        if self.frames is not None:
+            self.frames.close()
+            self.frames = None
 
     def _stop_policy(self):
         process, self.policy = self.policy, None

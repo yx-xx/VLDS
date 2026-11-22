@@ -15,8 +15,10 @@ class SegmentationPanel(ttk.Frame):
         self.data = None
         self.frame = 0
         self.selected = 0
-        ttk.Label(self, text="夹爪命令分段 · 尚未进行 F 拟合", style="Subheading.TLabel").pack(anchor="w")
-        self.timeline = tk.Canvas(self, height=38, highlightthickness=0, bg="#f4f6f5")
+        options = ttk.Frame(self)
+        options.pack(fill="x", pady=(0, 3))
+        ttk.Label(options, text="命令分段", style="Subheading.TLabel").pack(side="left", padx=(0, 16))
+        self.timeline = tk.Canvas(self, height=34, highlightthickness=0, bg="#f4f6f5")
         self.timeline.pack(fill="x", pady=(3, 2))
         self.timeline.bind("<Configure>", lambda _event: self._draw())
         self.timeline.bind("<Button-1>", self._click)
@@ -31,8 +33,6 @@ class SegmentationPanel(ttk.Frame):
         ttk.Button(row, text="播放此段", command=self._play).pack(side="left")
         self.detail = ttk.Label(self, text="", style="Muted.TLabel", wraplength=850)
         self.detail.pack(anchor="w", pady=(3, 0))
-        options = ttk.Frame(self)
-        options.pack(fill="x", pady=(5, 0))
         self.overlay_visible = tk.BooleanVar(value=True)
         self.overlay_current_only = tk.BooleanVar(value=False)
         self.overlay_markers = tk.BooleanVar(value=True)
@@ -44,7 +44,7 @@ class SegmentationPanel(ttk.Frame):
             ttk.Checkbutton(options, text=label, variable=variable, command=self._overlay_changed).pack(
                 side="left", padx=(0, 12)
             )
-        ttk.Label(options, text="当前段加粗 · 白点为当前观测", style="Muted.TLabel").pack(side="left")
+        ttk.Label(options, text="当前段加粗 · 白点定位", style="Muted.TLabel").pack(side="left")
 
     def _overlay_changed(self):
         self.configure_overlay(

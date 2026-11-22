@@ -2,6 +2,7 @@
 
 # ruff: noqa: RUF001 -- Chinese interface text uses Chinese punctuation.
 
+import contextlib
 import os
 import pathlib
 import queue
@@ -10,6 +11,7 @@ import threading
 from openpi.simulation import catalog
 from openpi.simulation.runtime.controller import InspectorController
 from openpi.simulation.ui.dataset_browser import DatasetBrowser
+from openpi.simulation.ui.scene_view import SceneView
 from openpi.simulation.ui.tk_runtime import configure_fonts
 from openpi.simulation.ui.tk_runtime import filedialog
 from openpi.simulation.ui.tk_runtime import scrolledtext
@@ -32,8 +34,8 @@ class InspectorWindow:
         self.suites = []
         self.models = []
         root.title("VLDS · 模型观察台")
-        root.geometry("1200x920")
-        root.minsize(1100, 860)
+        root.geometry("1520x980")
+        root.minsize(1100, 780)
         root.configure(bg="#f4f6f5")
         body_font = configure_fonts(root)
         style = ttk.Style(root)
@@ -62,8 +64,8 @@ class InspectorWindow:
         )
         style.configure(
             "ActiveMode.Toolbutton",
-            font=(body_font, 13, "bold"),
-            padding=(24, 12),
+            font=(body_font, 12, "bold"),
+            padding=(24, 9),
             background="#ffffff",
             foreground="#17664f",
             relief="flat",
@@ -82,14 +84,13 @@ class InspectorWindow:
         style.configure("Status.TLabel", foreground="#20765f", font=(body_font, 12, "bold"))
         style.configure("Error.TLabel", foreground="#ab3f32")
 
-        outer = ttk.Frame(root, padding=24)
+        outer = ttk.Frame(root, padding=16)
         outer.pack(fill="both", expand=True)
-        ttk.Label(outer, text="模型观察台", style="Heading.TLabel").pack(anchor="w")
-        ttk.Label(
-            outer, text="观察模型现场行为，或浏览数据集的真实演示。每次只查看你选中的场景与回合。", style="Muted.TLabel"
-        ).pack(anchor="w", pady=(4, 12))
-        navigation = ttk.Frame(outer)
-        navigation.pack(fill="x", pady=(0, 8))
+        header = ttk.Frame(outer)
+        header.pack(fill="x", pady=(0, 8))
+        ttk.Label(header, text="VLDS · 观察台", style="Heading.TLabel").pack(side="left")
+        navigation = ttk.Frame(header)
+        navigation.pack(side="right")
         self.active_page = tk.IntVar(value=0)
         self.mode_switches = []
         for page, title in enumerate(("模型仿真验证", "数据集浏览")):
@@ -112,11 +113,24 @@ class InspectorWindow:
         self.tabs.bind("<<NotebookTabChanged>>", self._tab_changed)
         columns = ttk.Frame(simulation_page)
         columns.pack(fill="both", expand=True)
-        left = ttk.Frame(columns)
-        left.pack(side="left", fill="both", expand=True, padx=(0, 28))
-        right = ttk.Frame(columns, width=350)
-        right.pack(side="right", fill="both")
-        right.pack_propagate(flag=False)
+        sidebar = ttk.Frame(columns, width=360)
+        sidebar.pack(side="left", fill="y", padx=(0, 16))
+        sidebar.pack_propagate(flag=False)
+        self.settings_canvas = tk.Canvas(sidebar, bg="#f4f6f5", highlightthickness=0, width=340)
+        scrollbar = ttk.Scrollbar(sidebar, orient="vertical", command=self.settings_canvas.yview)
+        scrollbar.pack(side="right", fill="y")
+        self.settings_canvas.configure(yscrollcommand=scrollbar.set)
+        self.settings_canvas.pack(side="left", fill="both", expand=True)
+        left = ttk.Frame(self.settings_canvas)
+        settings_window = self.settings_canvas.create_window((0, 0), window=left, anchor="nw")
+        left.bind(
+            "<Configure>", lambda _event: self.settings_canvas.configure(scrollregion=self.settings_canvas.bbox("all"))
+        )
+        self.settings_canvas.bind(
+            "<Configure>", lambda event: self.settings_canvas.itemconfigure(settings_window, width=event.width)
+        )
+        right = ttk.Frame(columns)
+        right.pack(side="right", fill="both", expand=True)
 
         self.dataset = tk.StringVar()
         self.suite = tk.StringVar()
@@ -139,22 +153,24 @@ class InspectorWindow:
         self.kind_box.bind("<<ComboboxSelected>>", self._filter_tasks)
         self.task_box = self._combo(left, "具体任务", self.task, pady=10)
         self.task_box.bind("<<ComboboxSelected>>", self._task_changed)
-        self.description = ttk.Label(left, text="", wraplength=570, style="Muted.TLabel")
+        self.description = ttk.Label(left, text="", wraplength=330, style="Muted.TLabel")
         self.description.pack(anchor="w", fill="x", pady=(0, 12))
         numeric = ttk.Frame(left)
         numeric.pack(fill="x")
         self.initial_spin = self._number(numeric, "初始状态编号", self.initial, 1000000)
         self._number(numeric, "随机种子", self.seed, 2**32 - 1)
-        self.initial_note = ttk.Label(left, text="", style="Muted.TLabel", wraplength=570)
+        self.initial_note = ttk.Label(left, text="", style="Muted.TLabel", wraplength=330)
         self.initial_note.pack(anchor="w", pady=(5, 10))
         self.model_box = self._combo(left, "模型配置", self.model)
         self.model_box.bind("<<ComboboxSelected>>", self._model_changed)
-        ttk.Label(left, text="自定义检查点（留空使用对应环境的默认权重）").pack(anchor="w", pady=(10, 4))
+        ttk.Label(left, text="自定义检查点（留空使用对应环境的默认权重）", wraplength=330).pack(
+            anchor="w", pady=(10, 4)
+        )
         path_row = ttk.Frame(left)
         path_row.pack(fill="x")
         ttk.Entry(path_row, textvariable=self.checkpoint).pack(side="left", fill="x", expand=True)
         ttk.Button(path_row, text="选择目录", command=self._browse).pack(side="right", padx=(6, 0))
-        self.policy_note = ttk.Label(left, text="", style="Muted.TLabel", wraplength=570)
+        self.policy_note = ttk.Label(left, text="", style="Muted.TLabel", wraplength=330)
         self.policy_note.pack(anchor="w", pady=(5, 10))
         ttk.Checkbutton(left, text="使用软件绘制三维界面（模型仍使用 GPU）", variable=self.software).pack(anchor="w")
         ttk.Checkbutton(left, text="打开场景时同时加载模型", variable=self.auto_model).pack(anchor="w", pady=(5, 10))
@@ -165,47 +181,39 @@ class InspectorWindow:
         self.load_button = ttk.Button(actions, text="加载 / 切换模型", command=self.load_model)
         self.load_button.pack(side="left", padx=(8, 0))
 
-        ttk.Label(right, text="当前场景", style="Subheading.TLabel").pack(anchor="w")
-        self.status = ttk.Label(right, text="先选择场景", wraplength=345, style="Status.TLabel")
-        self.status.pack(anchor="w", pady=(10, 8))
-        self.instruction = ttk.Label(right, text="完整 MuJoCo 三维窗口会单独打开。", wraplength=345)
-        self.instruction.pack(anchor="w", pady=(0, 12))
-        self.model_status = ttk.Label(right, text="模型尚未加载", wraplength=345, style="Muted.TLabel")
-        self.model_status.pack(anchor="w", pady=(0, 10))
+        self.scene_view = SceneView(
+            right, send=self._view_command, toggle_play=self.toggle_play, step=lambda: self.command("step")
+        )
+        self.scene_view.pack(fill="both", expand=True)
+        self.status = ttk.Label(right, text="先选择场景", wraplength=700, style="Status.TLabel")
+        self.status.pack(anchor="w", pady=(10, 4))
+        self.instruction = ttk.Label(right, text="三维场景会显示在上方视图中。", wraplength=700)
+        self.instruction.pack(anchor="w", pady=(0, 5))
+        self.model_status = ttk.Label(right, text="模型尚未加载", wraplength=700, style="Muted.TLabel")
+        self.model_status.pack(anchor="w")
         self.step_label = ttk.Label(right, text="控制步 0 · 本次推理 —", style="Muted.TLabel")
-        self.step_label.pack(anchor="w", pady=(0, 12))
+        self.step_label.pack(anchor="w", pady=(4, 8))
         controls = ttk.Frame(right)
         controls.pack(fill="x")
         self.play_button = ttk.Button(controls, text="开始 / 继续", style="Accent.TButton", command=self.toggle_play)
         self.play_button.pack(side="left", expand=True, fill="x")
         self.step_button = ttk.Button(controls, text="单步", command=lambda: self.command("step"))
-        self.step_button.pack(side="left", padx=(8, 0))
-        self.reset_button = ttk.Button(right, text="重置为当前初始状态", command=self.reset)
-        self.reset_button.pack(fill="x", pady=(8, 0))
-        self.next_initial_button = ttk.Button(right, text="换一个初始状态", command=self.next_initial)
-        self.next_initial_button.pack(fill="x", pady=(8, 0))
-        self.next_task_button = ttk.Button(right, text="打开下一个任务", command=self.next_task)
-        self.next_task_button.pack(fill="x", pady=(8, 0))
-        self.stop_button = ttk.Button(right, text="关闭当前场景", command=controller.stop_scene)
-        self.stop_button.pack(fill="x", pady=(8, 18))
-        ttk.Label(right, text="三维窗口操作", style="Subheading.TLabel").pack(anchor="w")
-        ttk.Label(
-            right,
-            text="左键旋转 · 右键平移 · 滚轮缩放\n空格暂停 / 继续 · → 单步\n关节、接触点和坐标系可在侧栏查看。",
-            wraplength=345,
-            style="Muted.TLabel",
-        ).pack(anchor="w", pady=(6, 16))
-        ttk.Label(
-            right,
-            text="每次只运行所选任务；手动重置或切换。\n这里的初始状态用于重现场景，模型会现场生成动作。",
-            wraplength=345,
-            style="Muted.TLabel",
-        ).pack(anchor="w")
+        self.step_button.pack(side="left", padx=8)
+        self.stop_button = ttk.Button(controls, text="关闭当前场景", command=controller.stop_scene)
+        self.stop_button.pack(side="left")
+        resets = ttk.Frame(right)
+        resets.pack(fill="x", pady=(8, 0))
+        self.reset_button = ttk.Button(resets, text="重置当前初态", command=self.reset)
+        self.reset_button.pack(side="left", expand=True, fill="x")
+        self.next_initial_button = ttk.Button(resets, text="换一个初始状态", command=self.next_initial)
+        self.next_initial_button.pack(side="left", expand=True, fill="x", padx=8)
+        self.next_task_button = ttk.Button(resets, text="打开下一个任务", command=self.next_task)
+        self.next_task_button.pack(side="left", expand=True, fill="x")
 
         ttk.Label(simulation_page, text="运行日志", style="Muted.TLabel").pack(anchor="w", pady=(14, 4))
         self.log = scrolledtext.ScrolledText(
             simulation_page,
-            height=5,
+            height=3,
             font="TkFixedFont",
             bg="#ffffff",
             fg="#46534e",
@@ -240,7 +248,7 @@ class InspectorWindow:
             side=side or "top", fill="x", expand=side is not None, pady=(pady, 0), padx=(0, 8) if side == "left" else 0
         )
         ttk.Label(frame, text=label).pack(anchor="w", pady=(0, 4))
-        box = ttk.Combobox(frame, textvariable=variable, state="readonly", width=20 if side else 50)
+        box = ttk.Combobox(frame, textvariable=variable, state="readonly", width=12 if side else 30)
         box.pack(fill="x")
         return box
 
@@ -325,6 +333,7 @@ class InspectorWindow:
 
     def open_scene(self):
         try:
+            self.scene_view.clear("正在加载三维场景…")
             self.controller.open_scene(self.selection(), load_model=self.auto_model.get())
             self.scene_ready = self.model_ready = self.done = False
             self._update_controls()
@@ -337,6 +346,12 @@ class InspectorWindow:
             self.show_error("请先打开左侧所选环境，再加载对应模型。")
             return
         self.controller.load_policy(self.models[self.model_box.current()], self.checkpoint.get())
+
+    def _view_command(self, command, **arguments):
+        if self.controller.worker is not None:
+            # A delayed resize may arrive after the scene was closed.
+            with contextlib.suppress(ValueError):
+                self.controller.send(command, **arguments)
 
     def command(self, command, **arguments):
         try:
@@ -401,6 +416,10 @@ class InspectorWindow:
                 for key in ("scene_ready", "model_ready", "paused", "done"):
                     if key in event:
                         setattr(self, key, event[key])
+                if event.get("scene_ready"):
+                    self.scene_view.resize_view()
+                elif event.get("scene_ready") is False:
+                    self.scene_view.clear(event.get("status", "场景已关闭。"))
                 if "status" in event:
                     self.status.configure(text=event["status"], style="Status.TLabel")
                 if "model_status" in event:
@@ -425,8 +444,10 @@ class InspectorWindow:
                     self.show_error(event["error"])
         except queue.Empty:
             pass
+        if self.scene_ready:
+            self.scene_view.update_frame(self.controller.read_frame())
         self._update_controls()
-        self.root.after(100, self.poll)
+        self.root.after(30, self.poll)
 
     def close(self):
         if self.closing:
@@ -449,7 +470,9 @@ def main(dataset_path=None, *, replay=False, watch=False):
     controller = InspectorController()
     try:
         window = InspectorWindow(root, controller, dataset_path)
-        window.dataset_browser.auto_replay.set(replay)
+        if replay:
+            window.dataset_browser.auto_replay.set(True)
+            window.dataset_browser.replay_preference = True
         window.dataset_browser.auto_refresh.set(watch)
         root.mainloop()
     finally:

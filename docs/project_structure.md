@@ -12,6 +12,7 @@ VLDS/
 ├── uv.lock                    # 依赖锁定文件
 ├── src/openpi/                # 模型、策略、训练、共享工具和仿真应用
 │   ├── datasets/              # 数据版本、下载、校验及示教预处理
+│   ├── fields/                # 独立于模型/仿真的稳定场、拟合与位姿原语
 │   └── simulation/            # 交互式观察台与仿真运行控制
 ├── packages/openpi-client/    # 轻量客户端、通信及共享 MuJoCo 查看器
 ├── scripts/                   # 用户命令入口、训练工具和 Docker 脚本
@@ -36,14 +37,21 @@ VLDS/
 ```text
 src/openpi/datasets/libero/
 ├── __init__.py
-├── __main__.py               # 统一 process / audit / inspect 命令
+├── __main__.py               # 预处理、拟合、校准、执行与诊断命令
 ├── processing.py             # 时序对齐、运动学抽检、分片导出与复现记录
 ├── trajectory.py             # 实测速度、命令区间、事件、候选与诊断窗口
 ├── reader.py                 # 延迟读取、F 输入与独立完整性复核
-└── inspection.py             # 回合与全量质量绘图；仅 inspect 时加载绘图库
+├── inspection.py             # 回合与全量质量绘图；仅 inspect 时加载绘图库
+├── fields.py                 # 有限候选、场拟合缓存、完整覆盖与多条路径选择
+├── calibration.py            # 固定场的速度校准、简单吸引子和参考偏移对照
+├── replay_teacher.py         # 成功源回放的派生参考位姿轨迹及来源校验
+├── operation_audit.py        # 离线操作证据、待复核事件和源回放对照
+└── field_inspection.py       # 完整环境执行与实际查询图像的诊断绘图
 ```
 
 测试与上述职责对应，放在 `tests/datasets/libero/`；下载测试留在 `tests/datasets/`。生产结果位于被 Git 忽略的 `data/processed/libero_v2/`，临时验证放在临时目录。历史 v1 产物保留来源和快照，新版不会将旧候选伪装成有效场标签。数据语义、文件布局及唯一运行说明见 [LIBERO 数据处理](data_processing.md)。
+
+稳定场和执行诊断的职责及运行入口见[参考动力系统说明](field_teachers.md)。数学/拟合/时钟测试位于 `tests/fields/`，候选与数据链路测试位于 `tests/datasets/libero/`；执行适配器与完整环境工作进程分别为 `simulation/runtime/field_control.py`、`field_execution.py` 和 `simulation/workers/fields.py`。这些模块不改变原动作策略的输出含义。
 
 ## 仿真模块
 
@@ -59,6 +67,7 @@ src/openpi/simulation/
 │   ├── dataset_browser.py     # 任务目录、回合筛选与播放控件
 │   ├── dataset_library.py     # 数据集总览卡片
 │   ├── segmentation.py        # 命令区间时间轴、跳段与单段播放
+│   ├── scene_view.py          # 内嵌三维画面、鼠标视角与键盘控制
 │   └── tk_runtime.py          # 系统 Tk 选择与字体配置
 ├── data/
 │   ├── reader.py              # 数据集索引、格式读取及帧访问
@@ -88,6 +97,8 @@ src/openpi/simulation/
 主环境 `.venv/` 使用 Python 3.11，运行控制面板、数据读取、模型服务和 ALOHA。LIBERO 使用 `examples/libero/.venv/` 中的独立 Python 3.8 与对应 MuJoCo 依赖。
 
 `workers/` 中的脚本通过绝对路径交给相应解释器直接执行，以隔离两套依赖。此目录应保持 Python 3.8 兼容，不导入主环境的 `openpi` 模型、界面或运行控制模块；可使用独立环境中安装的 `openpi_client`。
+
+共享查看器在 `packages/openpi-client/src/openpi_client/` 中维护：`embedded_viewer.py` 使用离屏渲染和明确的 OpenGL 生命周期兼容两套 MuJoCo；`simulation_frames.py` 用临时 mmap 文件传输最新完整 RGB 帧，工作进程退出后由主进程释放。桌面观察台传入 `--render-buffer` 使用内嵌视图，独立命令行查看器继续使用 `simulation_viewer.py`。
 
 图形模块必须通过 `ui/tk_runtime.py` 导入 Tk，并在 Tk 初始化后按需导入 `PIL.ImageTk`。提前导入 `tkinter` 或 `ImageTk` 会使系统 Tk 和中文字体选择失效。包的 `__init__.py` 保持轻量，避免导入时启动图形环境。
 
