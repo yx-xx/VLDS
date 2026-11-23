@@ -1,0 +1,989 @@
+{
+  "date": "2026-11-22",
+  "git_head": "15daa34e0e84ec3bc3dc682413571e86b9114f62",
+  "uses_uncommitted_source": true,
+  "source_sha256": {
+    "src/openpi/datasets/libero/fields.py": "b7e59a95f19d5462107b48892143f1a7213c26afbc7e413a661d0847057b6bf1",
+    "src/openpi/fields/seds.py": "f01e4e10285f4210133db7522f70d88bde19340a52c42f1f8709f99df5d54e7c",
+    "src/openpi/fields/primitive.py": "aac653f44f650eea58821390888ceba047180e1c9c3beaad85d68f6d0e4f29d0",
+    "src/openpi/datasets/libero/trajectory.py": "1e09abcafe40a3baf2f4eb2d69e634424bbc2aa92240f615a8aa89e34fb2803f",
+    "src/openpi/datasets/libero/replay_teacher.py": "cdb0452f85ea039e3cf79380c5eef7cd1560f9858e35980f99e975b62f991b7c",
+    "src/openpi/datasets/libero/reader.py": "fe34c5a769f7d4c85d40e3a84ade0333984e8945e02b062db33253a3888edbf5",
+    "src/openpi/fields/visualization.py": "0256782e35e4e12559ec2386c40ca90d66ee51cf66c545d2f7f6e174dc18f75b",
+    "src/openpi/datasets/libero/vector_field_inspection.py": "0d684517215cedd0a74fd3e29090d3604b9d823644c535fc208bbb71e8a7315a",
+    "src/openpi/datasets/libero/field_preview_sequence.py": "341f45a0b92801e5aeb3bbd088641f46e0f49e89a64939ac2a59ea83089767d6",
+    "src/openpi/simulation/ui/field_preview.py": "ae005c89dcc9d328f3902200a309cdf8af5b0bedee5fdf2259e9661ba3e1a5de",
+    "src/openpi/simulation/ui/dataset_browser.py": "298b3955beec3aedecf2a4b43ef19fe19a8089614f919930f2eac9d556b8b332",
+    "src/openpi/simulation/workers/field_overlay.py": "8ac0c25557b45743456cbdafca054bf823e4b5d1b8818fdf3f7bd1f91ff05ed3",
+    "src/openpi/simulation/workers/trajectory_overlay.py": "56f9c298c0963f61f36b5296edb17f2dcd998b1793b76fa0222a126b789a5553",
+    "src/openpi/simulation/workers/replay.py": "a5133b115eaa7f20e053c75cea195bff7f5f8bbeda28e0f021c889e456dff86b",
+    "src/openpi/simulation/runtime/replay.py": "0122de49548d6083fceb4f6308fff5b1e7cb8e1e4bcc01f725e471746a3290ab",
+    "src/openpi/simulation/data/reader.py": "3ee6765699da70ad2279b7f363b4960581b7ebb7285932838a4dfd4aad598f60",
+    "packages/openpi-client/src/openpi_client/embedded_viewer.py": "1a81e77d9509dbafd04bffdbe555406d6327595ad1c9221bf414395de471dcd8"
+  },
+  "source_snapshot": "data/experiments/field_repair_20261122/source_snapshot",
+  "source_manifest_sha256": "03d2c1f7c2ef60cfd00be950437a08747c6c0ca39bfea164987ebf47ab841794",
+  "source_dataset_revision": "f13aa24a3da8c43c7225569f28c562979fa0e35a",
+  "source_episode": {
+    "shard": "libero_spatial/pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate_demo.hdf5",
+    "group": "/episodes/demo_0",
+    "suite": "libero_spatial",
+    "task": "pick_up_the_black_bowl_between_the_plate_and_the_ramekin_and_place_it_on_the_plate_demo",
+    "language": "pick up the black bowl between the plate and the ramekin and place it on the plate",
+    "episode": "demo_0",
+    "split": "train",
+    "signature": "9edff419e37e866ab9a4418b3e9f57783a11023b03aaed606d469cf5c386ac93",
+    "actions": 98,
+    "observations": 99,
+    "duration_seconds": 4.89999999999966,
+    "events": 2,
+    "coupled_operations": 2,
+    "unsettled_operations": 1,
+    "short_command_changes": 0,
+    "command_intervals": 3,
+    "motion_phases": 2,
+    "candidates": 41,
+    "pruned_candidates": 0,
+    "alignment_sample_indices": [
+      1,
+      14,
+      28,
+      42,
+      55,
+      69,
+      83,
+      97
+    ],
+    "shifted_position_max_m": 0.0005355406390478785,
+    "shifted_position_rms_m": 0.00037704597670826045,
+    "same_index_position_rms_m": 0.009252553525105638,
+    "shifted_rotation_max_rad": 0.00074381919450509,
+    "shifted_joint_max_rad": 0.0,
+    "shifted_gripper_max_m": 0.0,
+    "alignment_pass": true,
+    "initial_image_available": false,
+    "terminal_observation_available": true,
+    "terminal_simulation_state_available": false,
+    "task_success": null,
+    "task_success_basis": "not_independently_checked; source dones/rewards are not success labels",
+    "initial_observation_basis": "MuJoCo forward kinematics of states[0]; no controller snapshot",
+    "post_observation_basis": "source obs after action; simulator states are approximate replay references"
+  },
+  "interval": {
+    "start": 36,
+    "end": 85,
+    "command": 1
+  },
+  "control": {
+    "dt": 0.05,
+    "reference_seconds": 0.05,
+    "max_speed": 0.3,
+    "max_angular_speed": 0.5,
+    "rotation_gain": 2.0,
+    "position_tolerance": 0.005,
+    "rotation_tolerance": 0.08726646259971647,
+    "speed_tolerance": 0.02,
+    "angular_speed_tolerance": 0.1,
+    "arrival_seconds": 0.1,
+    "extra_convergence_seconds": 2.0,
+    "position_rms_tolerance": 0.01,
+    "rotation_rms_tolerance": 0.08726646259971647,
+    "hold_position_range": 0.002,
+    "hold_rotation_range": 0.03490658503988659
+  },
+  "diagnosis": {
+    "initial_radius_m": 0.10088546754607658,
+    "max_radius_m": 0.11876045299611832,
+    "radius_increase_m": 0.017874985450041736,
+    "unavoidable_single_goal_position_rms_lower_bound_m": 0.010712988033680036,
+    "radial_outward_measured_velocity_samples": 17,
+    "current_whole_command_report": {
+      "passed": false,
+      "reasons": [
+        "position_rms",
+        "rotation_rms",
+        "nominal_arrival_timeout"
+      ],
+      "position_rms_m": 0.08918272298662454,
+      "rotation_rms_rad": 0.08902287270980216,
+      "source_seconds": 2.449999999999731,
+      "arrival_seconds": null,
+      "extra_seconds": null,
+      "limited_steps": 56,
+      "minimum_alpha": 0.062470703290107336,
+      "scope": "time-aligned nominal pose integration only; no robot dynamics or operation facts"
+    },
+    "current_velocity_rms_m_s": 0.052328790112777836
+  },
+  "seds_source": {
+    "repository": "https://github.com/HongminWu/SEDS",
+    "commit": "1afba5007caa942d208abcf589bacd3cb1c48b4c",
+    "version": "1.95, 2013-02-12 (Readme.txt)",
+    "retrieved": "2026-11-22",
+    "distribution": "third-party mirror retaining author copyright; not an official author download",
+    "authors_source_modified": false,
+    "archive_sha256": "8d13e1e75b0c938aa55c2a01c509478aa77854da0b5d38db7b55c3068222166e",
+    "license": "restricted noncommercial academic use; author source not modified or vendored",
+    "file_sha256": {
+      "Readme.txt": "483ef703f2f53d2adb20d65f9f8d8c8c5e81691dbbd06d1cb5840d9b71b39d73",
+      "SEDS_lib/initialize_SEDS.m": "0e5ad26c77d5539ffe9f6f112476dee1ccc68df5d7979f22aa08cb087c6e4ca1",
+      "SEDS_lib/SEDS_Solver.m": "671bcdf7355a75be0f369333bdf431a38f342ee34be720da24497017add3910f",
+      "SEDS_lib/SEDS_Solver_MSE.m": "5079e2ca1f882aec4585a0de1ab1b71d1351d56737f9d5aff1d7bb7a91c2ed10",
+      "GMR_lib/GMR.m": "f078f827d2f278d7d2c3d2d69c471c7ae8933401efd1c804f128fa630df1e5e0"
+    }
+  },
+  "original_trials": [
+    {
+      "name": "original",
+      "velocity_rms_m_s": 0.050010681220526126,
+      "max_A_plus_AT_eigenvalue_per_s": 0.2113706802905883,
+      "negative_definite": false,
+      "max_matrix_norm_per_s": 6.971982411303384,
+      "max_covariance_condition": 16343.911481014591,
+      "within_production_norm_condition_bounds": true,
+      "runtime": "Octave 6.4.0",
+      "MATLAB_native_run": false,
+      "optimizer_converged": null
+    },
+    {
+      "name": "original_sqp",
+      "velocity_rms_m_s": 0.03288757913412477,
+      "max_A_plus_AT_eigenvalue_per_s": 0.3014621208098553,
+      "negative_definite": false,
+      "max_matrix_norm_per_s": 10.043044712428276,
+      "max_covariance_condition": 98991.977369391,
+      "within_production_norm_condition_bounds": true,
+      "runtime": "Octave 6.4.0",
+      "MATLAB_native_run": false,
+      "optimizer_converged": false
+    },
+    {
+      "name": "original_eigen",
+      "velocity_rms_m_s": 0.02276351792430959,
+      "max_A_plus_AT_eigenvalue_per_s": 8.314950426128415e-05,
+      "negative_definite": false,
+      "max_matrix_norm_per_s": 58.73015840555696,
+      "max_covariance_condition": 4231374.282790386,
+      "within_production_norm_condition_bounds": false,
+      "runtime": "Octave 6.4.0",
+      "MATLAB_native_run": false,
+      "optimizer_converged": false
+    },
+    {
+      "name": "original_numeric",
+      "velocity_rms_m_s": 0.026572451758399413,
+      "max_A_plus_AT_eigenvalue_per_s": 0.128717017033042,
+      "negative_definite": false,
+      "max_matrix_norm_per_s": 12.057740062612536,
+      "max_covariance_condition": 71665.11700363203,
+      "within_production_norm_condition_bounds": true,
+      "runtime": "Octave 6.4.0",
+      "MATLAB_native_run": false,
+      "optimizer_converged": false
+    },
+    {
+      "name": "original_margin",
+      "velocity_rms_m_s": 0.026777190196569416,
+      "max_A_plus_AT_eigenvalue_per_s": -0.019489130968612038,
+      "negative_definite": true,
+      "max_matrix_norm_per_s": 9.132493722234727,
+      "max_covariance_condition": 55208.62344568497,
+      "within_production_norm_condition_bounds": true,
+      "runtime": "Octave 6.4.0",
+      "MATLAB_native_run": false,
+      "optimizer_converged": false
+    },
+    {
+      "name": "original_margin_003",
+      "velocity_rms_m_s": 0.02340028599541881,
+      "max_A_plus_AT_eigenvalue_per_s": -0.02999489983138079,
+      "negative_definite": true,
+      "max_matrix_norm_per_s": 91.61424094436599,
+      "max_covariance_condition": 2366537.133392363,
+      "within_production_norm_condition_bounds": false,
+      "runtime": "Octave 6.4.0",
+      "MATLAB_native_run": false,
+      "optimizer_converged": false
+    }
+  ],
+  "original_stable_output": {
+    "nominal": {
+      "passed": false,
+      "reasons": [
+        "position_rms",
+        "rotation_rms",
+        "nominal_arrival_timeout"
+      ],
+      "position_rms_m": 0.09195333854655038,
+      "rotation_rms_rad": 0.08902287270980216,
+      "source_seconds": 2.449999999999731,
+      "arrival_seconds": null,
+      "extra_seconds": null,
+      "limited_steps": 40,
+      "minimum_alpha": 0.02685841437209486,
+      "scope": "time-aligned nominal pose integration only; no robot dynamics or operation facts"
+    },
+    "solver": {
+      "original_source_unmodified": true,
+      "runtime": "Octave 6.4.0",
+      "compatibility": "fmincon replaced by Octave sqp; eigenvalue inequalities tightened by 0.02/s",
+      "status": 103,
+      "converged": false,
+      "iterations": 1000,
+      "max_symmetric_eigenvalue_per_s": -0.019489130968612038,
+      "fit_seconds": 15.891284942626953,
+      "position_scale_m": 0.1
+    },
+    "field_config": {
+      "length_scale": 0.1,
+      "covariance_floor": 1e-06,
+      "stability_margin": 0.009,
+      "max_condition": 1000000.0,
+      "max_matrix_norm": 20.0,
+      "restarts": 3,
+      "max_iterations": 300,
+      "seed": 20261122
+    },
+    "velocity_rms_m_s": 0.02677719019656879
+  },
+  "local_segmentation": {
+    "saved": {
+      "seconds": 2.1419771299988497,
+      "segments": [
+        {
+          "interval": {
+            "start": 36,
+            "end": 46,
+            "command": 1
+          },
+          "report": {
+            "passed": true,
+            "reasons": [],
+            "position_rms_m": 0.008104411282030627,
+            "rotation_rms_rad": 0.017239415944482778,
+            "source_seconds": 0.49999999999994515,
+            "arrival_seconds": 0.65,
+            "extra_seconds": 0.15000000000005487,
+            "limited_steps": 0,
+            "minimum_alpha": 1.0,
+            "scope": "time-aligned nominal pose integration only; no robot dynamics or operation facts"
+          },
+          "fit": {
+            "version": "seds_mse_pos3_k4_v1",
+            "samples": 11,
+            "objective": "trapezoidal-time-weighted physical velocity MSE",
+            "linear_baseline_rate_per_second": 5.5660121956476765,
+            "linear_baseline_velocity_mse": 0.0028934051023168077,
+            "radial_conflict_fraction": 0.0,
+            "radial_conflict_tolerance_m2_per_second": 1e-06,
+            "radial_conflict_indices": [],
+            "restarts": [
+              {
+                "seed": 20261122,
+                "iterations": 300,
+                "evaluations": 388,
+                "converged": false,
+                "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+                "velocity_mse": 0.0001694848958190571,
+                "constraints_passed": true
+              },
+              {
+                "seed": 20261123,
+                "iterations": 300,
+                "evaluations": 355,
+                "converged": false,
+                "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+                "constraints_passed": false,
+                "reason": "Field exceeds covariance condition or matrix norm limit: {'max_covariance_condition': 1502531.4838867618, 'max_matrix_norm_per_second': 8.595020225488835, 'minimum_stability_margin_per_second': 0.0841338795052697}"
+              },
+              {
+                "seed": 20261124,
+                "iterations": 300,
+                "evaluations": 370,
+                "converged": false,
+                "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+                "velocity_mse": 0.0001899711536950406,
+                "constraints_passed": true
+              }
+            ],
+            "optimizer_search_box": {
+              "skew_absolute_max": 2.5,
+              "B_element_absolute_max": 1.6,
+              "B_diagonal_raw_min": -12.0
+            },
+            "kind": "seds",
+            "optimizer_converged": false,
+            "velocity_mse": 0.0001694848958190571,
+            "selected_restart": 0,
+            "parameter_supervision": true
+          }
+        },
+        {
+          "interval": {
+            "start": 46,
+            "end": 57,
+            "command": 1
+          },
+          "report": {
+            "passed": true,
+            "reasons": [],
+            "position_rms_m": 0.0033119029770527536,
+            "rotation_rms_rad": 0.038681449375723355,
+            "source_seconds": 0.5499999999999394,
+            "arrival_seconds": 0.9,
+            "extra_seconds": 0.3500000000000606,
+            "limited_steps": 0,
+            "minimum_alpha": 1.0,
+            "scope": "time-aligned nominal pose integration only; no robot dynamics or operation facts"
+          },
+          "fit": {
+            "version": "seds_mse_pos3_k4_v1",
+            "samples": 12,
+            "objective": "trapezoidal-time-weighted physical velocity MSE",
+            "linear_baseline_rate_per_second": 1.8413478238379999,
+            "linear_baseline_velocity_mse": 0.018069934103009878,
+            "radial_conflict_fraction": 0.0,
+            "radial_conflict_tolerance_m2_per_second": 1e-06,
+            "radial_conflict_indices": [],
+            "restarts": [
+              {
+                "seed": 20261122,
+                "iterations": 300,
+                "evaluations": 390,
+                "converged": false,
+                "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+                "velocity_mse": 0.006338569645082101,
+                "constraints_passed": true
+              },
+              {
+                "seed": 20261123,
+                "iterations": 300,
+                "evaluations": 375,
+                "converged": false,
+                "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+                "velocity_mse": 0.004966367604811489,
+                "constraints_passed": true
+              },
+              {
+                "seed": 20261124,
+                "iterations": 300,
+                "evaluations": 371,
+                "converged": false,
+                "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+                "velocity_mse": 0.005982919944247564,
+                "constraints_passed": true
+              }
+            ],
+            "optimizer_search_box": {
+              "skew_absolute_max": 2.5,
+              "B_element_absolute_max": 1.6,
+              "B_diagonal_raw_min": -12.0
+            },
+            "kind": "seds",
+            "optimizer_converged": false,
+            "velocity_mse": 0.004966367604811489,
+            "selected_restart": 1,
+            "parameter_supervision": true
+          }
+        },
+        {
+          "interval": {
+            "start": 57,
+            "end": 71,
+            "command": 1
+          },
+          "report": {
+            "passed": true,
+            "reasons": [],
+            "position_rms_m": 0.0034089845188811914,
+            "rotation_rms_rad": 0.025707926020047643,
+            "source_seconds": 0.6999999999999229,
+            "arrival_seconds": 0.8500000000000001,
+            "extra_seconds": 0.15000000000007718,
+            "limited_steps": 0,
+            "minimum_alpha": 1.0,
+            "scope": "time-aligned nominal pose integration only; no robot dynamics or operation facts"
+          },
+          "fit": {
+            "version": "seds_mse_pos3_k4_v1",
+            "samples": 15,
+            "objective": "trapezoidal-time-weighted physical velocity MSE",
+            "linear_baseline_rate_per_second": 1.8050945423741682,
+            "linear_baseline_velocity_mse": 0.024125198803664965,
+            "radial_conflict_fraction": 0.0,
+            "radial_conflict_tolerance_m2_per_second": 1e-06,
+            "radial_conflict_indices": [],
+            "restarts": [
+              {
+                "seed": 20261122,
+                "iterations": 300,
+                "evaluations": 370,
+                "converged": false,
+                "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+                "velocity_mse": 0.003188825877216032,
+                "constraints_passed": true
+              },
+              {
+                "seed": 20261123,
+                "iterations": 300,
+                "evaluations": 411,
+                "converged": false,
+                "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+                "velocity_mse": 0.0038380596724003186,
+                "constraints_passed": true
+              },
+              {
+                "seed": 20261124,
+                "iterations": 300,
+                "evaluations": 365,
+                "converged": false,
+                "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+                "velocity_mse": 0.003448120289100146,
+                "constraints_passed": true
+              }
+            ],
+            "optimizer_search_box": {
+              "skew_absolute_max": 2.5,
+              "B_element_absolute_max": 1.6,
+              "B_diagonal_raw_min": -12.0
+            },
+            "kind": "seds",
+            "optimizer_converged": false,
+            "velocity_mse": 0.003188825877216032,
+            "selected_restart": 0,
+            "parameter_supervision": true
+          }
+        },
+        {
+          "interval": {
+            "start": 71,
+            "end": 85,
+            "command": 1
+          },
+          "report": {
+            "passed": true,
+            "reasons": [],
+            "position_rms_m": 0.0052225646040696015,
+            "rotation_rms_rad": 0.047299384216719614,
+            "source_seconds": 0.6999999999999234,
+            "arrival_seconds": 1.0,
+            "extra_seconds": 0.30000000000007665,
+            "limited_steps": 0,
+            "minimum_alpha": 1.0,
+            "scope": "time-aligned nominal pose integration only; no robot dynamics or operation facts"
+          },
+          "fit": {
+            "version": "seds_mse_pos3_k4_v1",
+            "samples": 15,
+            "objective": "trapezoidal-time-weighted physical velocity MSE",
+            "linear_baseline_rate_per_second": 2.673837367678768,
+            "linear_baseline_velocity_mse": 0.011267686572545428,
+            "radial_conflict_fraction": 0.0,
+            "radial_conflict_tolerance_m2_per_second": 1e-06,
+            "radial_conflict_indices": [],
+            "restarts": [
+              {
+                "seed": 20261122,
+                "iterations": 300,
+                "evaluations": 344,
+                "converged": false,
+                "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+                "velocity_mse": 0.0003708053055659869,
+                "constraints_passed": true
+              },
+              {
+                "seed": 20261123,
+                "iterations": 300,
+                "evaluations": 324,
+                "converged": false,
+                "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+                "velocity_mse": 0.0003579531615267126,
+                "constraints_passed": true
+              },
+              {
+                "seed": 20261124,
+                "iterations": 300,
+                "evaluations": 325,
+                "converged": false,
+                "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+                "velocity_mse": 0.0003579111845308383,
+                "constraints_passed": true
+              }
+            ],
+            "optimizer_search_box": {
+              "skew_absolute_max": 2.5,
+              "B_element_absolute_max": 1.6,
+              "B_diagonal_raw_min": -12.0
+            },
+            "kind": "seds",
+            "optimizer_converged": false,
+            "velocity_mse": 0.0003579111845308383,
+            "selected_restart": 2,
+            "parameter_supervision": true
+          }
+        }
+      ],
+      "position_rms_m": 0.0049882616574465025,
+      "rotation_rms_rad": 0.03356931180855638,
+      "integration": "each field starts at its demonstrated boundary; not a continuous physical rollout"
+    },
+    "adaptive": {
+      "seconds": 15.784457545989426,
+      "segments": [
+        {
+          "interval": {
+            "start": 36,
+            "end": 48,
+            "command": 1
+          },
+          "report": {
+            "passed": true,
+            "reasons": [],
+            "position_rms_m": 0.005551653443704166,
+            "rotation_rms_rad": 0.021631934506552562,
+            "source_seconds": 0.5999999999999341,
+            "arrival_seconds": 1.0,
+            "extra_seconds": 0.40000000000006586,
+            "limited_steps": 10,
+            "minimum_alpha": 0.1653571779215801,
+            "scope": "time-aligned nominal pose integration only; no robot dynamics or operation facts"
+          },
+          "fit": {
+            "fit": {
+              "version": "seds_mse_pos3_k4_v1",
+              "samples": 13,
+              "objective": "trapezoidal-time-weighted physical velocity MSE",
+              "linear_baseline_rate_per_second": 3.7705502705456637,
+              "linear_baseline_velocity_mse": 0.004729934653430449,
+              "radial_conflict_fraction": 0.0,
+              "radial_conflict_tolerance_m2_per_second": 1e-06,
+              "radial_conflict_indices": [],
+              "restarts": [
+                {
+                  "seed": 20261122,
+                  "iterations": 300,
+                  "evaluations": 404,
+                  "converged": false,
+                  "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+                  "velocity_mse": 0.0004026488257612717,
+                  "constraints_passed": true
+                },
+                {
+                  "seed": 20261123,
+                  "iterations": 300,
+                  "evaluations": 377,
+                  "converged": false,
+                  "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+                  "velocity_mse": 0.0004089300821566504,
+                  "constraints_passed": true
+                },
+                {
+                  "seed": 20261124,
+                  "iterations": 300,
+                  "evaluations": 393,
+                  "converged": false,
+                  "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+                  "constraints_passed": false,
+                  "reason": "Field exceeds covariance condition or matrix norm limit: {'max_covariance_condition': 1391265.8424357204, 'max_matrix_norm_per_second': 9.1795667030669, 'minimum_stability_margin_per_second': 0.010000378358332422}"
+                }
+              ],
+              "kind": "seds",
+              "optimizer_converged": false,
+              "velocity_mse": 0.0004026488257612717,
+              "parameter_supervision": true,
+              "optimizer_search_box": {
+                "skew_absolute_max": 2.5,
+                "B_element_absolute_max": 1.6,
+                "B_diagonal_raw_min": -12.0
+              },
+              "selected_restart": 0
+            },
+            "nominal": {
+              "passed": true,
+              "reasons": [],
+              "position_rms_m": 0.005551653443704166,
+              "rotation_rms_rad": 0.021631934506552562,
+              "source_seconds": 0.5999999999999341,
+              "arrival_seconds": 1.0,
+              "extra_seconds": 0.40000000000006586,
+              "limited_steps": 10,
+              "minimum_alpha": 0.1653571779215801,
+              "scope": "time-aligned nominal pose integration only; no robot dynamics or operation facts"
+            },
+            "accepted": true,
+            "reasons": []
+          }
+        },
+        {
+          "interval": {
+            "start": 48,
+            "end": 60,
+            "command": 1
+          },
+          "report": {
+            "passed": true,
+            "reasons": [],
+            "position_rms_m": 0.005258433510007447,
+            "rotation_rms_rad": 0.04329465395955144,
+            "source_seconds": 0.5999999999999339,
+            "arrival_seconds": 0.9,
+            "extra_seconds": 0.3000000000000661,
+            "limited_steps": 0,
+            "minimum_alpha": 1.0,
+            "scope": "time-aligned nominal pose integration only; no robot dynamics or operation facts"
+          },
+          "fit": {
+            "fit": {
+              "version": "seds_mse_pos3_k4_v1",
+              "samples": 13,
+              "objective": "trapezoidal-time-weighted physical velocity MSE",
+              "linear_baseline_rate_per_second": 1.9922132808973074,
+              "linear_baseline_velocity_mse": 0.01811025843119561,
+              "radial_conflict_fraction": 0.0,
+              "radial_conflict_tolerance_m2_per_second": 1e-06,
+              "radial_conflict_indices": [],
+              "restarts": [
+                {
+                  "seed": 20261122,
+                  "iterations": 300,
+                  "evaluations": 385,
+                  "converged": false,
+                  "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+                  "velocity_mse": 0.004199463584884458,
+                  "constraints_passed": true
+                },
+                {
+                  "seed": 20261123,
+                  "iterations": 300,
+                  "evaluations": 356,
+                  "converged": false,
+                  "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+                  "velocity_mse": 0.0041262227681747666,
+                  "constraints_passed": true
+                },
+                {
+                  "seed": 20261124,
+                  "iterations": 300,
+                  "evaluations": 373,
+                  "converged": false,
+                  "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+                  "velocity_mse": 0.00468556886776495,
+                  "constraints_passed": true
+                }
+              ],
+              "kind": "seds",
+              "optimizer_converged": false,
+              "velocity_mse": 0.0041262227681747666,
+              "parameter_supervision": true,
+              "optimizer_search_box": {
+                "skew_absolute_max": 2.5,
+                "B_element_absolute_max": 1.6,
+                "B_diagonal_raw_min": -12.0
+              },
+              "selected_restart": 1
+            },
+            "nominal": {
+              "passed": true,
+              "reasons": [],
+              "position_rms_m": 0.005258433510007447,
+              "rotation_rms_rad": 0.04329465395955144,
+              "source_seconds": 0.5999999999999339,
+              "arrival_seconds": 0.9,
+              "extra_seconds": 0.3000000000000661,
+              "limited_steps": 0,
+              "minimum_alpha": 1.0,
+              "scope": "time-aligned nominal pose integration only; no robot dynamics or operation facts"
+            },
+            "accepted": true,
+            "reasons": []
+          }
+        },
+        {
+          "interval": {
+            "start": 60,
+            "end": 72,
+            "command": 1
+          },
+          "report": {
+            "passed": true,
+            "reasons": [],
+            "position_rms_m": 0.007281244982951854,
+            "rotation_rms_rad": 0.023234984129869084,
+            "source_seconds": 0.5999999999999339,
+            "arrival_seconds": 1.55,
+            "extra_seconds": 0.9500000000000661,
+            "limited_steps": 2,
+            "minimum_alpha": 0.8455355446312491,
+            "scope": "time-aligned nominal pose integration only; no robot dynamics or operation facts"
+          },
+          "fit": {
+            "fit": {
+              "version": "seds_mse_pos3_k4_v1",
+              "samples": 13,
+              "objective": "trapezoidal-time-weighted physical velocity MSE",
+              "linear_baseline_rate_per_second": 1.9831159637454672,
+              "linear_baseline_velocity_mse": 0.02402875652702143,
+              "radial_conflict_fraction": 0.0,
+              "radial_conflict_tolerance_m2_per_second": 1e-06,
+              "radial_conflict_indices": [],
+              "restarts": [
+                {
+                  "seed": 20261122,
+                  "iterations": 300,
+                  "evaluations": 381,
+                  "converged": false,
+                  "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+                  "velocity_mse": 0.003844497631664507,
+                  "constraints_passed": true
+                },
+                {
+                  "seed": 20261123,
+                  "iterations": 300,
+                  "evaluations": 367,
+                  "converged": false,
+                  "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+                  "velocity_mse": 0.004189316214206718,
+                  "constraints_passed": true
+                },
+                {
+                  "seed": 20261124,
+                  "iterations": 300,
+                  "evaluations": 371,
+                  "converged": false,
+                  "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+                  "velocity_mse": 0.0036592082177676717,
+                  "constraints_passed": true
+                }
+              ],
+              "kind": "seds",
+              "optimizer_converged": false,
+              "velocity_mse": 0.0036592082177676717,
+              "parameter_supervision": true,
+              "optimizer_search_box": {
+                "skew_absolute_max": 2.5,
+                "B_element_absolute_max": 1.6,
+                "B_diagonal_raw_min": -12.0
+              },
+              "selected_restart": 2
+            },
+            "nominal": {
+              "passed": true,
+              "reasons": [],
+              "position_rms_m": 0.007281244982951854,
+              "rotation_rms_rad": 0.023234984129869084,
+              "source_seconds": 0.5999999999999339,
+              "arrival_seconds": 1.55,
+              "extra_seconds": 0.9500000000000661,
+              "limited_steps": 2,
+              "minimum_alpha": 0.8455355446312491,
+              "scope": "time-aligned nominal pose integration only; no robot dynamics or operation facts"
+            },
+            "accepted": true,
+            "reasons": []
+          }
+        },
+        {
+          "interval": {
+            "start": 72,
+            "end": 85,
+            "command": 1
+          },
+          "report": {
+            "passed": true,
+            "reasons": [],
+            "position_rms_m": 0.005894137250204134,
+            "rotation_rms_rad": 0.04219791891155712,
+            "source_seconds": 0.6499999999999289,
+            "arrival_seconds": 1.0,
+            "extra_seconds": 0.35000000000007114,
+            "limited_steps": 0,
+            "minimum_alpha": 1.0,
+            "scope": "time-aligned nominal pose integration only; no robot dynamics or operation facts"
+          },
+          "fit": {
+            "fit": {
+              "version": "seds_mse_pos3_k4_v1",
+              "samples": 14,
+              "objective": "trapezoidal-time-weighted physical velocity MSE",
+              "linear_baseline_rate_per_second": 2.919886701885291,
+              "linear_baseline_velocity_mse": 0.009468103844632326,
+              "radial_conflict_fraction": 0.0,
+              "radial_conflict_tolerance_m2_per_second": 1e-06,
+              "radial_conflict_indices": [],
+              "restarts": [
+                {
+                  "seed": 20261122,
+                  "iterations": 300,
+                  "evaluations": 358,
+                  "converged": false,
+                  "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+                  "velocity_mse": 0.0004027609882630964,
+                  "constraints_passed": true
+                },
+                {
+                  "seed": 20261123,
+                  "iterations": 300,
+                  "evaluations": 340,
+                  "converged": false,
+                  "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+                  "velocity_mse": 0.00038385108087783085,
+                  "constraints_passed": true
+                },
+                {
+                  "seed": 20261124,
+                  "iterations": 300,
+                  "evaluations": 330,
+                  "converged": false,
+                  "message": "STOP: TOTAL NO. OF ITERATIONS REACHED LIMIT",
+                  "velocity_mse": 0.00038366426183376103,
+                  "constraints_passed": true
+                }
+              ],
+              "kind": "seds",
+              "optimizer_converged": false,
+              "velocity_mse": 0.00038366426183376103,
+              "parameter_supervision": true,
+              "optimizer_search_box": {
+                "skew_absolute_max": 2.5,
+                "B_element_absolute_max": 1.6,
+                "B_diagonal_raw_min": -12.0
+              },
+              "selected_restart": 2
+            },
+            "nominal": {
+              "passed": true,
+              "reasons": [],
+              "position_rms_m": 0.005894137250204134,
+              "rotation_rms_rad": 0.04219791891155712,
+              "source_seconds": 0.6499999999999289,
+              "arrival_seconds": 1.0,
+              "extra_seconds": 0.35000000000007114,
+              "limited_steps": 0,
+              "minimum_alpha": 1.0,
+              "scope": "time-aligned nominal pose integration only; no robot dynamics or operation facts"
+            },
+            "accepted": true,
+            "reasons": []
+          }
+        }
+      ],
+      "position_rms_m": 0.005682151509476577,
+      "rotation_rms_rad": 0.03302538657038473,
+      "integration": "each field starts at its demonstrated boundary; not a continuous physical rollout"
+    }
+  },
+  "continuous_segmentation": {
+    "saved": {
+      "position_rms_m": 0.008515937611655942,
+      "rotation_rms_rad": 0.05379179959832555,
+      "position_end_error_m": 0.008675001287375906,
+      "switching": "source-time boundaries, no position/orientation reset, no arrival check, no robot physics"
+    },
+    "adaptive": {
+      "position_rms_m": 0.02193841664242868,
+      "rotation_rms_rad": 0.05307467025522709,
+      "position_end_error_m": 0.023785755552748738,
+      "switching": "source-time boundaries, no position/orientation reset, no arrival check, no robot physics"
+    }
+  },
+  "gui": {
+    "fallback_source": "adaptive_preview_only",
+    "fallback_interval": {
+      "start": 0,
+      "end": 8,
+      "command": -1
+    },
+    "fallback_continuous": {
+      "start": 0,
+      "end": 35,
+      "fields": 4,
+      "position_rms_m": 0.0206555638924123,
+      "rotation_rms_rad": 0.02008810139316973,
+      "time_aligned_passed": false,
+      "scope": "source-time switching without state resets; no arrival gating or robot physics"
+    },
+    "automatic_default": true,
+    "first": {
+      "start": 36,
+      "end": 46,
+      "command": 1
+    },
+    "next": {
+      "start": 46,
+      "end": 57,
+      "command": 1
+    },
+    "cache_reused": true,
+    "rapid_seek_final": {
+      "start": 5,
+      "end": 15,
+      "command": -1
+    },
+    "callback_errors": []
+  },
+  "validation": {
+    "pytest": "75 passed in 16.47s",
+    "ruff": "passed",
+    "git_diff_check": "passed",
+    "physical_execution_run": false,
+    "all_6500_fitted": false
+  },
+  "commands": [
+    "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 env -u PYTHONPATH .venv/bin/python data/experiments/field_repair_20261122/try_original.py",
+    "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 env -u PYTHONPATH .venv/bin/python data/experiments/field_repair_20261122/try_original_sqp.py",
+    "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 env -u PYTHONPATH .venv/bin/python data/experiments/field_repair_20261122/try_original_eigen.py",
+    "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 env -u PYTHONPATH .venv/bin/python data/experiments/field_repair_20261122/try_original_numeric.py",
+    "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 env -u PYTHONPATH .venv/bin/python data/experiments/field_repair_20261122/try_original_margin.py",
+    "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 env -u PYTHONPATH .venv/bin/python data/experiments/field_repair_20261122/evaluate_original.py",
+    "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 env -u PYTHONPATH .venv/bin/python data/experiments/field_repair_20261122/compare_segments.py",
+    "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 env -u PYTHONPATH .venv/bin/python data/experiments/field_repair_20261122/continuous_check.py",
+    "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 env -u PYTHONPATH .venv/bin/python data/experiments/field_repair_20261122/make_comparison.py",
+    "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 env -u PYTHONPATH .venv/bin/python data/experiments/field_repair_20261122/check_auto_ui.py"
+  ],
+  "artifacts": {
+    "data/experiments/field_repair_20261122/saved_first.npz": "da2d707ca9d574df503ced0c97690fb0183c6482f2abae82ccd1f35d80e1e299",
+    "data/experiments/field_repair_20261122/continuous_check.py": "44a0d2ff1e6d0fbbedf95656941eff9007cffc1b71e222a06c2b4a70d12bea31",
+    "data/experiments/field_repair_20261122/adaptive_1.npz": "1ac73d419fb95938f888079146956ec37b5886a0c1cdd34f24b61c970b30cda8",
+    "data/experiments/field_repair_20261122/saved_continuous.npz": "f47d046f1432b0f0ce20aad270309265eb84efe801636bdfc92ebc9667300319",
+    "data/experiments/field_repair_20261122/diagnosis_comparison.pdf": "e9873660efb24e27e04c6a9a85e45c450d7b05c53a4d2bc892710aa39bb16a5f",
+    "data/experiments/field_repair_20261122/original_eigen_result.mat": "ac4c292750d96b2e49539756dcd710f2c439abe3fd0bc75455ff21c216c216ab",
+    "data/experiments/field_repair_20261122/original_result.mat": "dd104e6a933d504705eeebe8e1c6df74834cbeacb36671581dcb68caf4bc514f",
+    "data/experiments/field_repair_20261122/original_margin_result.mat": "81faa3f5dc2807ef7fba7539acb17596744bbb276a6ea73669bfd60a30055197",
+    "data/experiments/field_repair_20261122/saved_1.npz": "e0f1631a0441600e685b108ba34c3aa323f08bbea55f002fa8d8c94b0d8eff4e",
+    "data/experiments/field_repair_20261122/original_sqp_result.mat": "4c0dbb4a692dc0d3237e567b2f5170ca537b868ddf8b1fffcdc64ec066191e83",
+    "data/experiments/field_repair_20261122/check_auto_ui.py": "8904ac9699aea6fe2dd57fabfd7239ef9faf4b47b2ec858618039ec096ed5223",
+    "data/experiments/field_repair_20261122/diagnosis_comparison.png": "65309618e8ad0d5a465127a42c71e8c4f89749099d8ad6b4ec0a0e71f0a60018",
+    "data/experiments/field_repair_20261122/original_numeric_result.mat": "19d3025ccf769580739cce7cb3f369cb011ff694a22f45eaaec827f4eea3d1b0",
+    "data/experiments/field_repair_20261122/saved_first.json": "ba5a702fc79264e2c74cb1739e8061501d4707bfc8d0ec1eb424878bdc449f3c",
+    "data/experiments/field_repair_20261122/adaptive_3.npz": "ae760ba653ee9a24aec5253e0d64477a3416d786691929d36c5d46cde03a50db",
+    "data/experiments/field_repair_20261122/continuous_results.json": "5e0d32fff7e50a32c21ffa47c8b80a6253b9e588a6eb4dc5bda7c2138a550838",
+    "data/experiments/field_repair_20261122/adaptive_first.json": "b869fc464bb4d337420e8b864d4a805328c1a6ff2a312a53ee627fd789b34069",
+    "data/experiments/field_repair_20261122/original_valid.npz": "87fa2540b08c8de01c9b8a475cd06e1801016b8c83aaaa46ba3e0c65aec695f7",
+    "data/experiments/field_repair_20261122/input.mat": "488ed1f867b13357549bbc2f1e3d9872935d81e317085536a0716f6ebb17ea7d",
+    "data/experiments/field_repair_20261122/original_valid.png": "a690c4dc0e723bd841b25f569d008931841a2c4cd2ebb53d39621fb2bc10c715",
+    "data/experiments/field_repair_20261122/try_original_margin.py": "f4d5b493eeae1b368429add5b8ecb630b8d880f6830fc3e6b2b278886202f3bb",
+    "data/experiments/field_repair_20261122/saved_0.npz": "da2d707ca9d574df503ced0c97690fb0183c6482f2abae82ccd1f35d80e1e299",
+    "data/experiments/field_repair_20261122/try_original.m": "b308b95c3401832ae574b88c6a2e00ea09366d8e66c37538de8e9f409a4a9337",
+    "data/experiments/field_repair_20261122/adaptive_2.npz": "8af1637ee38f48586c61215e274d7d500c03d084af48e672661a5d9d32bc177d",
+    "data/experiments/field_repair_20261122/evaluate_original.py": "5e2fe5aeeaafb92b2645c788906625f4bbb58a45a8ad61084a2a2e1847f27f7f",
+    "data/experiments/field_repair_20261122/try_original.py": "1a7790fa34b8b4be815a4611fd9efef83f90ac894a5a77129e1b42f88963fd30",
+    "data/experiments/field_repair_20261122/original_margin_003_result.mat": "b08c608d91f73229c46782d0534b416d6ebe8836281255b8d4dae664874f1bdb",
+    "data/experiments/field_repair_20261122/saved_3.npz": "c6707500880571e344519375791e83e0ffa39472a689c77f7cd7ef278475a96a",
+    "data/experiments/field_repair_20261122/original_valid.json": "1f425be6a693aa9de0c32b8a22ca907f4b628fe731c9376c481e3eafa91f7aa0",
+    "data/experiments/field_repair_20261122/saved_2.npz": "066e4a5a06c65eee14dd5d26167eb9875d0192c73639827a616c5eca17eedbc3",
+    "data/experiments/field_repair_20261122/adaptive_first.npz": "74c744867fab8715fd62ecbe2273218b2319dc48ed76576e3bc7b5aeb301b995",
+    "data/experiments/field_repair_20261122/adaptive_first.png": "8fc31cf486de85316c782f210abbadc73be36696da33067387a90f6abc313685",
+    "data/experiments/field_repair_20261122/saved_first.png": "e0c01b52a140e9fa1512f0cd895fc80b65a3f4335b2282c3345bedb5e0165fc0",
+    "data/experiments/field_repair_20261122/automatic_simulation.png": "814d11b932c01774e9f751321643a6dbfca67ef82a4dc5fb36ec5db0daa16cce",
+    "data/experiments/field_repair_20261122/seds_source_provenance.json": "854d23ec969ebf7ac608ba7d403948b91c4277347b66a2c182900886cb32a110",
+    "data/experiments/field_repair_20261122/try_original_sqp.py": "f355abd2c6a21cb2c307d9ed0398f47eb231273d326e394ad68c14578117391e",
+    "data/experiments/field_repair_20261122/adaptive_continuous.npz": "10d8414b041e7feb4e0c861384221914b2305d8e8029a62d5994cef69d78819e",
+    "data/experiments/field_repair_20261122/compare_segments.py": "e2857858cb28abdc02749a092dbf73a8dada6c35b6298d1294bf33bf6b089875",
+    "data/experiments/field_repair_20261122/make_comparison.py": "fa8b02fe5d98378ec974436d193825182c4c894227971b9fcdfa2c29a37a894c",
+    "data/experiments/field_repair_20261122/segmentation_results.json": "3a7f980d2c7aa9ecca50efb734dcc1fa4de83e342da5e81464573e687de078a1",
+    "data/experiments/field_repair_20261122/try_original_numeric.py": "9acf320e655c778343e01153cfb98f63b943c465009c0a90773054ab215ea4d1",
+    "data/experiments/field_repair_20261122/try_original_eigen.py": "86662417b8388afaf7d29d0494d21c511b7330faec3e46300c67740314aa757b",
+    "data/experiments/field_repair_20261122/auto_ui_result.json": "67373f8409834406b7664f298975e2f1fdeecc67cc482b9243fb287b2e9d7ffb",
+    "data/experiments/field_repair_20261122/adaptive_0.npz": "74c744867fab8715fd62ecbe2273218b2319dc48ed76576e3bc7b5aeb301b995"
+  }
+}

@@ -1,0 +1,461 @@
+{
+  "schema": "vlds.validation.long_segments.v1",
+  "snapshot_at": "2026-11-23T01:39:22.816900+08:00",
+  "code_commit": "15daa34e0e84ec3bc3dc682413571e86b9114f62",
+  "worktree_dirty": true,
+  "implementation_sha256": {
+    "src/openpi/fields/contractive.py": "99e9b388dbefc3f226d57068f32eb14438072d37328fa2d6327004da2dcac5a7",
+    "src/openpi/datasets/dynamics/coherent.py": "d0864bd2efb134d708c068e2019b1b79b712045f566ac4958413cee035dc7fdd",
+    "src/openpi/datasets/dynamics/coherent_audit.py": "a56c0fdbecd479985c08009b53fde784c267dc49f3fe393edb65b83f5ee1114e",
+    "src/openpi/datasets/dynamics/coherent_report.py": "e37a732958b68147bef0f4c19d1c2131638d64084e596bf7c37cca332cea0a73",
+    "src/openpi/datasets/dynamics/playback.py": "05574af5ca5e6f492b72d3b1eff1d911c0e365af8234b2445b0ec6e4da1672b9",
+    "src/openpi/simulation/ui/field_preview.py": "7966cd721e4c1af21ea8b870c224f18ca295c34e5b44f96471d7cde31640287e",
+    "src/openpi/simulation/ui/native_field.py": "31ec48de2b1d1597315a875dec62ae4ade9fb86f0a4c4c8de4d6c627222073b1",
+    "src/openpi/simulation/ui/segmentation.py": "3e241995410735fd339c847bdca121e12c2cbdda2baf15ae09581751a0584162",
+    "src/openpi/simulation/data/reader.py": "fdd52cd913871897466fd4c826118ed1592ee18e53c95e26aa13f3f0dbb072b3",
+    "tests/fields/test_contractive.py": "250c4694102db2474ac62ecac6025f94d3b947b47a543520bdd4416e53f505ce",
+    "tests/datasets/dynamics/test_coherent.py": "e36265415ebfb7ebdb5bae1f460f6e6aba292fd191eee478e20bea3a18768f55",
+    "tests/simulation/test_segmentation.py": "faece4d3171bb5dbd3519d9d63b1dcfe2efe95f3d5e5555f8f7ebce8b5495feb"
+  },
+  "source_collections": {
+    "libero": {
+      "fingerprint": "c7f937c1dcf2210a9add43b93f5d412de7cafd3114c16065b754148f518f346e",
+      "source_manifest_sha256": "03d2c1f7c2ef60cfd00be950437a08747c6c0ca39bfea164987ebf47ab841794",
+      "kind": "processed_libero",
+      "episodes": 6500
+    },
+    "lerobot_libero": {
+      "fingerprint": "f751e242ef2903f8c00614c565d449ca6b6d82873535b0df9cea2c73ea648ecd",
+      "source_manifest_sha256": "9a5ae91532d3c71a8a546048c454d97700aa332e5ddc773cf553b440a328006d",
+      "kind": "lerobot_libero",
+      "episodes": 1693
+    },
+    "aloha": {
+      "fingerprint": "70edf07bc10b04264f220e306d4663b65bdecfba0ea54995ee53724561a1100c",
+      "source_manifest_sha256": "6282de20f7669860a940cbec537d74a1f9911cac02ea5ddb90d3b1c0957632c5",
+      "kind": "aloha",
+      "episodes": 50
+    },
+    "pusht": {
+      "fingerprint": "f7e055aebbae3fd67db789cbfb1d29bde4f62fbe54afc4f127bd2d3e9550df21",
+      "source_manifest_sha256": "b29699ff9a7add4fe96562640466019aa0b14d2e92b200df547eede4725fb489",
+      "kind": "pusht",
+      "episodes": 206
+    },
+    "xarm": {
+      "fingerprint": "4f58f2d97733e9d287667a18a0908256faa9a3d644d984f7ec15826a4cd97183",
+      "source_manifest_sha256": "0be715d3fe8dbc8ddb1f61eab6cc8475e8f88e46aea461c0910c1a8bf8e1dcb2",
+      "kind": "xarm",
+      "episodes": 800
+    }
+  },
+  "baseline_observed_lengths": {
+    "libero": {
+      "episodes": 6500,
+      "segments": 183566,
+      "original_transitions_p10_p50_p90": [
+        2.0,
+        5.0,
+        9.0
+      ],
+      "original_seconds_p10_p50_p90": [
+        0.10000000000000009,
+        0.24999999999997247,
+        0.44999999999995044
+      ],
+      "under_10_original_transitions": 167323,
+      "under_0_5_original_seconds": 167323
+    },
+    "libero/profiles/production_retimed": {
+      "episodes": 6500,
+      "segments": 137599,
+      "original_transitions_p10_p50_p90": [
+        4.0,
+        7.0,
+        11.0
+      ],
+      "original_seconds_p10_p50_p90": [
+        0.19999999999997797,
+        0.34999999999996145,
+        0.5499999999999394
+      ],
+      "under_10_original_transitions": 110476,
+      "under_0_5_original_seconds": 110476
+    },
+    "lerobot_libero": {
+      "episodes": 1693,
+      "segments": 49596,
+      "original_transitions_p10_p50_p90": [
+        3.0,
+        5.0,
+        9.0
+      ],
+      "original_seconds_p10_p50_p90": [
+        0.2999997138977051,
+        0.4999998211860657,
+        0.8999996781349182
+      ],
+      "under_10_original_transitions": 45836,
+      "under_0_5_original_seconds": 25574
+    },
+    "aloha": {
+      "episodes": 50,
+      "segments": 1986,
+      "original_transitions_p10_p50_p90": [
+        6.0,
+        7.0,
+        13.0
+      ],
+      "original_seconds_p10_p50_p90": [
+        0.11999988555908203,
+        0.1399998664855957,
+        0.25999975204467773
+      ],
+      "under_10_original_transitions": 1161,
+      "under_0_5_original_seconds": 1970
+    },
+    "pusht": {
+      "episodes": 206,
+      "segments": 8420,
+      "original_transitions_p10_p50_p90": [
+        1.0,
+        2.0,
+        6.0
+      ],
+      "original_seconds_p10_p50_p90": [
+        0.09999996423721313,
+        0.20000004768371582,
+        0.5999994277954102
+      ],
+      "under_10_original_transitions": 8310,
+      "under_0_5_original_seconds": 7456
+    },
+    "xarm": {
+      "episodes": 800,
+      "segments": 19086,
+      "original_transitions_p10_p50_p90": [
+        1.0,
+        1.0,
+        1.0
+      ],
+      "original_seconds_p10_p50_p90": [
+        0.06666666269302368,
+        0.06666666269302368,
+        0.06666666269302368
+      ],
+      "under_10_original_transitions": 19086,
+      "under_0_5_original_seconds": 19086
+    }
+  },
+  "final_pilot_summary": {
+    "episodes": 6,
+    "expected_episodes": 6,
+    "passed_episodes": 5,
+    "segments": 60,
+    "accepted_segments": 54,
+    "actions_covered": 1416,
+    "single_transition_segments": 0,
+    "length_eligible_segments": 57,
+    "short_command_events": 3,
+    "new_short_motion_segments": 0,
+    "eligible_accepted_segments": 51,
+    "errors": [],
+    "full_collection": false,
+    "seconds": 149.14763361398946,
+    "training_ready": false,
+    "physical_execution_validated": false,
+    "parameter_supervision": false
+  },
+  "final_pilot_audit": {
+    "schema": "vlds.dynamics.coherent_audit.v1",
+    "fingerprint": "f35f3c9afdd013e8f104b83d245118e6a6e1a8cd2c3f53f9ec8889724f6b88ef",
+    "audit_implementation_sha256": "a56c0fdbecd479985c08009b53fde784c267dc49f3fe393edb65b83f5ee1114e",
+    "episodes": 6,
+    "counts": {
+      "segments": 60,
+      "transitions": 1416,
+      "length_eligible_segments": 57,
+      "short_command_events": 3,
+      "accepted_segments": 54,
+      "actions_covered": 1416,
+      "single_transition_segments": 0,
+      "new_short_motion_segments": 0,
+      "eligible_accepted_segments": 51
+    },
+    "failures": [],
+    "rejected_segments_by_reason": {
+      "position_maximum": 6
+    },
+    "full_source_episode_coverage": false,
+    "integrity_passed": true,
+    "all_nominal_passed": false,
+    "passed_episodes": 5,
+    "maximum_saved_vs_stepwise_error": 3.9968028886505635e-15,
+    "artifact_sha256_chain": "79ced28e1caf9c5d3224276922a9352e064302eb4068249edd0320d201b9357c",
+    "parameter_supervision": false,
+    "physical_execution_validated": false,
+    "training_ready": false
+  },
+  "case_6000": {
+    "previous_summary": {
+      "complete_coverage": true,
+      "actions_covered": 98,
+      "segments": 20,
+      "accepted_segments": 20,
+      "position_rms_native": 0.0038099498724673358,
+      "maximum_position_error_native": 0.008984256323618434,
+      "maximum_scaled_error": 0.8984256323618435,
+      "single_transition_segments": 0,
+      "minimum_stability_margin_per_second": 6.0,
+      "maximum_matrix_norm_per_second": 20.0,
+      "switching": "source timestamps, continuous state, no resets",
+      "physical_execution_validated": false,
+      "parameter_supervision": false,
+      "rotation_rms_rad": 0.02847671450225985,
+      "maximum_rotation_error_rad": 0.0676168759763503,
+      "passed": true,
+      "fit_margin": 0.9,
+      "source_observations": 99,
+      "terminal_action_target_available": true,
+      "source_tracking_max_speed_m_per_second": 0.2841454234477195,
+      "production_speed_cap_0_3_met": true
+    },
+    "coherent_summary": {
+      "complete_coverage": true,
+      "actions_covered": 98,
+      "segments": 6,
+      "accepted_segments": 6,
+      "passed": true,
+      "position_rms_native": 0.005433246078109488,
+      "maximum_scaled_error": 0.9239445040295883,
+      "single_transition_segments": 0,
+      "length_eligible_segments": 6,
+      "short_command_events": 0,
+      "new_short_motion_segments": 0,
+      "eligible_accepted_segments": 6,
+      "source_segment_seconds_median": 0.7749999999999563,
+      "parameter_supervision": false,
+      "physical_execution_validated": false,
+      "training_ready": false,
+      "rotation_rms_rad": 0.012323391518267
+    },
+    "coherent_original_lengths": [
+      20,
+      16,
+      15,
+      20,
+      14,
+      13
+    ]
+  },
+  "boundary_repair": {
+    "2": {
+      "coarse_passed": false,
+      "fine_passed": true
+    },
+    "13": {
+      "coarse_passed": false,
+      "fine_passed": false
+    },
+    "14": {
+      "coarse_passed": false,
+      "fine_passed": true
+    },
+    "19": {
+      "coarse_passed": false,
+      "fine_passed": true
+    }
+  },
+  "ui": {
+    "scope": "final LIBERO pilot, exploratory other pilots and full xArm in actual native UI and MuJoCo replay",
+    "reports": [
+      {
+        "dataset": "libero",
+        "episode": 6000,
+        "frame": 20,
+        "detail": "高斯门控稳定场 · 长片段/非线性稳定场（实验） · 原始 16 个转移 / 0.80s · 长度合格 · 当前场验收通过 · 整回合覆盖 98 个观测转移 · 当前段最大误差 0.900 倍阈值 · 本场限速 0.308 m/s · 整回合 RMS 5.43 mm\nworld Cartesian · m · 源时间连续切换，无状态重置；固定场拟合验收，物理执行尚未验证。",
+        "worker_status": {
+          "frame": 20,
+          "source_frame": 20,
+          "simulation_time": 1.2500000000000009,
+          "overlay_geoms": 92,
+          "segment": 2,
+          "segment_count": 6,
+          "timeline_frame": 20,
+          "field_interval": [
+            20,
+            36
+          ],
+          "overlay_sampled": false,
+          "field_geoms": 160
+        }
+      },
+      {
+        "dataset": "libero",
+        "episode": 6000,
+        "frame": 48,
+        "detail": "高斯门控稳定场 · 长片段/非线性稳定场（实验） · 原始 15 个转移 / 0.75s · 长度合格 · 当前场验收通过 · 整回合覆盖 98 个观测转移 · 当前段最大误差 0.900 倍阈值 · 本场限速 0.308 m/s · 整回合 RMS 5.43 mm\nworld Cartesian · m · 源时间连续切换，无状态重置；固定场拟合验收，物理执行尚未验证。",
+        "worker_status": {
+          "frame": 48,
+          "source_frame": 48,
+          "simulation_time": 2.6499999999999297,
+          "overlay_geoms": 93,
+          "segment": 3,
+          "segment_count": 6,
+          "timeline_frame": 48,
+          "field_interval": [
+            36,
+            51
+          ],
+          "overlay_sampled": false,
+          "field_geoms": 158
+        }
+      },
+      {
+        "dataset": "libero",
+        "episode": 6000,
+        "frame": 80,
+        "detail": "高斯门控稳定场 · 长片段/非线性稳定场（实验） · 原始 14 个转移 / 0.70s · 长度合格 · 当前场验收通过 · 整回合覆盖 98 个观测转移 · 当前段最大误差 0.924 倍阈值 · 本场限速 0.308 m/s · 整回合 RMS 5.43 mm\nworld Cartesian · m · 源时间连续切换，无状态重置；固定场拟合验收，物理执行尚未验证。",
+        "worker_status": {
+          "frame": 80,
+          "source_frame": 80,
+          "simulation_time": 4.249999999999754,
+          "overlay_geoms": 94,
+          "segment": 5,
+          "segment_count": 6,
+          "timeline_frame": 80,
+          "field_interval": [
+            71,
+            85
+          ],
+          "overlay_sampled": false,
+          "field_geoms": 156
+        }
+      },
+      {
+        "dataset": "libero",
+        "episode": 6000,
+        "frame": 48,
+        "detail": "高斯门控稳定场 · 长片段/非线性稳定场（实验） · 原始 15 个转移 / 0.75s · 长度合格 · 当前场验收通过 · 整回合覆盖 98 个观测转移 · 当前段最大误差 0.900 倍阈值 · 本场限速 0.308 m/s · 整回合 RMS 5.43 mm\nworld Cartesian · m · 源时间连续切换，无状态重置；固定场拟合验收，物理执行尚未验证。",
+        "worker_status": {
+          "frame": 48,
+          "source_frame": 48,
+          "simulation_time": 2.6499999999999297,
+          "overlay_geoms": 93,
+          "segment": 3,
+          "segment_count": 6,
+          "timeline_frame": 48,
+          "field_interval": [
+            36,
+            51
+          ],
+          "overlay_sampled": false,
+          "field_geoms": 158
+        }
+      },
+      {
+        "dataset": "xarm",
+        "fields": 2,
+        "frame": 10,
+        "detail": "高斯门控稳定场 · 长片段/非线性稳定场（实验） · 原始 14 个转移 / 0.93s · 长度合格 · 当前场验收未通过 · 原因：位置误差超限 · 整回合覆盖 24 个观测转移 · 当前段最大误差 16.715 倍阈值\nrecorded end effector xyz and gripper · m for xyz; native gripper scalar · 源时间连续切换，无状态重置；固定场拟合验收，物理执行尚未验证。",
+        "canvas_objects": 72
+      },
+      {
+        "dataset": "aloha",
+        "fields": 10,
+        "frame": 10,
+        "detail": "高斯门控稳定场 · 长片段/非线性稳定场（实验） · 原始 52 个转移 / 1.04s · 长度合格 · 当前场验收通过 · 整回合覆盖 399 个观测转移 · 当前段最大误差 0.887 倍阈值\ndual arm joint and gripper state · rad for joints; normalized grippers · 源时间连续切换，无状态重置；固定场拟合验收，物理执行尚未验证。",
+        "canvas_objects": 80
+      },
+      {
+        "dataset": "pusht",
+        "fields": 10,
+        "frame": 10,
+        "detail": "高斯门控稳定场 · 长片段/非线性稳定场（实验） · 原始 21 个转移 / 2.10s · 长度合格 · 当前场验收通过 · 整回合覆盖 160 个观测转移 · 当前段最大误差 0.900 倍阈值\nrecorded image plane · pixel · 源时间连续切换，无状态重置；固定场拟合验收，物理执行尚未验证。",
+        "canvas_objects": 80
+      },
+      {
+        "dataset": "lerobot_libero",
+        "fields": 9,
+        "frame": 10,
+        "detail": "高斯门控稳定场 · 长片段/非线性稳定场（实验） · 原始 15 个转移 / 1.50s · 长度合格 · 当前场验收通过 · 整回合覆盖 213 个观测转移 · 当前段最大误差 0.892 倍阈值\nrecorded end effector Cartesian · m · 源时间连续切换，无状态重置；固定场拟合验收，物理执行尚未验证。",
+        "canvas_objects": 79
+      }
+    ],
+    "callback_errors": []
+  },
+  "night_run_snapshot": {
+    "started_at": "2026-11-22T17:24:27.158550+00:00",
+    "status": "running",
+    "datasets": {
+      "xarm": {
+        "summary": {
+          "episodes": 800,
+          "expected_episodes": 800,
+          "passed_episodes": 0,
+          "segments": 1600,
+          "accepted_segments": 0,
+          "actions_covered": 19200,
+          "single_transition_segments": 0,
+          "length_eligible_segments": 1600,
+          "short_command_events": 0,
+          "new_short_motion_segments": 0,
+          "eligible_accepted_segments": 0,
+          "errors": [],
+          "full_collection": true,
+          "seconds": 39.05740331701236,
+          "training_ready": false,
+          "physical_execution_validated": false,
+          "parameter_supervision": false
+        },
+        "audit": {
+          "schema": "vlds.dynamics.coherent_audit.v1",
+          "fingerprint": "cee3fef989d01f59f8e5510d3e826c229df2f758e6b1c400faaba8e0428725a6",
+          "audit_implementation_sha256": "a56c0fdbecd479985c08009b53fde784c267dc49f3fe393edb65b83f5ee1114e",
+          "episodes": 800,
+          "counts": {
+            "segments": 1600,
+            "transitions": 19200,
+            "length_eligible_segments": 1600,
+            "short_command_events": 0,
+            "accepted_segments": 0,
+            "actions_covered": 19200,
+            "single_transition_segments": 0,
+            "new_short_motion_segments": 0,
+            "eligible_accepted_segments": 0
+          },
+          "failures": [],
+          "rejected_segments_by_reason": {
+            "position_maximum": 1600,
+            "nominal_arrival_timeout": 120
+          },
+          "full_source_episode_coverage": true,
+          "integrity_passed": true,
+          "all_nominal_passed": false,
+          "passed_episodes": 0,
+          "maximum_saved_vs_stepwise_error": 4.035660694512444e-14,
+          "artifact_sha256_chain": "f95086c7b003059b3c63c63ceedc6071fe2f6cd9b4ef7b26cc844cfd408a16e4",
+          "parameter_supervision": false,
+          "physical_execution_validated": false,
+          "training_ready": false
+        }
+      }
+    },
+    "implementation_sha256": {
+      "src/openpi/datasets/dynamics/coherent.py": "d0864bd2efb134d708c068e2019b1b79b712045f566ac4958413cee035dc7fdd",
+      "src/openpi/fields/contractive.py": "99e9b388dbefc3f226d57068f32eb14438072d37328fa2d6327004da2dcac5a7",
+      "src/openpi/datasets/dynamics/coherent_audit.py": "a56c0fdbecd479985c08009b53fde784c267dc49f3fe393edb65b83f5ee1114e",
+      "src/openpi/datasets/dynamics/coherent_report.py": "e37a732958b68147bef0f4c19d1c2131638d64084e596bf7c37cca332cea0a73"
+    }
+  },
+  "test_log": "data/experiments/dynamics_long_segments_20261123/final_regression.log",
+  "test_output": "........................................................................ [ 31%]\n........................................................................ [ 63%]\n........................................................................ [ 95%]\n...........                                                              [100%]\n227 passed in 35.18s\n",
+  "reproduction_commands": [
+    "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 env -u PYTHONPATH .venv/bin/python data/experiments/dynamics_long_segments_20261123/run_full.py",
+    "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 env -u PYTHONPATH .venv/bin/python -m pytest tests/fields tests/datasets/dynamics tests/datasets/libero tests/simulation -q",
+    "OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 env -u PYTHONPATH .venv/bin/python data/experiments/dynamics_long_segments_20261123/check_ui.py"
+  ],
+  "parameter_supervision": false,
+  "training_ready": false,
+  "physical_execution_validated": false
+}

@@ -154,7 +154,10 @@ def _scan_processed_libero(root):
         episodes,
         declared_episodes=len(episodes),
         robot="Franka Panda",
-        notes=["已处理示教；命令区间是分段候选，尚未经过 F 拟合。", "初始录制图像缺失；终端观测无对应的完整仿真状态。"],
+        notes=[
+            "已处理示教；命令区间保留完整动作，动力系统结果在浏览时另行载入。",
+            "初始录制图像缺失；终端观测无对应的完整仿真状态。",
+        ],
     )
 
 
@@ -432,6 +435,14 @@ class EpisodeReader:
         self.video_iterator = None
         self.video_stream = None
         self.root = next((p for p in episode.path.parents if (p / "meta/info.json").is_file()), episode.path.parent)
+        from openpi.datasets.dynamics.playback import available_profiles
+        from openpi.datasets.dynamics.playback import load_for_episode
+        from openpi.datasets.dynamics.playback import segmentation
+
+        preferred = "coherent" if "coherent" in available_profiles(episode) else "replay"
+        bundle = load_for_episode(episode, profile=preferred)
+        if bundle is not None:
+            self.segmentation = segmentation(bundle)
 
     def _row(self, frame, camera):
         columns = [

@@ -197,9 +197,13 @@ def run(args):
                     viewer.paused = expected_paused = not command["playing"]
                 elif action == "overlay":
                     if trajectory.overlay:
-                        trajectory.overlay.configure(**command)
-                        trajectory.draw_overlay(viewer)
-                        emit(overlay_updated=True, **trajectory.overlay_status())
+                        try:
+                            trajectory.overlay.configure(**command)
+                            trajectory.draw_overlay(viewer)
+                            viewer.sync()
+                            emit(overlay_updated=True, **trajectory.overlay_status())
+                        except (ValueError, OSError, KeyError) as error:
+                            emit(error="场叠加更新失败，保留当前场景：" + str(error))
                 elif action == "reload":
                     replacement = None
                     try:

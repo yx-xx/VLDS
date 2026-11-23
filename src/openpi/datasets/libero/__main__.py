@@ -43,6 +43,12 @@ def _inspect_fields(args):
     return inspect_fields(args)
 
 
+def _inspect_vector_field(args):
+    from openpi.datasets.libero.vector_field_inspection import inspect_vector_field
+
+    return inspect_vector_field(args)
+
+
 def _audit_fields(args):
     from openpi.datasets.libero.operation_audit import audit_fields
 
@@ -143,6 +149,20 @@ def main(argv=None):
     field_view.add_argument("--trial", type=int, default=0)
     field_view.add_argument("--output", type=Path, required=True)
     field_view.set_defaults(handler=_inspect_fields)
+    vector_view = commands.add_parser(
+        "inspect-vector-field", help="Plot a fixed velocity field against its source trajectory"
+    )
+    vector_view.add_argument("dataset", type=Path)
+    vector_view.add_argument("--episode", type=int, required=True)
+    vector_view.add_argument("--fields", type=Path, help="Saved episode JSON; otherwise fit one command interval")
+    vector_view.add_argument("--sequence", type=int, default=0, help="Zero-based saved sequence index")
+    vector_view.add_argument("--field", type=int, default=0, help="Zero-based field within the saved sequence")
+    vector_view.add_argument("--interval", type=int, default=0, help="Zero-based command interval for a new fit")
+    vector_view.add_argument("--representation", choices=("fitted", "linear"), default="fitted")
+    vector_view.add_argument("--max-speed", type=float, choices=(0.1, 0.2, 0.3), default=0.3)
+    vector_view.add_argument("--density", type=int, choices=range(3, 12), default=7)
+    vector_view.add_argument("--output", type=Path, required=True)
+    vector_view.set_defaults(handler=_inspect_vector_field)
     operations = commands.add_parser(
         "audit-fields", help="Audit operation evidence and propose unverified source events"
     )

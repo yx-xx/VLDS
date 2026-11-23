@@ -76,6 +76,12 @@ def test_embedded_renderer_in_both_environments_without_visible_glfw_window(inte
             viewer.command(dict(command='view', action='zoom', dy=0.2))
             viewer.sync()
             assert np.any(reader.read() != rotated)
+            viewer.command(dict(command='view', action='focus', lookat=[0.1, 0, 0.3], distance=0.7))
+            np.testing.assert_array_equal(viewer.cam.lookat, [0.1, 0, 0.3])
+            assert viewer.cam.distance == 0.7
+            viewer.command(dict(command='view', action='focus', lookat=[float('nan'), 0, 0], distance=-1))
+            np.testing.assert_array_equal(viewer.cam.lookat, [0.1, 0, 0.3])
+            np.testing.assert_array_equal(data.qpos, original)
             viewer.command(dict(command='view', action='reset'))
             np.testing.assert_array_equal(viewer.cam.lookat, [0, 0, 0.2])
             assert viewer.cam.distance == 1.5
@@ -89,6 +95,22 @@ def test_embedded_renderer_in_both_environments_without_visible_glfw_window(inte
             assert np.any(reader.read() != small)
             viewer.sync()
             assert reader.read() is None
+            # Paused configuration changes must publish a fresh RGB frame at the same physics time.
+            class TintOverlay:
+                def __init__(self, color):
+                    self.color = color
+                def draw(self, scene, clear=False):
+                    scene.geoms[0].rgba[:3] = self.color
+            viewer.set_overlay(TintOverlay([1, 0, 0]))
+            viewer.sync()
+            red = reader.read()
+            assert red is not None
+            viewer.set_overlay(TintOverlay([0, 1, 0]))
+            viewer.sync()
+            green = reader.read()
+            assert green is not None and np.any(red != green)
+            assert data.time == 0.05
+            viewer.set_overlay(None)
             # Switching scenes releases the old GL context, then creates another hidden one.
             viewer.detach()
             viewer.attach_native(model, data)

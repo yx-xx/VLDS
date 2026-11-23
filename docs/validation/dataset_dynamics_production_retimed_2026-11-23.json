@@ -1,0 +1,851 @@
+{
+  "schema": "vlds.dynamics.production_retimed_validation.v1",
+  "recorded_at": "2026-11-23T00:19:49.299793+08:00",
+  "code_commit": "15daa34e0e84ec3bc3dc682413571e86b9114f62",
+  "working_tree_dirty": true,
+  "base_collection": "VLDS/data/processed/dynamics_20261122_final/libero",
+  "profile_collection": "VLDS/data/processed/dynamics_20261122_final/libero/profiles/production_retimed",
+  "profile_run_fingerprint": "d75a2f8dd39885b79d4aa04b9bde8cc4ec6a84e8aaa3ca90aa4b0f50f042875f",
+  "build_started_at": "2026-11-22T15:46:30.303458+00:00",
+  "build_seconds": 163.875690047018,
+  "build_config": {
+    "schema": "vlds.dynamics.profile_run.v1",
+    "base_directory": "../..",
+    "base_fingerprint": "c7f937c1dcf2210a9add43b93f5d412de7cafd3114c16065b754148f518f346e",
+    "base_source_manifest_sha256": "03d2c1f7c2ef60cfd00be950437a08747c6c0ca39bfea164987ebf47ab841794",
+    "source_manifest_sha256": "03d2c1f7c2ef60cfd00be950437a08747c6c0ca39bfea164987ebf47ab841794",
+    "kind": "processed_libero",
+    "source_relative": "../../../../libero_v2",
+    "source_episodes": 6500,
+    "profile": {
+      "name": "production_retimed",
+      "label": "LIBERO 生产约束/放慢时间",
+      "maximum_speed_native_per_second": 0.3,
+      "maximum_angular_speed_rad_per_second": 0.5,
+      "rotation_gain_per_second": 2.0,
+      "fit_margin": 0.9,
+      "maximum_time_scale": 16
+    },
+    "model": "stable_isotropic_rollout_v1",
+    "implementation_sha256": {
+      "src/openpi/datasets/dynamics/profiles.py": "68e6081b186a40252f63630dca72d3572d4199f6ddb9bf0bbbe16393c8b104bf",
+      "src/openpi/fields/sequence.py": "35ded0d4fbb493eb8104b342e364bf2ddb070e76205f1e8f04a2a5d9329054a4"
+    },
+    "selected_episode_indices_count": 6500
+  },
+  "source_versions": {
+    "raw/libero": {
+      "repo_id": "yifengzhu-hf/LIBERO-datasets",
+      "requested_revision": "main",
+      "revision": "f13aa24a3da8c43c7225569f28c562979fa0e35a",
+      "format": "libero_hdf5",
+      "endpoint": "https://hf-mirror.com",
+      "mode": "full_snapshot",
+      "complete": true,
+      "files": 132,
+      "bytes": 100442945547,
+      "verified_at": "2026-11-20T18:54:50.707042+00:00"
+    },
+    "physical-intelligence/libero": {
+      "repo_id": "physical-intelligence/libero",
+      "requested_revision": "v2.0",
+      "revision": "9dfa69510ea9e1613fc54112bc706444b686a231",
+      "format": "lerobot",
+      "endpoint": "https://hf-mirror.com",
+      "mode": "full_snapshot",
+      "complete": true,
+      "files": 1699,
+      "bytes": 34938926941,
+      "transport_mirrors": [
+        "https://modelscope.cn/datasets/buxiangqimingzi/physical-intelligence-libero"
+      ],
+      "verified_at": "2026-11-20T12:30:02.579827+00:00"
+    },
+    "lerobot/aloha_sim_transfer_cube_human": {
+      "repo_id": "lerobot/aloha_sim_transfer_cube_human",
+      "requested_revision": "v2.1",
+      "revision": "8f81f044cbc65d9c1efbe5a302e8f9f4c16a86ed",
+      "format": "lerobot",
+      "endpoint": "https://hf-mirror.com",
+      "mode": "full_snapshot",
+      "complete": true,
+      "files": 106,
+      "bytes": 70424490,
+      "verified_at": "2026-11-20T10:12:04.702338+00:00"
+    },
+    "lerobot/pusht": {
+      "repo_id": "lerobot/pusht",
+      "requested_revision": "v2.1",
+      "revision": "6e1d9c95aaf8abb19342e723935b6af7c54b5903",
+      "format": "lerobot",
+      "endpoint": "https://hf-mirror.com",
+      "mode": "full_snapshot",
+      "complete": true,
+      "files": 418,
+      "bytes": 9493572,
+      "verified_at": "2026-11-20T10:12:04.219524+00:00"
+    },
+    "lerobot/xarm_lift_medium": {
+      "repo_id": "lerobot/xarm_lift_medium",
+      "requested_revision": "v2.1",
+      "revision": "89d5752c021e580d26d90ceec7e8192ef01e7c30",
+      "format": "lerobot",
+      "endpoint": "https://hf-mirror.com",
+      "mode": "full_snapshot",
+      "complete": true,
+      "files": 1606,
+      "bytes": 23795413,
+      "verified_at": "2026-11-20T10:12:04.654300+00:00"
+    }
+  },
+  "source_version_record": "dataset_dynamics_2026-11-22.json",
+  "build_summary": {
+    "profile": "production_retimed",
+    "profile_label": "LIBERO 生产约束/放慢时间",
+    "episodes": 6500,
+    "expected_episodes": 6500,
+    "selected_episodes": 6500,
+    "passed_episodes": 6500,
+    "segments": 137599,
+    "accepted_segments": 137599,
+    "transitions_covered": 1007618,
+    "single_transition_segments": 387,
+    "failure_reasons": {},
+    "full_collection": true,
+    "errors": [],
+    "seconds": 163.87294513900997,
+    "maximum_scaled_error": 0.972734499517772,
+    "maximum_speed_native_per_second": 0.3,
+    "maximum_angular_speed_rad_per_second": 0.5,
+    "rotation_gain_per_second": 2.0,
+    "physical_execution_validated": false,
+    "training_ready": false,
+    "time_scale_episode_counts": {
+      "1": 2786,
+      "2": 3238,
+      "4": 475,
+      "8": 1
+    },
+    "all_nominal_passed": true
+  },
+  "independent_audit": {
+    "schema": "vlds.dynamics.audit.v2",
+    "fingerprint": "d75a2f8dd39885b79d4aa04b9bde8cc4ec6a84e8aaa3ca90aa4b0f50f042875f",
+    "counts": {
+      "episodes": 6500,
+      "segments": 137599,
+      "accepted_segments": 137599,
+      "transitions": 1007618,
+      "control_steps": 1808414,
+      "single_transition_segments": 387
+    },
+    "failures": [],
+    "profile": "production_retimed",
+    "profile_label": "LIBERO 生产约束/放慢时间",
+    "rejected_segments_by_reason": {},
+    "full_source_episode_coverage": true,
+    "maximum_scaled_error": 0.9727344995177785,
+    "maximum_rotation_error_rad": 0.08705496557693534,
+    "maximum_saved_vs_stepwise_error": 1.3766765505351941e-14,
+    "artifact_sha256_chain": "2909853226d9fbb6d88ba6e4edcd912adecdf9a289cf224f8340dd02ad44a7eb",
+    "position_rms_native_p50_p95_max": [
+      0.0038662670708349235,
+      0.00473382057229997,
+      0.005948764915166847
+    ],
+    "rotation_rms_rad_p50_p95_max": [
+      0.023792974179540016,
+      0.0386443549752556,
+      0.05175727010623768
+    ],
+    "episodes_with_position_speed_cap_over_0_3": 0,
+    "maximum_position_speed_cap_m_per_second": null,
+    "profile_passed_episodes": 6500,
+    "integrity_passed": true,
+    "all_nominal_passed": true,
+    "physical_execution_validated": false,
+    "training_ready": false,
+    "passed": true
+  },
+  "original_time_production_audit": {
+    "schema": "vlds.dynamics.audit.v2",
+    "fingerprint": "120e1477a3240b40d5330891c3592f7758e2832a2067414c9491d31e9d2e66da",
+    "counts": {
+      "episodes": 6500,
+      "segments": 676614,
+      "accepted_segments": 425084,
+      "transitions": 1007618,
+      "control_steps": 1007618,
+      "single_transition_segments": 624842
+    },
+    "failures": [],
+    "profile": "production_libero",
+    "profile_label": "LIBERO 原生产控制约束",
+    "rejected_segments_by_reason": {
+      "position_maximum": 337,
+      "rotation_maximum": 251226
+    },
+    "full_source_episode_coverage": true,
+    "maximum_scaled_error": 7.068887056300259,
+    "maximum_rotation_error_rad": 1.3689907084600907,
+    "maximum_saved_vs_stepwise_error": 2.220446049250313e-15,
+    "artifact_sha256_chain": "28c28772a3fceca570ec9d0398199f76c485f101f9dbdb5eb314fb5f1d651d9d",
+    "position_rms_native_p50_p95_max": [
+      2.1668762641356258e-16,
+      0.00451580607611889,
+      0.011550222033613404
+    ],
+    "rotation_rms_rad_p50_p95_max": [
+      0.06137779922576829,
+      0.258824633433269,
+      0.539952623837605
+    ],
+    "episodes_with_position_speed_cap_over_0_3": 0,
+    "maximum_position_speed_cap_m_per_second": null,
+    "profile_passed_episodes": 2787,
+    "integrity_passed": true,
+    "all_nominal_passed": false,
+    "physical_execution_validated": false,
+    "training_ready": false,
+    "passed": true
+  },
+  "default_playback_audits": {
+    "libero": {
+      "schema": "vlds.dynamics.audit.v2",
+      "fingerprint": "c7f937c1dcf2210a9add43b93f5d412de7cafd3114c16065b754148f518f346e",
+      "counts": {
+        "episodes": 6500,
+        "segments": 183566,
+        "accepted_segments": 183566,
+        "transitions": 1007618,
+        "control_steps": 1007618,
+        "single_transition_segments": 1523
+      },
+      "failures": [],
+      "profile": "replay",
+      "profile_label": "source-calibrated nominal tracking",
+      "rejected_segments_by_reason": {},
+      "full_source_episode_coverage": true,
+      "maximum_scaled_error": 0.8999977467558006,
+      "maximum_rotation_error_rad": 0.07853972683030974,
+      "maximum_saved_vs_stepwise_error": 2.220446049250313e-15,
+      "artifact_sha256_chain": "2fee7a8bd4472a7b3cce5fea32fcf8579aed16aaee04fbb88ba010f56e5647bd",
+      "position_rms_native_p50_p95_max": [
+        0.0032862260380285323,
+        0.00434508543712831,
+        0.005559341312015564
+      ],
+      "rotation_rms_rad_p50_p95_max": [
+        0.026976780191244994,
+        0.03287661585730922,
+        0.04135251678791356
+      ],
+      "episodes_with_position_speed_cap_over_0_3": 1029,
+      "maximum_position_speed_cap_m_per_second": 1.6497812015296436,
+      "profile_passed_episodes": 6500,
+      "integrity_passed": true,
+      "all_nominal_passed": true,
+      "physical_execution_validated": false,
+      "training_ready": false,
+      "passed": true
+    },
+    "lerobot_libero": {
+      "schema": "vlds.dynamics.audit.v2",
+      "fingerprint": "f751e242ef2903f8c00614c565d449ca6b6d82873535b0df9cea2c73ea648ecd",
+      "counts": {
+        "episodes": 1693,
+        "segments": 49596,
+        "accepted_segments": 49596,
+        "transitions": 271772,
+        "control_steps": 271772,
+        "single_transition_segments": 325
+      },
+      "failures": [],
+      "profile": "replay",
+      "profile_label": "source-calibrated nominal tracking",
+      "rejected_segments_by_reason": {},
+      "full_source_episode_coverage": true,
+      "maximum_scaled_error": 0.8999948353633339,
+      "maximum_rotation_error_rad": 0.07853543046050288,
+      "maximum_saved_vs_stepwise_error": 1.9984014443252818e-15,
+      "artifact_sha256_chain": "6d1d7c7d6824b7bfd9bf59e435a01c5991073bfbfd4d64abdedf9099388172f2",
+      "position_rms_native_p50_p95_max": [
+        0.0035076472240906783,
+        0.004608160523061829,
+        0.005509712647661127
+      ],
+      "rotation_rms_rad_p50_p95_max": [
+        0.02655909514422839,
+        0.032546366865279376,
+        0.037261139457199256
+      ],
+      "episodes_with_position_speed_cap_over_0_3": 0,
+      "maximum_position_speed_cap_m_per_second": null,
+      "profile_passed_episodes": 1693,
+      "integrity_passed": true,
+      "all_nominal_passed": true,
+      "physical_execution_validated": false,
+      "training_ready": false,
+      "passed": true
+    },
+    "aloha": {
+      "schema": "vlds.dynamics.audit.v2",
+      "fingerprint": "70edf07bc10b04264f220e306d4663b65bdecfba0ea54995ee53724561a1100c",
+      "counts": {
+        "episodes": 50,
+        "segments": 1986,
+        "accepted_segments": 1986,
+        "transitions": 19950,
+        "control_steps": 19950,
+        "single_transition_segments": 0
+      },
+      "failures": [],
+      "profile": "replay",
+      "profile_label": "source-calibrated nominal tracking",
+      "rejected_segments_by_reason": {},
+      "full_source_episode_coverage": true,
+      "maximum_scaled_error": 0.8989029631742024,
+      "maximum_rotation_error_rad": 0.0,
+      "maximum_saved_vs_stepwise_error": 1.7763568394002505e-15,
+      "artifact_sha256_chain": "0361eb90e8bc0301bd060e4a5ca0ab910878128be1d804701d79ec34b42f0dc0",
+      "position_rms_native_p50_p95_max": [
+        0.02116436520788962,
+        0.023433503245990774,
+        0.024303470878430336
+      ],
+      "rotation_rms_rad_p50_p95_max": [],
+      "episodes_with_position_speed_cap_over_0_3": 0,
+      "maximum_position_speed_cap_m_per_second": null,
+      "profile_passed_episodes": 50,
+      "integrity_passed": true,
+      "all_nominal_passed": true,
+      "physical_execution_validated": false,
+      "training_ready": false,
+      "passed": true
+    },
+    "pusht": {
+      "schema": "vlds.dynamics.audit.v2",
+      "fingerprint": "f7e055aebbae3fd67db789cbfb1d29bde4f62fbe54afc4f127bd2d3e9550df21",
+      "counts": {
+        "episodes": 206,
+        "segments": 8420,
+        "accepted_segments": 8420,
+        "transitions": 25444,
+        "control_steps": 25444,
+        "single_transition_segments": 1405
+      },
+      "failures": [],
+      "profile": "replay",
+      "profile_label": "source-calibrated nominal tracking",
+      "rejected_segments_by_reason": {},
+      "full_source_episode_coverage": true,
+      "maximum_scaled_error": 0.8997128966604722,
+      "maximum_rotation_error_rad": 0.0,
+      "maximum_saved_vs_stepwise_error": 4.547473508864641e-13,
+      "artifact_sha256_chain": "56cc0be2fea3bb4dd12e1dd822d4270bf53ce60a5ead988adc5c747294db1c7b",
+      "position_rms_native_p50_p95_max": [
+        1.9071755710163163,
+        2.211454758782837,
+        2.4068114679122363
+      ],
+      "rotation_rms_rad_p50_p95_max": [],
+      "episodes_with_position_speed_cap_over_0_3": 0,
+      "maximum_position_speed_cap_m_per_second": null,
+      "profile_passed_episodes": 206,
+      "integrity_passed": true,
+      "all_nominal_passed": true,
+      "physical_execution_validated": false,
+      "training_ready": false,
+      "passed": true
+    },
+    "xarm": {
+      "schema": "vlds.dynamics.audit.v2",
+      "fingerprint": "4f58f2d97733e9d287667a18a0908256faa9a3d644d984f7ec15826a4cd97183",
+      "counts": {
+        "episodes": 800,
+        "segments": 19086,
+        "accepted_segments": 19086,
+        "transitions": 19200,
+        "control_steps": 19200,
+        "single_transition_segments": 18978
+      },
+      "failures": [],
+      "profile": "replay",
+      "profile_label": "source-calibrated nominal tracking",
+      "rejected_segments_by_reason": {},
+      "full_source_episode_coverage": true,
+      "maximum_scaled_error": 0.8927699763434195,
+      "maximum_rotation_error_rad": 0.0,
+      "maximum_saved_vs_stepwise_error": 3.3306690738754696e-16,
+      "artifact_sha256_chain": "d71fa563ab48e97862ecff2f8f9bb03f512eafc72ac2c387079f10f9ab509d88",
+      "position_rms_native_p50_p95_max": [
+        1.2871840073818063e-17,
+        0.0015768068935358055,
+        0.009929340197141447
+      ],
+      "rotation_rms_rad_p50_p95_max": [],
+      "episodes_with_position_speed_cap_over_0_3": 0,
+      "maximum_position_speed_cap_m_per_second": null,
+      "profile_passed_episodes": 800,
+      "integrity_passed": true,
+      "all_nominal_passed": true,
+      "physical_execution_validated": false,
+      "training_ready": false,
+      "passed": true
+    }
+  },
+  "default_totals": {
+    "episodes": 9249,
+    "segments": 262654,
+    "transitions": 1343984,
+    "control_steps": 1343984
+  },
+  "comparison": {
+    "episode": 6000,
+    "profiles": [
+      {
+        "profile": "replay",
+        "fields": 20,
+        "accepted_segments": 20,
+        "source_duration_s": 4.89999999999966,
+        "nominal_duration_s": 4.89999999999966,
+        "position_rms_mm": 3.8099498724673357,
+        "rotation_rms_degrees": 1.631595555378474,
+        "maximum_rotation_error_degrees": 3.8741616173043996,
+        "passed": true
+      },
+      {
+        "profile": "production_libero",
+        "fields": 98,
+        "accepted_segments": 70,
+        "source_duration_s": 4.89999999999966,
+        "nominal_duration_s": 4.89999999999966,
+        "position_rms_mm": 2.6603806803170685e-14,
+        "rotation_rms_degrees": 4.088772401208581,
+        "maximum_rotation_error_degrees": 8.303929441780623,
+        "passed": false
+      },
+      {
+        "profile": "production_retimed",
+        "fields": 18,
+        "accepted_segments": 18,
+        "source_duration_s": 4.89999999999966,
+        "nominal_duration_s": 9.79999999999932,
+        "position_rms_mm": 3.9328468465620166,
+        "rotation_rms_degrees": 1.259750015536124,
+        "maximum_rotation_error_degrees": 2.749593071363973,
+        "passed": true
+      }
+    ]
+  },
+  "ui": {
+    "reports": [
+      {
+        "profile": "replay",
+        "fields": 20,
+        "frame": 48,
+        "selected_field": 9,
+        "detail": "离线线性稳定场 · 回放配置 · 当前场验收通过 · 覆盖 98 个观测转移 · 最大误差 0.898 倍阈值 · 本场限速 0.117 m/s · 整回合 RMS 3.81 mm\nworld Cartesian · m · 源时间连续切换，无状态重置；固定场拟合验收，物理执行尚未验证。",
+        "time_label": "帧 48/98 · 2.40/4.90 s",
+        "report": {
+          "passed": true,
+          "reasons": [],
+          "maximum_scaled_error": 0.15826979330765134,
+          "position_rms_native": 0.0011034103162018939,
+          "continuous_position_rms_native": 0.0010490389538451946,
+          "arrival_scaled_error_after_extra": 0.0,
+          "rotation_rms_rad": 0.027104953282949224,
+          "continuous_rotation_rms_rad": 0.027104953282949224,
+          "maximum_rotation_error_rad": 0.04835814855686108,
+          "position_rms_m": 0.0010490389538451946,
+          "scope": "persisted local and continuous fit acceptance; errors display the carried-state rollout"
+        },
+        "time_scale": 1,
+        "worker_status": {
+          "frame": 48,
+          "source_frame": 48,
+          "simulation_time": 2.6499999999999297,
+          "overlay_geoms": 119,
+          "segment": 10,
+          "segment_count": 20,
+          "timeline_frame": 48,
+          "field_interval": [
+            48,
+            51
+          ],
+          "overlay_sampled": false,
+          "field_geoms": 134
+        }
+      },
+      {
+        "profile": "production_libero",
+        "fields": 98,
+        "frame": 48,
+        "selected_field": 48,
+        "detail": "离线线性稳定场 · LIBERO 原生产控制约束 · 当前场验收未通过 · 原因：姿态误差超限 · 覆盖 98 个观测转移 · 最大误差 0.000 倍阈值 · 本场限速 0.089 m/s · 整回合 RMS 0.00 mm\nworld Cartesian · m · 源时间连续切换，无状态重置；固定场拟合验收，物理执行尚未验证。",
+        "time_label": "帧 48/98 · 2.40/4.90 s",
+        "report": {
+          "passed": false,
+          "reasons": [
+            "rotation_maximum"
+          ],
+          "maximum_scaled_error": 0.0,
+          "position_rms_native": 0.0,
+          "continuous_position_rms_native": 0.0,
+          "arrival_scaled_error_after_extra": 0.0,
+          "rotation_rms_rad": 0.08924590955226416,
+          "continuous_rotation_rms_rad": 0.08924590955226416,
+          "maximum_rotation_error_rad": 0.09434551287588697,
+          "position_rms_m": 0.0,
+          "scope": "persisted local and continuous fit acceptance; errors display the carried-state rollout"
+        },
+        "time_scale": 1,
+        "worker_status": {
+          "overlay_updated": true,
+          "overlay_geoms": 100,
+          "segment": 49,
+          "segment_count": 98,
+          "timeline_frame": 48,
+          "field_interval": [
+            48,
+            49
+          ],
+          "overlay_sampled": false,
+          "field_geoms": 129
+        }
+      },
+      {
+        "profile": "production_retimed",
+        "fields": 18,
+        "frame": 48,
+        "selected_field": 8,
+        "detail": "离线线性稳定场 · LIBERO 生产约束/放慢时间 · 当前场验收通过 · 覆盖 98 个观测转移 · 最大误差 0.872 倍阈值 · 本场限速 0.078 m/s · 整回合 RMS 3.93 mm\nworld Cartesian · m · 示教时间放慢 2 倍，控制周期保持 0.050s；连续切换，无状态重置；固定场拟合验收，物理执行尚未验证。",
+        "time_label": "帧 48/98 · 源 2.40/4.90 s · 放慢后 4.80/9.80 s",
+        "report": {
+          "passed": true,
+          "reasons": [],
+          "maximum_scaled_error": 0.6847006621786139,
+          "position_rms_native": 0.004696872141315217,
+          "continuous_position_rms_native": 0.004482173524088155,
+          "arrival_scaled_error_after_extra": 0.0,
+          "arrival_speed_scaled_per_second": 0.0,
+          "rotation_rms_rad": 0.029534834265415137,
+          "continuous_rotation_rms_rad": 0.029534834265415137,
+          "maximum_rotation_error_rad": 0.0479894521853246,
+          "arrival_rotation_error_after_extra_rad": 0.0008757116977471202,
+          "arrival_angular_speed_rad_per_second": 0.0017514233954942404,
+          "position_rms_m": 0.004482173524088155,
+          "scope": "persisted local and continuous fit acceptance; errors display the carried-state rollout"
+        },
+        "time_scale": 2,
+        "worker_status": {
+          "overlay_updated": true,
+          "overlay_geoms": 95,
+          "segment": 9,
+          "segment_count": 18,
+          "timeline_frame": 48,
+          "field_interval": [
+            48,
+            54
+          ],
+          "overlay_sampled": false,
+          "field_geoms": 140
+        }
+      },
+      {
+        "profile": "replay",
+        "fields": 20,
+        "frame": 48,
+        "selected_field": 9,
+        "detail": "离线线性稳定场 · 回放配置 · 当前场验收通过 · 覆盖 98 个观测转移 · 最大误差 0.898 倍阈值 · 本场限速 0.117 m/s · 整回合 RMS 3.81 mm\nworld Cartesian · m · 源时间连续切换，无状态重置；固定场拟合验收，物理执行尚未验证。",
+        "time_label": "帧 48/98 · 2.40/4.90 s",
+        "report": {
+          "passed": true,
+          "reasons": [],
+          "maximum_scaled_error": 0.15826979330765134,
+          "position_rms_native": 0.0011034103162018939,
+          "continuous_position_rms_native": 0.0010490389538451946,
+          "arrival_scaled_error_after_extra": 0.0,
+          "rotation_rms_rad": 0.027104953282949224,
+          "continuous_rotation_rms_rad": 0.027104953282949224,
+          "maximum_rotation_error_rad": 0.04835814855686108,
+          "position_rms_m": 0.0010490389538451946,
+          "scope": "persisted local and continuous fit acceptance; errors display the carried-state rollout"
+        },
+        "time_scale": 1,
+        "worker_status": {
+          "overlay_updated": true,
+          "overlay_geoms": 98,
+          "segment": 10,
+          "segment_count": 20,
+          "timeline_frame": 48,
+          "field_interval": [
+            48,
+            51
+          ],
+          "overlay_sampled": false,
+          "field_geoms": 134
+        }
+      },
+      {
+        "profile": "replay",
+        "frame": 0,
+        "worker_status": {
+          "frame": 0,
+          "source_frame": 0,
+          "simulation_time": 0.25000000000000017,
+          "overlay_geoms": 97,
+          "segment": 1,
+          "segment_count": 20,
+          "timeline_frame": 0,
+          "field_interval": [
+            0,
+            4
+          ],
+          "overlay_sampled": false,
+          "field_geoms": 135
+        }
+      },
+      {
+        "profile": "production_libero",
+        "frame": 0,
+        "worker_status": {
+          "overlay_updated": true,
+          "overlay_geoms": 100,
+          "segment": 1,
+          "segment_count": 98,
+          "timeline_frame": 0,
+          "field_interval": [
+            0,
+            1
+          ],
+          "overlay_sampled": false,
+          "field_geoms": 129
+        }
+      },
+      {
+        "profile": "production_retimed",
+        "frame": 0,
+        "worker_status": {
+          "overlay_updated": true,
+          "overlay_geoms": 97,
+          "segment": 1,
+          "segment_count": 18,
+          "timeline_frame": 0,
+          "field_interval": [
+            0,
+            4
+          ],
+          "overlay_sampled": false,
+          "field_geoms": 135
+        }
+      },
+      {
+        "profile": "replay",
+        "frame": 0,
+        "worker_status": {
+          "overlay_updated": true,
+          "overlay_geoms": 97,
+          "segment": 1,
+          "segment_count": 20,
+          "timeline_frame": 0,
+          "field_interval": [
+            0,
+            4
+          ],
+          "overlay_sampled": false,
+          "field_geoms": 135
+        }
+      }
+    ],
+    "callback_errors": []
+  },
+  "execution": {
+    "cwd": "VLDS/",
+    "environment": {
+      "OPENBLAS_NUM_THREADS": "1",
+      "OMP_NUM_THREADS": "1",
+      "PYTHONPATH": "unset"
+    },
+    "build_argv": [
+      ".venv/bin/python",
+      "-m",
+      "openpi.datasets.dynamics.profiles",
+      "data/processed/dynamics_20261122_final/libero",
+      "--profile",
+      "production_retimed",
+      "--workers",
+      "10"
+    ],
+    "retimed_audit_argv": [
+      ".venv/bin/python",
+      "-m",
+      "openpi.datasets.dynamics.audit",
+      "data/processed/dynamics_20261122_final/libero/profiles/production_retimed",
+      "--workers",
+      "10"
+    ],
+    "fixed_audit_argv": [
+      ".venv/bin/python",
+      "-m",
+      "openpi.datasets.dynamics.audit",
+      "data/processed/dynamics_20261122_final/libero/profiles/production_libero",
+      "--workers",
+      "10"
+    ],
+    "default_audits": {
+      "argv": [
+        ".venv/bin/python",
+        "-"
+      ],
+      "stdin_body": "VLDS/data/experiments/dynamics_validation_20261123/audit_all.py"
+    },
+    "gui_argv": [
+      ".venv/bin/python",
+      "data/experiments/check_profile_dynamics_ui_20261123.py"
+    ],
+    "gui_environment": {
+      "DISPLAY": ":1"
+    },
+    "test_argv": [
+      ".venv/bin/pytest",
+      "tests/fields",
+      "tests/datasets/dynamics",
+      "tests/datasets/libero",
+      "tests/simulation",
+      "-q"
+    ],
+    "test_environment": {
+      "DISPLAY": ":1"
+    }
+  },
+  "tests": {
+    "passed": 208,
+    "seconds": 31.29,
+    "ruff_check": true,
+    "ruff_format_check": true,
+    "compileall_python_3_11_and_worker_python_3_8": true,
+    "git_diff_check_both_repositories": true
+  },
+  "source_snapshot_sha256": {
+    "VLDS/data/experiments/dynamics_validation_20261123/source_snapshot/packages/openpi-client/src/openpi_client/embedded_viewer.py": "1a81e77d9509dbafd04bffdbe555406d6327595ad1c9221bf414395de471dcd8",
+    "VLDS/data/experiments/dynamics_validation_20261123/source_snapshot/src/openpi/datasets/dynamics/__init__.py": "1184b04251eb912bf7c4589b9014ac31ba03e0a8850d8edb4b5f00ecd5de9071",
+    "VLDS/data/experiments/dynamics_validation_20261123/source_snapshot/src/openpi/datasets/dynamics/__main__.py": "cb8979dbae258350180c0fa67bedf71af80f115b8ee95d6de5a2c82d0aaca4d9",
+    "VLDS/data/experiments/dynamics_validation_20261123/source_snapshot/src/openpi/datasets/dynamics/audit.py": "945982ea5a25b7eb5380e8f5e047c6e6fba703355f7701270b1529226cb24edf",
+    "VLDS/data/experiments/dynamics_validation_20261123/source_snapshot/src/openpi/datasets/dynamics/build.py": "14a621fcbd54577dd890c470dc6a97021d11fc8931ad08fb312a1b32128965e4",
+    "VLDS/data/experiments/dynamics_validation_20261123/source_snapshot/src/openpi/datasets/dynamics/playback.py": "3fc0788c3cfac245e74f634bca0b3eb91c914b01885dc33571a05b67a585d805",
+    "VLDS/data/experiments/dynamics_validation_20261123/source_snapshot/src/openpi/datasets/dynamics/profiles.py": "68e6081b186a40252f63630dca72d3572d4199f6ddb9bf0bbbe16393c8b104bf",
+    "VLDS/data/experiments/dynamics_validation_20261123/source_snapshot/src/openpi/datasets/libero/__main__.py": "63482a00c819c12cc083e05a25fb5b7597bd1359eab61030e39c66052c54281a",
+    "VLDS/data/experiments/dynamics_validation_20261123/source_snapshot/src/openpi/datasets/libero/field_preview_sequence.py": "341f45a0b92801e5aeb3bbd088641f46e0f49e89a64939ac2a59ea83089767d6",
+    "VLDS/data/experiments/dynamics_validation_20261123/source_snapshot/src/openpi/datasets/libero/vector_field_inspection.py": "0d684517215cedd0a74fd3e29090d3604b9d823644c535fc208bbb71e8a7315a",
+    "VLDS/data/experiments/dynamics_validation_20261123/source_snapshot/src/openpi/fields/sequence.py": "35ded0d4fbb493eb8104b342e364bf2ddb070e76205f1e8f04a2a5d9329054a4",
+    "VLDS/data/experiments/dynamics_validation_20261123/source_snapshot/src/openpi/fields/visualization.py": "82d0bce530e84d95523209871ade08b46d507fdb0334c2026264580cabf69e0e",
+    "VLDS/data/experiments/dynamics_validation_20261123/source_snapshot/src/openpi/simulation/data/reader.py": "aec2d2467c81025d265deed6473eb7ace85a0b35a787aeaf087a3c23174319e6",
+    "VLDS/data/experiments/dynamics_validation_20261123/source_snapshot/src/openpi/simulation/runtime/replay.py": "ea20db36973caaa5df1a9cfe90dfdedbac5200ae93227434aa07a176e40468ef",
+    "VLDS/data/experiments/dynamics_validation_20261123/source_snapshot/src/openpi/simulation/ui/dataset_browser.py": "2b6fb4d846c27d4f9806e4124ca1192ae084e9c200de0c319c50ba2fedfdc024",
+    "VLDS/data/experiments/dynamics_validation_20261123/source_snapshot/src/openpi/simulation/ui/field_preview.py": "a167b4b9f2fe07927d59680525fe398a752b4f9e0c73308d1af9a753501facf8",
+    "VLDS/data/experiments/dynamics_validation_20261123/source_snapshot/src/openpi/simulation/ui/native_field.py": "c9b8a562a91e941232f7d46c7a681080dac62fc3262a3b9d1a65182a411da6e7",
+    "VLDS/data/experiments/dynamics_validation_20261123/source_snapshot/src/openpi/simulation/ui/segmentation.py": "77303a4387c8b3156e0ab87c96ba6a828c2ec00b7ef7d7de64f2752badfdb840",
+    "VLDS/data/experiments/dynamics_validation_20261123/source_snapshot/src/openpi/simulation/workers/field_overlay.py": "b2124662d281098facb6f632ac5112b548b28d10aec356465c52b578d28e7fe8",
+    "VLDS/data/experiments/dynamics_validation_20261123/source_snapshot/src/openpi/simulation/workers/replay.py": "6063834a21c95131803d7cfacb8507de069fa4addcabd418f968c5327c7bafe8",
+    "VLDS/data/experiments/dynamics_validation_20261123/source_snapshot/src/openpi/simulation/workers/trajectory_overlay.py": "9e89719c68ddd17f93878077e638a334e84de62088e1241fbb6ba1c850c2aac2",
+    "VLDS/data/experiments/dynamics_validation_20261123/source_snapshot/tests/datasets/dynamics/test_build.py": "cdaf553572b5c86988f309d32a8ed38d098d5d8c99f061840d39af116a1dc8cb",
+    "VLDS/data/experiments/dynamics_validation_20261123/source_snapshot/tests/datasets/dynamics/test_profiles.py": "f44ef39b60ac1ae4733be0807ee05276f6ababd489003672b4b3ce81ba19326c",
+    "VLDS/data/experiments/dynamics_validation_20261123/source_snapshot/tests/datasets/libero/test_field_preview_sequence.py": "afe218ca01c3f78ba0933296d2957d990d64532c5fd18a8d0bed7f5e2c7b5bf5",
+    "VLDS/data/experiments/dynamics_validation_20261123/source_snapshot/tests/datasets/libero/test_vector_field_inspection.py": "222cb9e84000c89e907cf7b773e894041199f471425d646f54e1858b2579a089",
+    "VLDS/data/experiments/dynamics_validation_20261123/source_snapshot/tests/fields/test_sequence.py": "17055e4b021cb377c344cb32b49fc1bf98b1376a3e57a3f0d475e1750aad8f56",
+    "VLDS/data/experiments/dynamics_validation_20261123/source_snapshot/tests/fields/test_visualization.py": "ae5158ed3f654e357ea4ecc6b0d40ba76ecd6c2f4d04ba17e824045a96ad3990",
+    "VLDS/data/experiments/dynamics_validation_20261123/source_snapshot/tests/simulation/test_dataset_replay.py": "267594db1ed32b1f69fa7b355611f402538254ac6d8f2c32016a62712a7589bc",
+    "VLDS/data/experiments/dynamics_validation_20261123/source_snapshot/tests/simulation/test_embedded_viewer.py": "ae0555eb15d1d18c223bfa549246d2f6528d80eafb9371e3040fbf44aa8cc4e3",
+    "VLDS/data/experiments/dynamics_validation_20261123/source_snapshot/tests/simulation/test_segmentation.py": "763605bed9a1ad66d1e4c66e2dcdf126c97b25956bbf12ae32856a0acedb3e3e"
+  },
+  "artifact_sha256": {
+    "VLDS/data/experiments/check_profile_dynamics_ui_20261123.py": "72d5f6c70bbb644af176010981562cc973fb65d65965de968a7cdcbadb5e4a66",
+    "VLDS/data/experiments/dynamics_all_audit_v2_20261123.log": "1d3a47b8ef50e286173795cf3ef70e8fd8b6249f916b1dff7c71b500b1e097ad",
+    "VLDS/data/experiments/dynamics_final_checks_20261123.log": "6199aab2ab6b137f3513df465c2315ee975123f8debc8051c876e0238f043b0b",
+    "VLDS/data/experiments/dynamics_final_tests_20261123.log": "85910cc44d296c23e9329c066d13e5090895e6272595ba841c595160335e1184",
+    "VLDS/data/experiments/dynamics_production_retimed_analysis_20261122/make_comparison.py": "fe48be11798e9962e88a09eba0030c4d7f1633d2ff7e40e6a783ce2c9b57de4a",
+    "VLDS/data/experiments/dynamics_profiles_tests_20261122.log": "ee0a3dc4a51519691766d23ac41f6e93ad32864f138f7e98269c56f45cd1f50d",
+    "VLDS/data/experiments/dynamics_profiles_ui_20261123/production_libero.png": "3f0d59a875e46f8caafd0174ecf6b3bf6166d9c425658994291ae4f72f6cbc9f",
+    "VLDS/data/experiments/dynamics_profiles_ui_20261123/production_libero_scene.png": "29c0f7d293669f77beabe377dae2acf9dee77335bf742c307b40123c27f9b6fd",
+    "VLDS/data/experiments/dynamics_profiles_ui_20261123/production_retimed.png": "375afac007ada817706709374d3d6d78b90b7320aca5e4adebdf7023b3572dab",
+    "VLDS/data/experiments/dynamics_profiles_ui_20261123/production_retimed_scene.png": "26a7c36e378b7d1754f8e532205faa9826661264175ff4d050d82295653ef020",
+    "VLDS/data/experiments/dynamics_profiles_ui_20261123/replay.png": "c860305fe12589e5050da502621984606856c1928a13e20ca5d672537d57958a",
+    "VLDS/data/experiments/dynamics_profiles_ui_20261123/replay_scene.png": "e931afe843156945b097bb4d09c154a45f28bef2e566d98074069e14029a511b",
+    "VLDS/data/experiments/dynamics_profiles_ui_20261123/result.json": "621f492c9763ae6c38d359101a1a662c192ad62e40a8f25b6a3548d12a4fc427",
+    "VLDS/data/experiments/dynamics_profiles_ui_20261123.log": "84d176c49fd66013504ee0f6932b56a40002cf7fac226424504893933c264757",
+    "VLDS/data/experiments/dynamics_render_tests_20261123.log": "ada80fad71dd03aaa728366b63c8cb7b8593c72564d71abfcdfaf184792ad2b7",
+    "VLDS/data/experiments/dynamics_validation_20261123/archive.py": "81783b39d9dce4f20eebb96b26f154b970b3cb192a96a8c9f79dda353876b277",
+    "VLDS/data/experiments/dynamics_validation_20261123/audit_all.py": "5569311b4eb35b58f7988321443872469e0c1f6446268c24c847b19ddc96f048",
+    "VLDS/data/experiments/production_fixed_audit_v2_20261122.log": "69f250dc1426cf20fb218af8d737462047cf570f7b6ca566bab9014291987b63",
+    "VLDS/data/processed/dynamics_20261122_final/aloha/audit.json": "6567530986058085a2e47c2f177a8a89453ca1a4f54b9e23a5511cbe73fa7cea",
+    "VLDS/data/processed/dynamics_20261122_final/aloha/index.json": "047da885ca40ea0589915b3a82f4264b97f0f1de00571461a73a51c3030ca0cb",
+    "VLDS/data/processed/dynamics_20261122_final/aloha/run.json": "77a3a7d5fe404961a625ce6cfd96ecd4191b5ac4fbe1d3f7380a57ddf8392749",
+    "VLDS/data/processed/dynamics_20261122_final/aloha/summary.json": "d391f6284d20a4024a00275f206024e0bb618d3060d207a8e53720414f1ef820",
+    "VLDS/data/processed/dynamics_20261122_final/collections.json": "72476b67c917d3ac6033051aebebec0adcdf97c1eea359b0239cdd74be59a44c",
+    "VLDS/data/processed/dynamics_20261122_final/lerobot_libero/audit.json": "020a4875e3a902dc66e9cfc75c10e7e9bd01b765bf40772429f0f70ac143d222",
+    "VLDS/data/processed/dynamics_20261122_final/lerobot_libero/index.json": "681256c0254a0d23b89b415ae427265237fd1db0f61538dfa75cbdc5ae9c708b",
+    "VLDS/data/processed/dynamics_20261122_final/lerobot_libero/run.json": "6fe9f1c5b1c64f435904f6bedc99e41233f5a15f24f2c08cdac1459d63239538",
+    "VLDS/data/processed/dynamics_20261122_final/lerobot_libero/summary.json": "6566d3805a929bcadea507c21c3b3d3e11e38ce9f11713d89d3115ea87df48e1",
+    "VLDS/data/processed/dynamics_20261122_final/libero/audit.json": "6d96bd85150486c91c95766df2d9456089380cc73fc4cc4cc69a1ed83cf0a4ea",
+    "VLDS/data/processed/dynamics_20261122_final/libero/index.json": "d40e0a8e849802e0b0ed5e36cb366448dc6ab569a49ca2efd668b23ed327fff1",
+    "VLDS/data/processed/dynamics_20261122_final/libero/profiles/production_libero/audit.json": "024d1a8462d2f2d56ab422bf801afdbeec6b01acc68d8f5236b4161d7209494a",
+    "VLDS/data/processed/dynamics_20261122_final/libero/profiles/production_libero/index.json": "75c549c63983b612217f603517103a016b639470ecef6cc21aff051595bdddb5",
+    "VLDS/data/processed/dynamics_20261122_final/libero/profiles/production_libero/run.json": "641c02e5e67e792fddc00ad1bca3a8278f6659c37fc33f9c221dc595ac123e00",
+    "VLDS/data/processed/dynamics_20261122_final/libero/profiles/production_libero/summary.json": "db832d03d165dfeeeba4094166888d01bb2e31b555293a096403d39705c93f3d",
+    "VLDS/data/processed/dynamics_20261122_final/libero/profiles/production_retimed/audit.json": "752765d2159a8553483dcd472b4c479bcc57726025ef105169453002b06c328b",
+    "VLDS/data/processed/dynamics_20261122_final/libero/profiles/production_retimed/index.json": "aaae53b73c968227449b8debe596ba0a0e14848ae434bdae42eb201be577eedf",
+    "VLDS/data/processed/dynamics_20261122_final/libero/profiles/production_retimed/run.json": "d8344ec0f27c21b3e9a7396e2aaad06a9c3d6a3bbe0aefba4678dd448fcb5188",
+    "VLDS/data/processed/dynamics_20261122_final/libero/profiles/production_retimed/source_snapshot/src/openpi/datasets/dynamics/profiles.py": "68e6081b186a40252f63630dca72d3572d4199f6ddb9bf0bbbe16393c8b104bf",
+    "VLDS/data/processed/dynamics_20261122_final/libero/profiles/production_retimed/source_snapshot/src/openpi/fields/sequence.py": "35ded0d4fbb493eb8104b342e364bf2ddb070e76205f1e8f04a2a5d9329054a4",
+    "VLDS/data/processed/dynamics_20261122_final/libero/profiles/production_retimed/summary.json": "7f531b4a422d8feb90b73641f6d8215e68b817a193da295a614a84fc19d231be",
+    "VLDS/data/processed/dynamics_20261122_final/libero/run.json": "a901dc7bf8059b9d1e9ba1aa426b2e6eced8ee13cfbc274893b90dcf1cf516cc",
+    "VLDS/data/processed/dynamics_20261122_final/libero/summary.json": "ca98c540947dd36212ee3151d1e498bd48aa10c511f960518d8660f8b2ee3fa0",
+    "VLDS/data/processed/dynamics_20261122_final/pusht/audit.json": "367bc106135e5fb5eeb7484ba05e1dd0f3681c82e701e9414bc205db1f2d4c4c",
+    "VLDS/data/processed/dynamics_20261122_final/pusht/index.json": "6d9eece40ec3c79332b50e39b2dc461c9c1c856886352936c7b0c81c32456afe",
+    "VLDS/data/processed/dynamics_20261122_final/pusht/run.json": "1e80adb0d85bfd546bee1415bfc522fbe2075925d53e7975fa60e79f5b496713",
+    "VLDS/data/processed/dynamics_20261122_final/pusht/summary.json": "df45f8d9bb60127c4cee5465cd2eaafd562fdfd625fead8346898f759a44a341",
+    "VLDS/data/processed/dynamics_20261122_final/xarm/audit.json": "cbb7e3a936942a663640c521fa780901c7e4499b0960ef4a19df5c136152a66e",
+    "VLDS/data/processed/dynamics_20261122_final/xarm/index.json": "0fbc4c42de9396dfbc3fa5d48166b8dd6ad76947cece3ee19393e5928e212e8e",
+    "VLDS/data/processed/dynamics_20261122_final/xarm/run.json": "7b38662d4629c5e2cc84c0eb2b2f05bef9c4132c1e5592a4d0040f60e48d27e8",
+    "VLDS/data/processed/dynamics_20261122_final/xarm/summary.json": "6fc5f00389c8fb531a077c3afa1ca3e17e964005e283cda196f2478dadef4730",
+    "VLDS/docs/validation/dataset_dynamics_production_retimed_2026-11-23.md": "f148331dedd9bbfee831e71560460333da39cc16ea24042304eb2d116b8af69f",
+    "VLDS_paper/实验图表/全量动力系统分段_20261122/production_profile_comparison.json": "b05cc7f708ecbebc57d32200c635d7a18aef9489f3ffbfd221824b2ec6b0909a",
+    "VLDS_paper/实验图表/全量动力系统分段_20261122/production_profile_comparison.png": "e139c8c7e4e2cc46394f4ddc63e55cd9865cd218537b3b2ae58a1ac88c2fb544"
+  },
+  "replaced_historical_artifact_hashes": {
+    "VLDS/data/processed/dynamics_20261122_final/pusht/audit.json": {
+      "historical_sha256": "60eb99f96a58d4f02e2ef2e22b5d74654fc3fe3d0aef8b7716c64ceff4212763",
+      "current_sha256": "367bc106135e5fb5eeb7484ba05e1dd0f3681c82e701e9414bc205db1f2d4c4c"
+    },
+    "VLDS/data/processed/dynamics_20261122_final/aloha/audit.json": {
+      "historical_sha256": "4b8a7c62dda7f993bf89a836a9f4ece00e6f4ff8772acf705556e5ae62e11948",
+      "current_sha256": "6567530986058085a2e47c2f177a8a89453ca1a4f54b9e23a5511cbe73fa7cea"
+    },
+    "VLDS/data/processed/dynamics_20261122_final/xarm/audit.json": {
+      "historical_sha256": "ae07a97b2e88b6c601421f699104eb0e9474655486af4ce00cb1e26468d483c5",
+      "current_sha256": "cbb7e3a936942a663640c521fa780901c7e4499b0960ef4a19df5c136152a66e"
+    },
+    "VLDS/data/processed/dynamics_20261122_final/lerobot_libero/audit.json": {
+      "historical_sha256": "31ba9b7a91e6d816e87213b5cb2bfcbdb581ae00d0c48ac172802bc001f1b85a",
+      "current_sha256": "020a4875e3a902dc66e9cfc75c10e7e9bd01b765bf40772429f0f70ac143d222"
+    },
+    "VLDS/data/processed/dynamics_20261122_final/libero/audit.json": {
+      "historical_sha256": "5e8d0feec25416aaed1cd4dc01db22e286f224c0e522861254c8159577bacf22",
+      "current_sha256": "6d96bd85150486c91c95766df2d9456089380cc73fc4cc4cc69a1ed83cf0a4ea"
+    }
+  },
+  "claim_boundary": {
+    "model": "stable fixed-goal isotropic linear field with scalar speed saturation",
+    "all_default_playback_passed_under_saved_configuration": true,
+    "all_libero_passed_under_production_limits_with_explicit_retiming": true,
+    "original_time_all_production_passed": false,
+    "control_period_preserved": true,
+    "interpolation_points_are_measured_observations": false,
+    "state_reset_at_segment_boundaries": false,
+    "physical_execution_validated": false,
+    "training_ready": false,
+    "parameter_supervision": false,
+    "xarm_short_segment_identifiability_resolved": false
+  }
+}

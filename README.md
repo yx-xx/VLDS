@@ -11,7 +11,12 @@ env -u PYTHONPATH .venv/bin/python scripts/view_simulation.py
 - [常用启动命令](COMMANDS.md)：观察台、数据集浏览、模型服务和命令行仿真。
 - [项目结构与开发约定](docs/project_structure.md)：目录职责、模块边界、测试及运行文件位置。
 - [LIBERO 数据处理](docs/data_processing.md)：统一处理、复核和绘图入口，完整命令区间及 F 候选输入。
-- [参考动力系统拟合与连续执行](docs/field_teachers.md)：SEDS 参考 F、有限选段、完整 LIBERO 执行、简单吸引子对照与实际验证边界。
+- [参考动力系统拟合与连续执行](docs/field_teachers.md)：SEDS 参考 F、有限选段、随数据集片段自动切换的三维场可视化、完整 LIBERO 执行、简单吸引子对照与实际验证边界。
+- [长片段与非线性场复核](docs/validation/dataset_dynamics_long_segments_2026-11-23.md)：针对短段过多增加原始长度门槛、高斯门控场及失败边界细搜；全量状态以运行产物为准。
+- [全量数据集分段与动力系统播放](docs/dataset_dynamics.md)：9,249 个回合的离线场、连续误差验收、坐标差异和控制配置边界。
+- [VLDS 结构化模型与训练实现](docs/vlds_training.md)：结构化训练集、模型头、损失和代码实现顺序；方法定义见论文项目。
+- [LIBERO 原生产控制配置复验](docs/validation/dataset_dynamics_production_libero_2026-11-22.md)：固定生产速度/角速度/姿态增益下的独立重拟合结果。
+- [LIBERO 生产约束与放慢时间复核](docs/validation/dataset_dynamics_production_retimed_2026-11-23.md)：固定控制上限、保持控制周期的 6,500 回合名义验收、独立重算与三配置播放。
 - [模型观察台说明](docs/simulation_inspector.md)：操作方式、模型适配、数据格式和三维回放条件。
 - [文档索引](docs/README.md)：安装、训练与部署相关文档。
 

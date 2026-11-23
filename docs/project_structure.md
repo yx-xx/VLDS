@@ -46,12 +46,13 @@ src/openpi/datasets/libero/
 ├── calibration.py            # 固定场的速度校准、简单吸引子和参考偏移对照
 ├── replay_teacher.py         # 成功源回放的派生参考位姿轨迹及来源校验
 ├── operation_audit.py        # 离线操作证据、待复核事件和源回放对照
-└── field_inspection.py       # 完整环境执行与实际查询图像的诊断绘图
+├── field_inspection.py       # 完整环境执行与实际查询图像的诊断绘图
+└── vector_field_inspection.py # 当前段拟合/保存场读取与位置场诊断
 ```
 
 测试与上述职责对应，放在 `tests/datasets/libero/`；下载测试留在 `tests/datasets/`。生产结果位于被 Git 忽略的 `data/processed/libero_v2/`，临时验证放在临时目录。历史 v1 产物保留来源和快照，新版不会将旧候选伪装成有效场标签。数据语义、文件布局及唯一运行说明见 [LIBERO 数据处理](data_processing.md)。
 
-稳定场和执行诊断的职责及运行入口见[参考动力系统说明](field_teachers.md)。数学/拟合/时钟测试位于 `tests/fields/`，候选与数据链路测试位于 `tests/datasets/libero/`；执行适配器与完整环境工作进程分别为 `simulation/runtime/field_control.py`、`field_execution.py` 和 `simulation/workers/fields.py`。这些模块不改变原动作策略的输出含义。
+`fields/visualization.py` 负责固定场采样、名义轨迹和静态诊断图；`datasets/libero/field_preview_sequence.py` 负责浏览时的兼容方案复用、按需细分及不重置状态的连续误差复核，`simulation/ui/field_preview.py` 负责后台调度、会话缓存和随时间轴切换；`simulation/workers/field_overlay.py` 将只读数值预览画入 MuJoCo，兼容独立 Python 3.8 环境。稳定场和执行诊断的职责及运行入口见[参考动力系统说明](field_teachers.md)。数学/拟合/时钟测试位于 `tests/fields/`，候选与数据链路测试位于 `tests/datasets/libero/`；执行适配器与完整环境工作进程分别为 `simulation/runtime/field_control.py`、`field_execution.py` 和 `simulation/workers/fields.py`。这些模块不改变原动作策略的输出含义。
 
 ## 仿真模块
 
@@ -67,6 +68,7 @@ src/openpi/simulation/
 │   ├── dataset_browser.py     # 任务目录、回合筛选与播放控件
 │   ├── dataset_library.py     # 数据集总览卡片
 │   ├── segmentation.py        # 命令区间时间轴、跳段与单段播放
+│   ├── field_preview.py       # 后台逐段拟合、保存场选择、诊断图导出
 │   ├── scene_view.py          # 内嵌三维画面、鼠标视角与键盘控制
 │   └── tk_runtime.py          # 系统 Tk 选择与字体配置
 ├── data/
@@ -185,3 +187,11 @@ env -u PYTHONPATH .venv/bin/python -m pytest --strict-markers -m 'not manual'
 ```
 
 图形测试在没有 `DISPLAY` 时跳过。工作进程入口测试分别使用主环境和已安装的 LIBERO 解释器，验证移动后的脚本可直接执行。测试不自动下载权重或启动整套数据集性能评测。
+
+## 全量动力系统构建模块
+
+`datasets/dynamics/coherent.py` 的可选前视目标配置输出独立 `coherent_flow` 场，区分过点目标与实际分段边界；`fields/contractive.py` 保留目标为显式平衡点的收缩映射。`datasets/dynamics/continuity.py` 单独测量边界末步速度和源轨迹真实停留，并导出速度及误差对照图；状态连续的验收不能代替速度衔接检查。
+
+`src/openpi/fields/sequence.py` 维护稳定线性场的连续状态细分和回放拟合；`src/openpi/datasets/dynamics/` 维护跨数据格式适配、并行构建、断点恢复、登记、播放读取和独立重算；其中 `profiles.py` 保存独立的固定控制配置与显式放慢时间配置，`audit.py` 逐控制步直接反馈重算，分别报告产物完整性和全部场名义验收。`simulation/ui/native_field.py` 显示非 LIBERO 世界坐标下的原生状态投影。运行结果在忽略的 `data/processed/dynamics_*/`，数据集指针在各自的 `.vlds/dynamics.json`。用户入口与合规范围见 [dataset_dynamics.md](dataset_dynamics.md)。
+
+长片段实验场由 `fields/contractive.py` 提供共同度量下的高斯门控收缩映射；`datasets/dynamics/coherent.py` 负责原始长度约束、失败处边界细搜及独立配置保存，`coherent_audit.py` 独立逐步验收，`coherent_report.py` 汇总长度和拟合覆盖。播放端 `datasets/dynamics/playback.py` 对保存的新旧模型分别采样，`simulation/ui/native_field.py` 负责原状态空间的真实场截面。已审计样例的显式载入由 `playback.load_saved_episode` 核对当前回合并调用 `coherent_audit.validate_saved_episode` 重新积分，不要求样例覆盖全量，也不修改默认登记。对应测试在 `tests/fields/test_contractive.py`、`tests/datasets/dynamics/test_coherent.py` 和 `tests/datasets/dynamics/test_manual_playback.py`。

@@ -291,3 +291,17 @@ def test_reload_does_not_reuse_a_worker_invalidated_by_pending_stop(tmp_path):
         control.reload(episode, frame=2)
     open_worker.assert_called_once_with(episode, frame=2)
     control.process.stdin.write.assert_not_called()
+
+
+def test_new_episode_overlay_is_staged_until_recording_changes():
+    from unittest.mock import Mock
+
+    replay = DatasetReplay()
+    replay.send = Mock()
+    replay.prepare_episode()
+    replay.configure_overlay(intervals=[{"start": 0, "end": 10}], field_preview="new.npz")
+    replay.send.assert_not_called()
+    assert replay.overlay_options["field_preview"] == "new.npz"
+    replay.overlay_suspended = False
+    replay.configure_overlay(field_visible=True)
+    replay.send.assert_called_once()

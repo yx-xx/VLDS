@@ -1,0 +1,89 @@
+{
+  "schema": "vlds.dynamics.production_validation.v1",
+  "recorded_at": "2026-11-22T15:31:19.823402+00:00",
+  "base_collection": "data/processed/dynamics_20261122_final/libero",
+  "profile_collection": "data/processed/dynamics_20261122_final/libero/profiles/production_libero",
+  "profile_run_fingerprint": "120e1477a3240b40d5330891c3592f7758e2832a2067414c9491d31e9d2e66da",
+  "base_fingerprint": "c7f937c1dcf2210a9add43b93f5d412de7cafd3114c16065b754148f518f346e",
+  "profile": {
+    "name": "production_libero",
+    "label": "LIBERO 原生产控制约束",
+    "maximum_speed_native_per_second": 0.3,
+    "maximum_angular_speed_rad_per_second": 0.5,
+    "rotation_gain_per_second": 2.0,
+    "fit_margin": 0.9
+  },
+  "build_summary": {
+    "profile": "production_libero",
+    "profile_label": "LIBERO 原生产控制约束",
+    "episodes": 6500,
+    "expected_episodes": 6500,
+    "selected_episodes": 6500,
+    "passed_episodes": 2787,
+    "segments": 676614,
+    "accepted_segments": 425084,
+    "transitions_covered": 1007618,
+    "single_transition_segments": 624842,
+    "failure_reasons": {
+      "position_maximum": 337,
+      "rotation_maximum": 251226
+    },
+    "full_collection": true,
+    "errors": [],
+    "seconds": 640.9007068059873,
+    "maximum_scaled_error": 7.068887056300279,
+    "maximum_speed_native_per_second": 0.3,
+    "maximum_angular_speed_rad_per_second": 0.5,
+    "rotation_gain_per_second": 2.0,
+    "physical_execution_validated": false,
+    "training_ready": false
+  },
+  "independent_audit": {
+    "schema": "vlds.dynamics.audit.v1",
+    "fingerprint": "120e1477a3240b40d5330891c3592f7758e2832a2067414c9491d31e9d2e66da",
+    "counts": {
+      "episodes": 6500,
+      "segments": 676614,
+      "transitions": 1007618,
+      "single_transition_segments": 624842
+    },
+    "failures": [],
+    "profile": "production_libero",
+    "profile_label": "LIBERO 原生产控制约束",
+    "rejected_segments_by_reason": {
+      "position_maximum": 337,
+      "rotation_maximum": 251226
+    },
+    "full_source_episode_coverage": true,
+    "maximum_scaled_error": 7.068887056300259,
+    "maximum_saved_vs_stepwise_error": 2.220446049250313e-15,
+    "artifact_sha256_chain": "28c28772a3fceca570ec9d0398199f76c485f101f9dbdb5eb314fb5f1d651d9d",
+    "position_rms_native_p50_p95_max": [
+      2.1668762641356258e-16,
+      0.00451580607611889,
+      0.011550222033613404
+    ],
+    "rotation_rms_rad_p50_p95_max": [
+      0.06137779922576829,
+      0.258824633433269,
+      0.539952623837605
+    ],
+    "episodes_with_position_speed_cap_over_0_3": 0,
+    "maximum_position_speed_cap_m_per_second": null,
+    "profile_passed_episodes": 2787,
+    "physical_execution_validated": false,
+    "training_ready": false,
+    "passed": true
+  },
+  "claim_boundary": {
+    "profile_passed_episodes_means": "all saved segments in that episode pass the fixed nominal profile checks",
+    "audit_passed_means": "saved profile artifacts are complete and independently reproducible",
+    "physical_execution_validated": false,
+    "training_ready": false
+  },
+  "follow_up_validation": {
+    "record": "dataset_dynamics_production_retimed_2026-11-23.json",
+    "date": "2026-11-23",
+    "note": "Historical values and hashes are preserved. Live audit.json files were replaced by v2 revalidation; current hashes and separate integrity/nominal acceptance are in the follow-up record."
+  }
+}

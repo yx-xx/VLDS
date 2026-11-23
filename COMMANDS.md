@@ -136,3 +136,87 @@ env -u PYTHONPATH .venv/bin/python -m openpi.datasets.libero inspect \
 ## 参考动力系统拟合与完整环境诊断
 
 SEDS 参考 F、完整动作覆盖的有限选段、简单吸引子对照、控制偏移校准和连续执行，统一使用 `python -m openpi.datasets.libero` 的 `fit-fields / calibrate-fields / rescore-fields / execute-fields / inspect-fields / audit-fields` 子命令。完整命令与真实结果边界见[参考动力系统说明](docs/field_teachers.md)。新增离线池不是 `vlds.fields.v1` 主训练集；旧 v2 候选掩码保持 false。
+
+### 动力系统场与分段轨迹对照
+
+已处理 LIBERO 的观察台浏览默认自动分段、后台预取场快照并随时间轴切换场，分段边界不会在播放主线程中重新采样；也可用“诊断整命令段”或“载入拟合结果…”手动检查，在 MuJoCo 中显示速度箭头、参考轨迹、名义积分和目标，支持聚焦、显示开关及导出。三维渲染进程与数据时间轴异步运行，软件渲染较慢时只跳过中间三维帧，不拖住录制画面播放。独立导出已有场：
+
+```bash
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 env -u PYTHONPATH .venv/bin/python \
+  -m openpi.datasets.libero inspect-vector-field data/processed/libero_v2 \
+  --episode 6000 --fields data/experiments/fields_20261122/pilot_c/episode_06000.json \
+  --sequence 0 --field 1 --output data/experiments/field_visualization/saved_field.png
+```
+
+省略 `--fields` 并用 `--interval 1` 可重新拟合整个命令段。索引从 0 开始；名义轨迹不代表物理执行。参数与参考来源说明见[场可视化](docs/field_teachers.md#场可视化与逐段拟合诊断)。
+
+## 全量数据集动力系统分段与播放
+
+从本仓库根目录执行；省略回合选择即处理所有回合及划分。代码/配置变化后使用新输出目录。完整说明及控制合规限制见 [docs/dataset_dynamics.md](docs/dataset_dynamics.md)。
+
+```bash
+# 全部完整数据集：离线构建并登记为播放默认值
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 env -u PYTHONPATH .venv/bin/python \
+  -m openpi.datasets.dynamics --output data/processed/dynamics_new --workers 10
+
+# 复核本次已完成的 LIBERO 回放场（不启动机器人执行）
+OPENBLAS_NUM_THREADS=1 env -u PYTHONPATH .venv/bin/python \
+  -m openpi.datasets.dynamics.audit data/processed/dynamics_20261122_final/libero
+
+# 在已有回放结果旁生成 LIBERO 原生产控制配置：0.3 m/s、0.5 rad/s、姿态增益 2/s
+# 此复建示例写入新的 experiments/production_libero_recheck；失败叶子保留并记录原因
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 env -u PYTHONPATH .venv/bin/python \
+  -m openpi.datasets.dynamics.profiles \
+  data/processed/dynamics_20261122_final/libero --profile production_libero --workers 10 \
+  --output data/experiments/production_libero_recheck
+
+# 独立复核生产配置的覆盖、保存轨迹和约束上限
+OPENBLAS_NUM_THREADS=1 env -u PYTHONPATH .venv/bin/python \
+  -m openpi.datasets.dynamics.audit \
+  data/processed/dynamics_20261122_final/libero/profiles/production_libero
+
+# 固定生产约束、保持原控制周期，通过明确放慢示教时间拟合全量回合
+# 播放时在“配置”下选择“生产约束/放慢时间”
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 env -u PYTHONPATH .venv/bin/python \
+  -m openpi.datasets.dynamics.profiles \
+  data/processed/dynamics_20261122_final/libero --profile production_retimed --workers 10
+
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 env -u PYTHONPATH .venv/bin/python \
+  -m openpi.datasets.dynamics.audit \
+  data/processed/dynamics_20261122_final/libero/profiles/production_retimed --workers 10
+
+# 浏览保存的分段与场，切换回合不会调用拟合优化器
+env -u PYTHONPATH .venv/bin/python scripts/view_simulation.py --dataset data/processed/libero_v2
+```
+
+### 长片段与非线性稳定场
+
+原始片段至少 10 个观测转移且源时长至少 0.5 s；失败长段和短命令事件保留。此配置使用基础回放速度上限，不能与固定生产控制配置混称。某类全量结果通过独立完整性复核后，观察台会默认选择它。
+
+```bash
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 env -u PYTHONPATH .venv/bin/python \
+  -m openpi.datasets.dynamics.coherent \
+  data/processed/dynamics_20261122_final/libero --workers 8
+
+OPENBLAS_NUM_THREADS=1 OMP_NUM_THREADS=1 env -u PYTHONPATH .venv/bin/python \
+  -m openpi.datasets.dynamics.coherent_audit \
+  data/processed/dynamics_20261122_final/libero/profiles/coherent --workers 8
+
+OPENBLAS_NUM_THREADS=1 env -u PYTHONPATH .venv/bin/python \
+  -m openpi.datasets.dynamics.coherent_report data/processed/dynamics_20261122_final \
+  --output data/experiments/dynamics_long_segments_20261123/analysis
+```
+
+对其他集合将 `libero` 替换为 `lerobot_libero`、`aloha`、`pusht` 或 `xarm`。夜间执行状态、失败与复现边界见[长片段复核记录](docs/validation/dataset_dynamics_long_segments_2026-11-23.md)。
+
+### 分段末端减速诊断
+
+名义积分在段末收敛会造成速度下降；状态连续不等于速度连续。新增 `--goal-lookahead-steps 4` 试验独立过点场配置，完整性审计覆盖全量后观察台会自动发现“长片段/过点场”。已审计样例可提前手动检查：选择处理后 LIBERO v2 的回合 6000，点击“载入拟合结果…”，选择 `data/experiments/dynamics_passthrough_20261123/v5/libero/episode_06000.json`。其他四类数据也支持载入对应回合，失败状态会保留。本轮样例、真实停止保护、整回合回退和验收边界见[段末减速与过点场](docs/dataset_dynamics.md#段末减速与过点场)。已有窗口可继续使用，新增入口在下次启动时生效。不要直接覆盖已有结果目录。
+
+```bash
+OPENBLAS_NUM_THREADS=1 env -u PYTHONPATH .venv/bin/python \
+  -m openpi.datasets.dynamics.continuity \
+  data/experiments/dynamics_passthrough_20261123/v5/libero/episode_06000.json \
+  --baseline data/processed/dynamics_20261122_final/libero/profiles/coherent/episode_06000.json \
+  --output data/experiments/dynamics_passthrough_20261123/analysis/libero_06000
+```

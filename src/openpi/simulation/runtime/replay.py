@@ -25,6 +25,7 @@ class DatasetReplay:
         self.closed = False
         self.source = None
         self.overlay_options = {"visible": True, "current_only": False, "markers": True}
+        self.overlay_suspended = False
 
     def open(self, episode, *, frame=0):
         if episode.replay_source and episode.replay_source.frame(frame) is None:
@@ -81,6 +82,7 @@ class DatasetReplay:
                     return
                 self.process = process
                 self.process_generation = generation
+                self.overlay_suspended = False
             recent = []
             for line in process.stdout:
                 if line.startswith("@dataset "):
@@ -106,9 +108,15 @@ class DatasetReplay:
             **self.overlay_options,
         }
 
+    def prepare_episode(self):
+        """Stage new overlays until the matching recording has been loaded."""
+        self.overlay_suspended = True
+        self.overlay_options.update(intervals=None, field_preview=None)
+
     def configure_overlay(self, **options):
         self.overlay_options.update(options)
-        self.send("overlay", **self.overlay_options)
+        if not self.overlay_suspended:
+            self.send("overlay", **self.overlay_options)
 
     @staticmethod
     def _location(episode):
@@ -139,6 +147,7 @@ class DatasetReplay:
                 timeline_frame=frame,
                 overlay=self._overlay(episode),
             )
+            self.overlay_suspended = False
 
     def send(self, command, **values):
         if not self.lock.acquire(blocking=False):

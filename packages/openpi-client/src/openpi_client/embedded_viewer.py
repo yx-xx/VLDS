@@ -132,6 +132,17 @@ class EmbeddedViewer:
                 lookat, distance, azimuth, elevation = self.home
                 self.cam.lookat[:] = lookat
                 self.cam.distance, self.cam.azimuth, self.cam.elevation = distance, azimuth, elevation
+            elif action == "focus":
+                target = np.asarray(message.get("lookat"), dtype=float)
+                distance = float(message.get("distance", self.cam.distance))
+                if (
+                    target.shape == (3,)
+                    and np.isfinite(target).all()
+                    and np.isfinite(distance)
+                    and 0.05 <= distance <= 20
+                ):
+                    self.cam.lookat[:] = target
+                    self.cam.distance = distance
             elif action in ("rotate", "pan", "zoom"):
                 movement = {
                     "rotate": mujoco.mjtMouse.mjMOUSE_ROTATE_V,

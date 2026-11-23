@@ -17,7 +17,8 @@ class SegmentationPanel(ttk.Frame):
         self.selected = 0
         options = ttk.Frame(self)
         options.pack(fill="x", pady=(0, 3))
-        ttk.Label(options, text="命令分段", style="Subheading.TLabel").pack(side="left", padx=(0, 16))
+        self.heading = ttk.Label(options, text="命令分段", style="Subheading.TLabel")
+        self.heading.pack(side="left", padx=(0, 16))
         self.timeline = tk.Canvas(self, height=34, highlightthickness=0, bg="#f4f6f5")
         self.timeline.pack(fill="x", pady=(3, 2))
         self.timeline.bind("<Configure>", lambda _event: self._draw())
@@ -59,6 +60,7 @@ class SegmentationPanel(ttk.Frame):
         if not data:
             self.pack_forget()
             return
+        self.heading.configure(text="动力系统分段" if data.get("kind") == "dynamics" else "命令分段")
         intervals, times = data["intervals"], data["time"]
         self.combo["values"] = [
             f"第 {index + 1} 段 · {item['command_label']} · {times[item['start']]:.2f}–{times[item['end']]:.2f} s"
@@ -77,10 +79,31 @@ class SegmentationPanel(ttk.Frame):
         self.combo.current(self.selected)
         item = intervals[self.selected]
         terminal = " · 当前为终端观测，无下一动作" if frame == len(self.data["time"]) - 1 else ""
-        self.detail.configure(
-            text=f"动作 [{item['start']}, {item['end']}) · 观测端点 [{item['start']}, {item['end']}] · "
-            f"{self.data['candidate_counts'][self.selected]} 个拟合候选；含区间内全部运动与等待{terminal}"
-        )
+        if self.data.get("kind") == "dynamics":
+            status = "通过" if item["accepted"] else "未通过"
+            quality = item.get("quality", {})
+            if "field" in item:
+                stability = f"共同度量收缩界 {item['field']['maximum_contraction']:.5f} / 步"
+            else:
+                stability = f"线性稳定率 {item['rate_per_second']:.2f}/s"
+            length = ""
+            if quality:
+                label = (
+                    "长度合格"
+                    if quality["eligible_length"]
+                    else "短命令事件，仅诊断"
+                    if quality["short_command_event"]
+                    else "过短，仅诊断"
+                )
+                length = f" · 原始 {quality['transitions']} 转移 / {quality['source_seconds']:.2f}s · {label}"
+            self.detail.configure(
+                text=f"保存场 {self.selected + 1} · 区间 [{item['start']}, {item['end']}] · 名义验收{status} · {stability}{length}{terminal}"
+            )
+        else:
+            self.detail.configure(
+                text=f"动作 [{item['start']}, {item['end']}) · 观测端点 [{item['start']}, {item['end']}] · "
+                f"{self.data['candidate_counts'][self.selected]} 个拟合候选；含区间内全部运动与等待{terminal}"
+            )
         self._draw()
 
     def _draw(self):

@@ -13,6 +13,11 @@ import h5py
 import mujoco
 import numpy as np
 
+if __package__:
+    from openpi.simulation.workers.field_overlay import FieldOverlay
+else:
+    from field_overlay import FieldOverlay
+
 
 class TrajectoryOverlay:
     """Small per-episode display snapshot, independent of simulation physics."""
@@ -57,6 +62,11 @@ class TrajectoryOverlay:
         self.visible = specification.get("visible", True)
         self.current_only = specification.get("current_only", False)
         self.markers = specification.get("markers", True)
+        self.processed_path, self.processed_group = path, specification["group"]
+        self.recorded_intervals = self.intervals
+        self.field = None
+        self.field_visible = self.field_vectors = self.field_rollout = True
+        self.configure(**specification)
         self.frame = 0
         self.selected = 0
         self.drawn_geoms = 0
@@ -75,7 +85,27 @@ class TrajectoryOverlay:
         )
 
     def configure(self, **options):
-        for key in ("visible", "current_only", "markers"):
+        if "intervals" in options:
+            intervals = options["intervals"] or self.recorded_intervals
+            previous = 0
+            for item in intervals:
+                if item["start"] != previous or not previous < item["end"] < len(self.positions):
+                    raise ValueError("Saved dynamics intervals must partition the recorded trajectory.")
+                previous = item["end"]
+            if previous != len(self.positions) - 1:
+                raise ValueError("Saved dynamics intervals omit source actions.")
+            self.intervals = intervals
+            frame = getattr(self, "frame", 0)
+            self.selected = next(
+                (i for i, item in enumerate(intervals) if item["start"] <= frame < item["end"]), len(intervals) - 1
+            )
+        if "field_preview" in options:
+            path = options["field_preview"]
+            replacement = (
+                FieldOverlay(path, self.processed_path, self.processed_group, len(self.positions)) if path else None
+            )
+            self.field = replacement
+        for key in ("visible", "current_only", "markers", "field_visible", "field_vectors", "field_rollout"):
             if key in options:
                 setattr(self, key, bool(options[key]))
 
@@ -86,8 +116,12 @@ class TrajectoryOverlay:
         start_geom = scene.ngeom
         self.drawn_geoms = 0
         self.sampled = False
+        if self.field is not None and self.field_visible:
+            self.field.draw(scene, self.frame, self._geom, vectors=self.field_vectors, rollout=self.field_rollout)
         if not self.visible:
             return
+        # Reserve the already drawn field geometry before allocating recorded trajectory lines.
+        start_geom = scene.ngeom
         shown = [self.selected] if self.current_only else list(range(len(self.intervals)))
         # Reserve room for the cursor and boundaries before allocating path connectors.
         reserve = 3 + (len(shown) + 1 if self.markers else 0)
@@ -105,6 +139,15 @@ class TrajectoryOverlay:
             rgba = [*self.colors[index % len(self.colors)], 1.0 if active else 0.65]
             radius = 0.004 if active else 0.002
             for left, right in zip(nodes[:-1], nodes[1:]):
+                if (
+                    self.field is not None
+                    and self.field_visible
+                    and self.field.start <= self.frame <= self.field.end
+                    and right > self.field.start
+                    and left < self.field.end
+                ):
+                    # The active field draws its own orange reference, including derived teachers.
+                    continue
                 if np.linalg.norm(self.positions[right] - self.positions[left]) < 1e-8:
                     continue
                 geom = self._geom(scene, mujoco.mjtGeom.mjGEOM_CAPSULE, radius, self.positions[left], rgba)
@@ -121,7 +164,7 @@ class TrajectoryOverlay:
                     0.006,
                     self.positions[item["start"]],
                     rgba,
-                    str(index + 1),
+                    str(index + 1) if index == self.selected or len(shown) <= 10 else "",
                 )
             last = self.intervals[shown[-1]]["end"]
             self._geom(scene, mujoco.mjtGeom.mjGEOM_SPHERE, 0.006, self.positions[last], [0.9, 0.9, 0.9, 1], "END")
@@ -148,4 +191,12 @@ class TrajectoryOverlay:
         return geom
 
     def status(self):
-        return {"overlay_geoms": self.drawn_geoms, "segment": self.selected + 1, "overlay_sampled": self.sampled}
+        return {
+            "overlay_geoms": self.drawn_geoms,
+            "segment": self.selected + 1,
+            "segment_count": len(self.intervals),
+            "timeline_frame": self.frame,
+            "field_interval": [self.field.start, self.field.end] if self.field else None,
+            "overlay_sampled": self.sampled,
+            "field_geoms": self.field.drawn_geoms if self.field and self.field_visible else 0,
+        }
